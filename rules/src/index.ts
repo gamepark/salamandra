@@ -1,3 +1,3 @@
-export { GameTemplateRules } from './GameTemplateRules'
-export { GameTemplateOptionsSpec } from './GameTemplateOptions'
-export { GameTemplateSetup } from './GameTemplateSetup'
+export { SalamandraRules } from './SalamandraRules'
+export { SalamandraOptionsSpec } from './SalamandraOptions'
+export { SalamandraSetup } from './SalamandraSetup'
