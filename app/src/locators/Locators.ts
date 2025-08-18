@@ -10,7 +10,9 @@ import { fieldSpaceLocator } from './FieldSpaceLocator'
 import { fieldStackLocator } from './FieldStackLocator'
 import { gameLayoutLocator } from './GameLayoutLocator'
 import { groveStackLocator } from './GroveStackLocator'
+import { playerActualRoundApprenticesSpaceLocator } from './PlayerActualRoundApprenticesSpaceLocator'
 import { playerApprenticesSpaceLocator } from './PlayerApprenticesSpaceLocator'
+import { playerCrystalTokenStockLocator } from './PlayerCrystalTokenStockLocator'
 import { playerDruidSpaceLocator } from './PlayerDruidSpaceLocator'
 import { playerMatLayoutLocator } from './PlayerMatLayoutLocator'
 import { score100MarkerIdlePlaceLocator } from './Score100MarkerIdlePlaceLocator'
@@ -38,6 +40,8 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.PlayerMatLayout]: playerMatLayoutLocator,
   [LocationType.PlayerDruidSpace]: playerDruidSpaceLocator,
   [LocationType.PlayerApprenticesSpace]: playerApprenticesSpaceLocator,
+  [LocationType.PlayerActualRoundApprenticesSpace]: playerActualRoundApprenticesSpaceLocator,
+  [LocationType.PlayerCrystalTokenStock]: playerCrystalTokenStockLocator,
   [LocationType.Score100MarkerIdlePlace]: score100MarkerIdlePlaceLocator,
   [LocationType.ScorePiste]: scorePisteLocator
 }

@@ -15,6 +15,8 @@ export enum LocationType {
   PlayerMatLayout,
   PlayerDruidSpace,
   PlayerApprenticesSpace,
+  PlayerActualRoundApprenticesSpace,
+  PlayerCrystalTokenStock,
   Score100MarkerIdlePlace,
   ScorePiste
 }

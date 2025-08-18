@@ -2,15 +2,17 @@ import { MaterialGameSetup } from '@gamepark/rules-api'
 import { reverse, shuffle } from 'lodash'
 import { bearDivinityCards } from './material/BearDivinityCard'
 import { blackSalamanderCards } from './material/BlackSalamanderCard'
-import { Step } from './material/Step'
+import { crystalTokens } from './material/CrystalToken'
 import { eagleDivinityCards } from './material/EagleDivinityCard'
 import { fieldTiles, startFieldTiles } from './material/FieldTile'
 import { groveTiles } from './material/GroveTile'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { spellBookCards } from './material/SpellBookCard'
+import { Step } from './material/Step'
 import { whiteSalamanderCards } from './material/WhiteSalamanderCard'
 import { PlayerColor } from './PlayerColor'
+import { MemoryType } from './rules/MemoryType'
 import { RuleId } from './rules/RuleId'
 import { SalamandraOptions } from './SalamandraOptions'
 import { SalamandraRules } from './SalamandraRules'
@@ -29,6 +31,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     this.setUpGroves()
     this.setupSpellBooks()
     this.setupPlayers()
+    this.setupMemory()
   }
 
   start() {
@@ -97,6 +100,10 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
       this.createApprenticeDiscs(2, player, Step.Night, 3)
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.Score100MarkerIdlePlace } })
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.ScorePiste, id: 0 } })
+      this.material(MaterialType.ApprenticeDisc)
+        .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === 0)
+        .moveItemsAtOnce({ type: LocationType.PlayerActualRoundApprenticesSpace, player })
+      this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player })
     })
   }
 
@@ -107,5 +114,9 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
         location: { type: LocationType.PlayerApprenticesSpace, player, id: locationId }
       })
     }
+  }
+
+  private setupMemory() {
+    this.memorize(MemoryType.ActualRound, 0)
   }
 }

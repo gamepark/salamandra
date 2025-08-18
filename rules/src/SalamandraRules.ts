@@ -34,7 +34,8 @@ export class SalamandraRules
       [LocationType.EagleDivinityStack]: new PositiveSequenceStrategy()
     },
     [MaterialType.ApprenticeDisc]: {
-      [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy()
+      [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerActualRoundApprenticesSpace]: new PositiveSequenceStrategy(),
     },
     [MaterialType.FieldTile]: {
       [LocationType.FieldStack]: new PositiveSequenceStrategy(),
