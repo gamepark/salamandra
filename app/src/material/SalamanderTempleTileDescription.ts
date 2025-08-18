@@ -1,4 +1,5 @@
 import { CardDescription } from '@gamepark/react-game'
+import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import SalamanderTempleTile from '../images/tiles/SalamanderTempleTile.png'
 
 class SalamanderTempleTileDescription extends CardDescription {
@@ -6,6 +7,8 @@ class SalamanderTempleTileDescription extends CardDescription {
   height = 9.2
 
   image = SalamanderTempleTile
+
+  staticItem = { location: { type: LocationType.GameLayout, x: 0.5, y: 0 } }
 }
 
 export const salamanderTempleTileDescription = new SalamanderTempleTileDescription()

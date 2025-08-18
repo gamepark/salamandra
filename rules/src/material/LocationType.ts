@@ -1,1 +1,20 @@
-export enum LocationType {}
+export enum LocationType {
+  GameLayout = 1,
+  WhiteSalamanderStack,
+  BlackSalamanderStack,
+  VenerationPointsLayout,
+  GroveStack,
+  FieldStack,
+  FieldSpace,
+  SpellBookSpace,
+  SecondaryDivinitiesLayout,
+  BearDivinityStack,
+  EagleDivinityStack,
+  CristalTokenStock,
+  ScrollTokenStock,
+  PlayerMatLayout,
+  PlayerDruidSpace,
+  PlayerApprenticesSpace,
+  Score100MarkerIdlePlace,
+  ScorePiste
+}

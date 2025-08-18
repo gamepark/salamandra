@@ -1,5 +1,5 @@
 import { CardDescription } from '@gamepark/react-game'
-import { ApprenticeDisc } from '@gamepark/salamandra/material/ApprenticeDisc'
+import { Step } from '@gamepark/salamandra/material/Step'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
 import ApprenticeDiscDayBlue from '../images/tiles/apprenticeDisc/ApprenticeDiscDayBlue.jpg'
 import ApprenticeDiscDayRed from '../images/tiles/apprenticeDisc/ApprenticeDiscDayRed.jpg'
@@ -11,18 +11,19 @@ import ApprenticeDiscNightGrey from '../images/tiles/apprenticeDisc/ApprenticeDi
 import ApprenticeDiscNightYellow from '../images/tiles/apprenticeDisc/ApprenticeDiscNightYellow.jpg'
 
 class ApprenticeDiscDescription extends CardDescription {
-  width = 0.7
-  height = 0.7
+  width = 0.7 * 3
+  height = 0.7 * 3
+  borderRadius = 0.35 * 3
 
   images = {
-    [PlayerColor.Blue * 10 + ApprenticeDisc.Day]: ApprenticeDiscDayBlue,
-    [PlayerColor.Blue * 10 + ApprenticeDisc.Night]: ApprenticeDiscNightBlue,
-    [PlayerColor.Grey * 10 + ApprenticeDisc.Day]: ApprenticeDiscDayGrey,
-    [PlayerColor.Grey * 10 + ApprenticeDisc.Night]: ApprenticeDiscNightGrey,
-    [PlayerColor.Red * 10 + ApprenticeDisc.Day]: ApprenticeDiscDayRed,
-    [PlayerColor.Red * 10 + ApprenticeDisc.Night]: ApprenticeDiscNightRed,
-    [PlayerColor.Yellow * 10 + ApprenticeDisc.Day]: ApprenticeDiscDayYellow,
-    [PlayerColor.Yellow * 10 + ApprenticeDisc.Night]: ApprenticeDiscNightYellow
+    [PlayerColor.Blue * 10 + Step.Day]: ApprenticeDiscDayBlue,
+    [PlayerColor.Blue * 10 + Step.Night]: ApprenticeDiscNightBlue,
+    [PlayerColor.Grey * 10 + Step.Day]: ApprenticeDiscDayGrey,
+    [PlayerColor.Grey * 10 + Step.Night]: ApprenticeDiscNightGrey,
+    [PlayerColor.Red * 10 + Step.Day]: ApprenticeDiscDayRed,
+    [PlayerColor.Red * 10 + Step.Night]: ApprenticeDiscNightRed,
+    [PlayerColor.Yellow * 10 + Step.Day]: ApprenticeDiscDayYellow,
+    [PlayerColor.Yellow * 10 + Step.Night]: ApprenticeDiscNightYellow
   }
 }
 

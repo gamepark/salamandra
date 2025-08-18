@@ -35,7 +35,7 @@ import GroveTileBack from '../images/tiles/grove/GroveTileBack.jpg'
 class GroveTileDescription extends CardDescription {
   width = 4
   height = 4
-  borderRadius = 0.2
+  borderRadius = 0.5
 
   backImage = GroveTileBack
 

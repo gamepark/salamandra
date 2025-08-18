@@ -6,8 +6,9 @@ import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
 import ScoreMarkerYellow from '../images/tiles/scoreMarker/ScoreMarkerYellow.jpg'
 
 class ScoreMarkerDescription extends CardDescription {
-  width = 0.32
-  height = 0.32
+  width = 0.32 * 3.5
+  height = 0.32 * 3.5
+  borderRadius = 0.16 * 3.5
 
   images = {
     [PlayerColor.Blue]: ScoreMarkerBlue,
