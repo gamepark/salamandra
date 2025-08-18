@@ -1,6 +1,6 @@
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { MaterialDescription } from '@gamepark/react-game'
-import { apprenticeDiscDescription } from './ApprenticeDiscDescription'
+import { apprenticeTokenDescription } from './ApprenticeTokenDescription'
 import { bearDivinityCardDescription } from './BearDivinityCardDescription'
 import { blackSalamanderCardDescription } from './BlackSalamanderCardDescription'
 import { crystalTokenDescription } from './CrystalTokenDescription'
@@ -32,6 +32,6 @@ export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.EagleDivinityCard]: eagleDivinityCardDescription,
   [MaterialType.BlackSalamanderCard]: blackSalamanderCardDescription,
   [MaterialType.WhiteSalamanderCard]: whiteSalamanderCardDescription,
-  [MaterialType.ApprenticeDisc]: apprenticeDiscDescription,
+  [MaterialType.ApprenticeToken]: apprenticeTokenDescription,
   [MaterialType.ScoreMarker]: scoreMarkerDescription
 }

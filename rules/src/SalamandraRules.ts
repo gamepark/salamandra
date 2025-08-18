@@ -33,7 +33,7 @@ export class SalamandraRules
     [MaterialType.EagleDivinityCard]: {
       [LocationType.EagleDivinityStack]: new PositiveSequenceStrategy()
     },
-    [MaterialType.ApprenticeDisc]: {
+    [MaterialType.ApprenticeToken]: {
       [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy(),
       [LocationType.PlayerActualRoundApprenticesSpace]: new PositiveSequenceStrategy(),
     },

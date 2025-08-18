@@ -100,7 +100,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
       this.createApprenticeDiscs(2, player, Step.Night, 3)
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.Score100MarkerIdlePlace } })
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.ScorePiste, id: 0 } })
-      this.material(MaterialType.ApprenticeDisc)
+      this.material(MaterialType.ApprenticeToken)
         .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === 0)
         .moveItemsAtOnce({ type: LocationType.PlayerActualRoundApprenticesSpace, player })
       this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player })
@@ -109,7 +109,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   private createApprenticeDiscs(quantity: number, player: PlayerColor, step: Step, locationId: number) {
     for (let i = 0; i < quantity; i++) {
-      this.material(MaterialType.ApprenticeDisc).createItem({
+      this.material(MaterialType.ApprenticeToken).createItem({
         id: player * 10 + step,
         location: { type: LocationType.PlayerApprenticesSpace, player, id: locationId }
       })

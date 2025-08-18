@@ -7,7 +7,7 @@ export enum MaterialType {
   CrystalToken,
   VenerationPointsBoard,
   SecondaryDivinitiesBoard,
-  ApprenticeDisc,
+  ApprenticeToken,
   ScoreMarker,
   PlayerMat,
   DruidTile,
