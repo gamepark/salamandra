@@ -2,7 +2,7 @@ import { MoneyDescription } from '@gamepark/react-game'
 import { CrystalToken } from '@gamepark/salamandra/material/CrystalToken'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import CristalToken1 from '../images/tokens/CristalToken1.png'
-import CristalToken5 from '../images/tokens/CristalToken1.png'
+import CristalToken5 from '../images/tokens/CristalToken5.png'
 
 class CrystalTokenDescription extends MoneyDescription {
   width = 1.8
