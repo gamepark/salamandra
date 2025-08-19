@@ -1,8 +1,19 @@
-import { FillGapStrategy, hideItemId, MaterialGame, MaterialMove, PositiveSequenceStrategy, SecretMaterialRules, TimeLimit } from '@gamepark/rules-api'
+import {
+  CustomMove,
+  FillGapStrategy,
+  hideItemId,
+  MaterialGame,
+  MaterialMove,
+  PositiveSequenceStrategy,
+  SecretMaterialRules,
+  TimeLimit
+} from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
-import { TheFirstStepRule } from './rules/TheFirstStepRule'
+import { CustomMoveType } from './rules/CustomMove'
+import { DoActionsRule } from './rules/DoActionsRule'
+import { MemoryType } from './rules/MemoryType'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -14,7 +25,7 @@ export class SalamandraRules
   implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
 {
   rules = {
-    [RuleId.TheFirstStep]: TheFirstStepRule
+    [RuleId.DoActions]: DoActionsRule
   }
 
   locationsStrategies = {
@@ -35,7 +46,7 @@ export class SalamandraRules
     },
     [MaterialType.ApprenticeToken]: {
       [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerActualRoundApprenticesSpace]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerActualRoundApprenticesSpace]: new PositiveSequenceStrategy()
     },
     [MaterialType.FieldTile]: {
       [LocationType.FieldStack]: new PositiveSequenceStrategy(),
@@ -57,6 +68,22 @@ export class SalamandraRules
     [MaterialType.FieldTile]: {
       [LocationType.FieldStack]: hideItemId
     }
+  }
+
+  protected onCustomMove(move: CustomMove) {
+    const moves: MaterialMove[] = []
+    if (move.type === CustomMoveType.Score) {
+      const { player, score } = move.data as { player: PlayerColor; score: number }
+      this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
+      const newScore = this.getMemory(player).remind(MemoryType.Score)
+      moves.push(
+        this.material(MaterialType.ScoreMarker)
+          .location(LocationType.ScorePiste)
+          .id(player)
+          .moveItem((item) => ({ ...item.location, id: newScore % 100 }))
+      )
+    }
+    return moves
   }
 
   giveTime(): number {

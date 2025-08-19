@@ -6,6 +6,7 @@ import { bearDivinityStackLocator } from './BearDivinityStackLocator'
 import { blackSalamanderStackLocator } from './BlackSalamanderStackLocator'
 import { cristalTokenStockLocator } from './CristalTokenStockLocator'
 import { eagleDivinityStackLocator } from './EagleDivinityStackLocator'
+import { fieldApprenticeSpaceLocator } from './FieldApprenticeSpaceLocator'
 import { fieldSpaceLocator } from './FieldSpaceLocator'
 import { fieldStackLocator } from './FieldStackLocator'
 import { gameLayoutLocator } from './GameLayoutLocator'
@@ -31,6 +32,7 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.GroveStack]: groveStackLocator,
   [LocationType.FieldStack]: fieldStackLocator,
   [LocationType.FieldSpace]: fieldSpaceLocator,
+  [LocationType.FieldApprenticeSpace]: fieldApprenticeSpaceLocator,
   [LocationType.SpellBookSpace]: spellBookSpaceLocator,
   [LocationType.SecondaryDivinitiesLayout]: secondaryDivinitiesLayoutLocator,
   [LocationType.BearDivinityStack]: bearDivinityStackLocator,

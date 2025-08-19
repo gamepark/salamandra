@@ -115,6 +115,8 @@
   },
   "fr": {
     "translation": {
+      "header.take.actions.you": "Réalisez vos actions ou <pass>Passez</pass>",
+      "header.take.actions.player": "{player} peut faire ses actions",
       "Menu": "Menu",
       "OK": "OK",
       "Validate": "Valider",

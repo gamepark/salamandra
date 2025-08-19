@@ -6,6 +6,7 @@ export enum LocationType {
   GroveStack,
   FieldStack,
   FieldSpace,
+  FieldApprenticeSpace,
   SpellBookSpace,
   SecondaryDivinitiesLayout,
   BearDivinityStack,

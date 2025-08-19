@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { RuleId } from '@gamepark/salamandra/rules/RuleId'
 import { ComponentType } from 'react'
-import { TheFirstStepHeader } from './TheFirstStepHeader'
+import { DoActionsHeader } from './DoActionsHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.TheFirstStep]: TheFirstStepHeader
+  [RuleId.DoActions]: DoActionsHeader
 }

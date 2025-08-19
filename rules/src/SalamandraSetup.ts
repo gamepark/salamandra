@@ -35,7 +35,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   start() {
-    this.startPlayerTurn(RuleId.TheFirstStep, this.players[0])
+    this.startPlayerTurn(RuleId.DoActions, this.players[0])
   }
 
   private setupSalamandraCardsStacks() {
@@ -92,12 +92,13 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   private setupPlayers() {
     reverse([...this.players]).forEach((player) => {
+      this.memorize(MemoryType.Score, 0, player)
       this.material(MaterialType.PlayerMat).createItem({ id: player, location: { type: LocationType.PlayerMatLayout, player } })
       this.material(MaterialType.DruidTile).createItem({ id: player * 10 + Step.Day, location: { type: LocationType.PlayerDruidSpace, player } })
-      this.createApprenticeDiscs(3, player, Step.Day, 0)
-      this.createApprenticeDiscs(2, player, Step.Night, 1)
-      this.createApprenticeDiscs(3, player, Step.Day, 2)
-      this.createApprenticeDiscs(2, player, Step.Night, 3)
+      this.createApprenticeTokens(3, player, Step.Day, 0)
+      this.createApprenticeTokens(2, player, Step.Night, 1)
+      this.createApprenticeTokens(3, player, Step.Day, 2)
+      this.createApprenticeTokens(2, player, Step.Night, 3)
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.Score100MarkerIdlePlace } })
       this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.ScorePiste, id: 0 } })
       this.material(MaterialType.ApprenticeToken)
@@ -107,7 +108,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     })
   }
 
-  private createApprenticeDiscs(quantity: number, player: PlayerColor, step: Step, locationId: number) {
+  private createApprenticeTokens(quantity: number, player: PlayerColor, step: Step, locationId: number) {
     for (let i = 0; i < quantity; i++) {
       this.material(MaterialType.ApprenticeToken).createItem({
         id: player * 10 + step,

@@ -1,3 +1,4 @@
 export enum MemoryType {
-  ActualRound = 1
+  ActualRound = 1,
+  Score
 }
