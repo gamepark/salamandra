@@ -1,18 +1,18 @@
 import { CardDescription } from '@gamepark/react-game'
 import { Step } from '@gamepark/salamandra/material/Step'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
-import DruidTileDayBlue from '../images/tiles/player/PlayerTileBlueDay.jpg'
-import DruidTileDayGrey from '../images/tiles/player/PlayerTileGreyDay.jpg'
-import DruidTileDayRed from '../images/tiles/player/PlayerTileRedDay.jpg'
-import DruidTileDayYellow from '../images/tiles/player/PlayerTileYellowDay.jpg'
-import DruidTileNightBlue from '../images/tiles/player/PlayerTileBlueNight.jpg'
-import DruidTileNightGrey from '../images/tiles/player/PlayerTileGreyNight.jpg'
-import DruidTileNightRed from '../images/tiles/player/PlayerTileRedNight.jpg'
-import DruidTileNightYellow from '../images/tiles/player/PlayerTileYellowNight.jpg'
+import DruidTileDayBlue from '../images/tiles/player/PlayerTileBlueDay.png'
+import DruidTileDayGrey from '../images/tiles/player/PlayerTileGreyDay.png'
+import DruidTileDayRed from '../images/tiles/player/PlayerTileRedDay.png'
+import DruidTileDayYellow from '../images/tiles/player/PlayerTileYellowDay.png'
+import DruidTileNightBlue from '../images/tiles/player/PlayerTileBlueNight.png'
+import DruidTileNightGrey from '../images/tiles/player/PlayerTileGreyNight.png'
+import DruidTileNightRed from '../images/tiles/player/PlayerTileRedNight.png'
+import DruidTileNightYellow from '../images/tiles/player/PlayerTileYellowNight.png'
 
 class DruidTileDescription extends CardDescription {
-  width = 1.4 * 3
-  height = 2.25 * 3
+  width = 4.4
+  height = 6.9
   borderRadius = 0
 
   images = {
