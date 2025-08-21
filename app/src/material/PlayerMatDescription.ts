@@ -6,8 +6,8 @@ import PlayerMatRed from '../images/boards/PlayerBoardRed.png'
 import PlayerMatYellow from '../images/boards/PlayerBoardYellow.png'
 
 class PlayerMatDescription extends BoardDescription {
-  width = 6.6 * 3
-  height = 4.8 * 3
+  width = 6.6 * 3.5
+  height = 4.8 * 3.5
 
   images = {
     [PlayerColor.Blue]: PlayerMatBlue,

@@ -12,10 +12,14 @@ export class DoActionsRule extends PlayerTurnRule {
 
   getPlayerMoves() {
     const moves: MaterialMove[] = []
-    moves.push(...this.placeApprenticeHelper.getPlayerMoves())
+    const placeApprenticeMoves = this.placeApprenticeHelper.getPlayerMoves()
+    if (placeApprenticeMoves.length === 0) {
+      moves.push(this.customMove(CustomMoveType.Pass))
+    } else {
+      moves.push(...placeApprenticeMoves)
+    }
     moves.push(...this.activateApprenticeHelper.getPlayerMoves())
     moves.push(...this.buildFieldTileHelper.getPlayerMoves())
-    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
@@ -29,7 +33,7 @@ export class DoActionsRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [this.startPlayerTurn(RuleId.DoActions, this.nextPlayer)]
+      return [this.startRule(RuleId.ActionsOnPass)]
     }
     return []
   }

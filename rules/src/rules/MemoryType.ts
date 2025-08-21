@@ -3,6 +3,7 @@ export enum MemoryType {
   Score,
   PlayerPrimaryResources,
   PlayerPotions,
-  LastFieldBuilded
+  LastFieldBuilded,
+  PlayersWhoPassed
 }
 

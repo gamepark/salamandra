@@ -1,4 +1,6 @@
 import { isMoveItem, isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { crystalTokens } from '../../material/CrystalToken'
+import { EffectType } from '../../material/Effect'
 import { fieldData, FieldTile, FieldType } from '../../material/FieldTile'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
 import { LocationType } from '../../material/LocationType'
@@ -10,12 +12,20 @@ import { RuleId } from '../RuleId'
 export class ActivateApprenticeHelper extends MaterialRulesPart {
   player?: PlayerColor
   nextPlayer: PlayerColor
+  isPassAction: boolean
   fieldTileHelper = new FieldTileHelper(this.game)
 
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, player = game.rule?.player) {
+  constructor(game: MaterialGame, nextPlayer: PlayerColor, isPassAction = false, player = game.rule?.player) {
     super(game)
     this.nextPlayer = nextPlayer
     this.player = player
+    this.isPassAction = isPassAction
+  }
+
+  onRuleStart(): MaterialMove[] {
+    if (!this.isPassAction) return []
+    if (this.playerApprenticeTokenInField.length === 0) return []
+    return this.playerApprenticeTokenInField.moveItems((item) => ({ ...item.location, rotation: !item.location.rotation }))
   }
 
   getPlayerMoves() {
@@ -24,15 +34,41 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
   }
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
-    const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.isActivateApprenticeMove(move)) {
-      moves.push(...this.fieldTileHelper.getActivationEffet(move.location))
-      moves.push(...this.fieldTileHelper.payActivation(move.location.parent ?? 0))
-      const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
-      if (fieldId) {
-        if (fieldData[fieldId as FieldTile].type === FieldType.Cauldron) {
-          moves.push(this.startPlayerTurn(RuleId.DoActions, this.nextPlayer))
-        }
+      if (this.isPassAction) return this.beforeItemMoveOnPassAction(move)
+      else return this.beforeItemMoveOnStepAction(move)
+    }
+    return []
+  }
+
+  beforeItemMoveOnStepAction(move: ItemMove): MaterialMove[] {
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return []
+    const moves: MaterialMove[] = []
+    moves.push(...this.fieldTileHelper.getActivationEffet(move.location))
+    moves.push(...this.fieldTileHelper.payActivation(move.location.parent ?? 0))
+    const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
+    if (fieldId) {
+      if (fieldData[fieldId as FieldTile].type === FieldType.Cauldron) {
+        moves.push(this.startPlayerTurn(RuleId.DoActions, this.nextPlayer))
+      }
+    }
+    return moves
+  }
+
+  beforeItemMoveOnPassAction(move: ItemMove): MaterialMove[] {
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return []
+    const moves: MaterialMove[] = []
+    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
+    if (field) {
+      const effect = fieldData[field as FieldTile].activationEffect
+      if (effect.type === EffectType.Crystal) {
+        moves.push(
+          ...this.material(MaterialType.CrystalToken)
+            .money(crystalTokens)
+            .addMoney(effect.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+        )
+      } else {
+        this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
       }
     }
     return moves

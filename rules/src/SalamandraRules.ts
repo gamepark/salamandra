@@ -12,6 +12,7 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
+import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
 import { MemoryType } from './rules/MemoryType'
@@ -27,18 +28,23 @@ export class SalamandraRules
 {
   rules = {
     [RuleId.DoActions]: DoActionsRule,
-    [RuleId.ActionsAfterBuildingField]: ActionsAfterBuildingFieldRule
+    [RuleId.ActionsAfterBuildingField]: ActionsAfterBuildingFieldRule,
+    [RuleId.ActionsOnPass]: ActionsOnPassRule,
   }
 
   locationsStrategies = {
     [MaterialType.WhiteSalamanderCard]: {
       [LocationType.WhiteSalamanderStack]: new PositiveSequenceStrategy()
     },
+    [MaterialType.ScrollToken]: {
+      [LocationType.PlayerScrollTokenStock]: new PositiveSequenceStrategy()
+    },
     [MaterialType.BlackSalamanderCard]: {
       [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy()
     },
     [MaterialType.GroveTile]: {
-      [LocationType.GroveStack]: new PositiveSequenceStrategy()
+      [LocationType.GroveStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerGroveTiles]: new PositiveSequenceStrategy()
     },
     [MaterialType.BearDivinityCard]: {
       [LocationType.BearDivinityStack]: new PositiveSequenceStrategy(),

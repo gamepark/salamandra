@@ -11,7 +11,6 @@ import { MaterialType } from './material/MaterialType'
 import { Potion } from './material/Potion'
 import { PrimaryResource } from './material/PrimaryResource'
 import { spellBookCards } from './material/SpellBookCard'
-import { Step } from './material/Step'
 import { whiteSalamanderCards } from './material/WhiteSalamanderCard'
 import { PlayerColor } from './PlayerColor'
 import { MemoryType } from './rules/MemoryType'
@@ -97,7 +96,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
       this.initializePlayerResources(player)
       this.memorize(MemoryType.Score, 0, player)
       this.material(MaterialType.PlayerMat).createItem({ id: player, location: { type: LocationType.PlayerMatLayout, player } })
-      this.material(MaterialType.DruidTile).createItem({ id: player * 10 + Step.Day, location: { type: LocationType.PlayerDruidSpace, player } })
+      this.material(MaterialType.DruidTile).createItem({ id: player, location: { type: LocationType.PlayerDruidSpace, player, rotation: false } })
       this.createApprenticeTokens(3, player, false, 0)
       this.createApprenticeTokens(2, player, true, 1)
       this.createApprenticeTokens(3, player, false, 2)

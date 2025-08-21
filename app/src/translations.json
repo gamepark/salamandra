@@ -120,6 +120,8 @@
       "header.take.actions.player": "{player} peut faire ses actions",
       "header.take.actions.after.building.you": "Réalisez vos actions",
       "header.take.actions.after.building.player": "{player} peut faire ses actions",
+      "header.take.actions.on.pass.you": "Récupérez des tuiles bosquet ou <pass>Passez</pass>",
+      "header.take.actions.on.pass.player": "{player} peut récupérer des tuiles bosquet",
       "Menu": "Menu",
       "OK": "OK",
       "Validate": "Valider",

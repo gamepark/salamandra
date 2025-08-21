@@ -1,4 +1,6 @@
 import { Location, MaterialGame, MaterialMove, MaterialRulesPart, XYCoordinates } from '@gamepark/rules-api'
+import { CustomMoveType } from '../../rules/CustomMove'
+import { BonusType, DivinityType } from '../Bonus'
 import { crystalTokens } from '../CrystalToken'
 import { groveData, GroveTile } from '../GroveTile'
 import { LocationType } from '../LocationType'
@@ -123,5 +125,40 @@ export class GroveTileHelper extends MaterialRulesPart {
     return this.material(MaterialType.GroveTile)
       .location(LocationType.GroveStack)
       .maxBy((item) => item.location.x ?? 0)
+  }
+
+  getGroveBonus(index: number): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    const groveId = this.material(MaterialType.GroveTile).getItem(index).id
+    const bonus = groveData[groveId as GroveTile].bonus
+    bonus.forEach((b) => {
+      if (b.type === BonusType.Scroll) {
+        moves.push(
+          this.material(MaterialType.ScrollToken)
+            .location(LocationType.ScrollTokenStock)
+            .moveItem({ type: LocationType.PlayerScrollTokenStock, player: this.player })
+        )
+      }
+      if (b.type === BonusType.Points) {
+        moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: b.amount }))
+      }
+      if (b.type === BonusType.DivinityCard) {
+        if(b.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
+          moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, x: undefined, player: this.player }))
+        }
+        if(b.divinity === DivinityType.Bear && this.bearCards.length > 0) {
+          moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, x: undefined, player: this.player }))
+        }
+      }
+    })
+    return moves
+  }
+
+  get eagleCards() {
+    return this.material(MaterialType.EagleDivinityCard).location(LocationType.EagleDivinityStack).maxBy(item => item.location.x ?? 0)
+  }
+
+  get bearCards() {
+    return this.material(MaterialType.BearDivinityCard).location(LocationType.BearDivinityStack).maxBy(item => item.location.x ?? 0)
   }
 }
