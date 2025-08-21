@@ -1,4 +1,4 @@
-import { Location, MaterialGame, MaterialRulesPart, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialGame, MaterialMove, MaterialRulesPart, XYCoordinates } from '@gamepark/rules-api'
 import { crystalTokens } from '../CrystalToken'
 import { groveData, GroveTile } from '../GroveTile'
 import { LocationType } from '../LocationType'
@@ -41,10 +41,75 @@ export class GroveTileHelper extends MaterialRulesPart {
     }
     if (nbCrystals) {
       return this.material(MaterialType.CrystalToken)
-          .money(crystalTokens)
-          .addMoney(nbCrystals, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+        .money(crystalTokens)
+        .addMoney(nbCrystals, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
     return []
+  }
+
+  addGroveInEmptySpace(location: Partial<Location>): MaterialMove[] {
+    if (this.grovesInStack.length === 0) return []
+    const moves: MaterialMove[] = []
+    const coordinates = { x: location.x ?? 0, y: location.y ?? 0 }
+    if (this.checkIfEmptySpaceAtTopRight(coordinates)) {
+      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y - 0.5 }))
+    }
+    if (this.checkIfEmptySpaceAtBottomRight(coordinates)) {
+      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y + 0.5 }))
+    }
+    if (this.checkIfEmptySpaceAtBottomLeft(coordinates)) {
+      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y + 0.5 }))
+    }
+    if (this.checkIfEmptySpaceAtTopLeft(coordinates)) {
+      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y - 0.5 }))
+    }
+    return moves
+  }
+
+  checkIfEmptySpaceAtTopRight = (coordinates: XYCoordinates): boolean => {
+    const fieldAtTop = this.checkIfHasField({ x: coordinates.x, y: coordinates.y - 1 })
+    const fieldAtTopRight = this.checkIfHasField({ x: coordinates.x + 1, y: coordinates.y - 1 })
+    const fieldAtRight = this.checkIfHasField({ x: coordinates.x + 1, y: coordinates.y })
+
+    return fieldAtTop && fieldAtTopRight && fieldAtRight && !this.checkIfAlreadyHasGrove({ x: coordinates.x + 0.5, y: coordinates.y - 0.5 })
+  }
+
+  checkIfEmptySpaceAtBottomRight = (coordinates: XYCoordinates): boolean => {
+    const fieldAtRight = this.checkIfHasField({ x: coordinates.x + 1, y: coordinates.y })
+    const fieldAtBottomRight = this.checkIfHasField({ x: coordinates.x + 1, y: coordinates.y + 1 })
+    const fieldAtBottom = this.checkIfHasField({ x: coordinates.x, y: coordinates.y + 1 })
+
+    return fieldAtRight && fieldAtBottomRight && fieldAtBottom && !this.checkIfAlreadyHasGrove({ x: coordinates.x + 0.5, y: coordinates.y + 0.5 })
+  }
+
+  checkIfEmptySpaceAtBottomLeft = (coordinates: XYCoordinates): boolean => {
+    const fieldAtBottom = this.checkIfHasField({ x: coordinates.x, y: coordinates.y + 1 })
+    const fieldAtBottomLeft = this.checkIfHasField({ x: coordinates.x - 1, y: coordinates.y + 1 })
+    const fieldAtLeft = this.checkIfHasField({ x: coordinates.x - 1, y: coordinates.y })
+
+    return fieldAtBottom && fieldAtBottomLeft && fieldAtLeft && !this.checkIfAlreadyHasGrove({ x: coordinates.x - 0.5, y: coordinates.y + 0.5 })
+  }
+
+  checkIfEmptySpaceAtTopLeft = (coordinates: XYCoordinates): boolean => {
+    const fieldAtLeft = this.checkIfHasField({ x: coordinates.x - 1, y: coordinates.y })
+    const fieldAtTopLeft = this.checkIfHasField({ x: coordinates.x - 1, y: coordinates.y - 1 })
+    const fieldAtTop = this.checkIfHasField({ x: coordinates.x, y: coordinates.y - 1 })
+
+    return fieldAtLeft && fieldAtTopLeft && fieldAtTop && !this.checkIfAlreadyHasGrove({ x: coordinates.x - 0.5, y: coordinates.y - 0.5 })
+  }
+
+  checkIfHasField = (coordinates: XYCoordinates): boolean => {
+    return (
+      this.material(MaterialType.FieldTile).location((loc) => loc.type === LocationType.GameLayout && loc.y === coordinates.y && loc.x === coordinates.x)
+        .length > 0
+    )
+  }
+
+  checkIfAlreadyHasGrove = (coordinates: XYCoordinates): boolean => {
+    return (
+      this.material(MaterialType.GroveTile).location((loc) => loc.type === LocationType.GameLayout && loc.y === coordinates.y && loc.x === coordinates.x)
+        .length > 0
+    )
   }
 
   private checkGroveCrystal(coordinates: XYCoordinates, index: number) {
@@ -52,5 +117,11 @@ export class GroveTileHelper extends MaterialRulesPart {
       .location((loc) => loc.type === LocationType.GameLayout && loc.y === coordinates.y && loc.x === coordinates.x)
       .getItem()?.id
     return groveId ? groveData[groveId as GroveTile].crystals[index] : 0
+  }
+
+  get grovesInStack() {
+    return this.material(MaterialType.GroveTile)
+      .location(LocationType.GroveStack)
+      .maxBy((item) => item.location.x ?? 0)
   }
 }

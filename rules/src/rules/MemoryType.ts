@@ -1,4 +1,8 @@
 export enum MemoryType {
   ActualRound = 1,
-  Score
+  Score,
+  PlayerPrimaryResources,
+  PlayerPotions,
+  LastFieldBuilded
 }
+

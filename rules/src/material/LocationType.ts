@@ -18,6 +18,11 @@ export enum LocationType {
   PlayerApprenticesSpace,
   PlayerActualRoundApprenticesSpace,
   PlayerCrystalTokenStock,
+  PlayerScrollTokenStock,
+  PlayerEagleCards,
+  PlayerBearCards,
+  PlayerSalamanderCards,
+  PlayerGroveTiles,
   Score100MarkerIdlePlace,
   ScorePiste
 }

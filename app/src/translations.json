@@ -115,8 +115,11 @@
   },
   "fr": {
     "translation": {
+      "button.activate": "Activer",
       "header.take.actions.you": "Réalisez vos actions ou <pass>Passez</pass>",
       "header.take.actions.player": "{player} peut faire ses actions",
+      "header.take.actions.after.building.you": "Réalisez vos actions",
+      "header.take.actions.after.building.player": "{player} peut faire ses actions",
       "Menu": "Menu",
       "OK": "OK",
       "Validate": "Valider",

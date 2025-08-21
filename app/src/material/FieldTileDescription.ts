@@ -1,3 +1,4 @@
+import { css, Interpolation, Theme } from '@emotion/react'
 import { CardDescription } from '@gamepark/react-game'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile'
 import FieldTile01 from '../images/tiles/field/FieldTile01.png'
@@ -57,6 +58,12 @@ class FieldTileDescription extends CardDescription {
     [FieldTile.Field22]: FieldTile22,
     [FieldTile.Field23]: FieldTile23,
     [FieldTile.Field24]: FieldTile24
+  }
+
+  getFrontExtraCss(): Interpolation<Theme> {
+    return css`
+      clip-path: polygon(32% 1%, 67% 1%, 99% 32%, 99% 67%, 67% 99%, 32% 99%, 1% 67%, 1% 32%);
+    `
   }
 }
 

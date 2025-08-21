@@ -11,6 +11,7 @@ import {
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
+import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
 import { MemoryType } from './rules/MemoryType'
@@ -25,7 +26,8 @@ export class SalamandraRules
   implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
 {
   rules = {
-    [RuleId.DoActions]: DoActionsRule
+    [RuleId.DoActions]: DoActionsRule,
+    [RuleId.ActionsAfterBuildingField]: ActionsAfterBuildingFieldRule
   }
 
   locationsStrategies = {
@@ -39,10 +41,12 @@ export class SalamandraRules
       [LocationType.GroveStack]: new PositiveSequenceStrategy()
     },
     [MaterialType.BearDivinityCard]: {
-      [LocationType.BearDivinityStack]: new PositiveSequenceStrategy()
+      [LocationType.BearDivinityStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerBearCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.EagleDivinityCard]: {
-      [LocationType.EagleDivinityStack]: new PositiveSequenceStrategy()
+      [LocationType.EagleDivinityStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerEagleCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.ApprenticeToken]: {
       [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy(),

@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, Location, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { isMoveItem, isMoveItemType, ItemMove, Location, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
 import { GroveTileHelper } from '../../material/helper/GroveTileHelper'
 import { LocationType } from '../../material/LocationType'
@@ -9,13 +9,15 @@ import { RuleId } from '../RuleId'
 export class PlaceApprenticeHelper extends MaterialRulesPart {
   player?: PlayerColor
   nextPlayer: PlayerColor
+  fieldIndex?: number
   groveTileHelper = new GroveTileHelper(this.game)
   fieldTileHelper = new FieldTileHelper(this.game)
 
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, player = game.rule?.player) {
+  constructor(game: MaterialGame, nextPlayer: PlayerColor, fieldIndex?: number, player = game.rule?.player) {
     super(game)
     this.nextPlayer = nextPlayer
     this.player = player
+    this.fieldIndex = fieldIndex
   }
 
   getPlayerMoves() {
@@ -23,22 +25,25 @@ export class PlaceApprenticeHelper extends MaterialRulesPart {
 
     const moves: MaterialMove[] = []
     this.getPossibleLocations().forEach((location: Location) => {
-      moves.push(this.playerApprenticeToken.moveItem(location))
+      moves.push(this.playerApprenticeToken.moveItem((item) => ({ ...location, rotation: item.location.rotation })))
     })
     return moves
   }
 
-  afterItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
+  beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.ApprenticeToken)(move)) {
+    if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.isPlaceApprenticeMove(move)) {
       moves.push(...this.groveTileHelper.getGroveCrystals(move.location))
-      moves.push(...this.fieldTileHelper.getFieldBonus(move.location))
+      if (move.location.x === 0) {
+        moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
+      }
       moves.push(this.startPlayerTurn(RuleId.DoActions, this.nextPlayer))
     }
     return moves
   }
 
   private getPossibleLocations(): Location[] {
+    if (this.fieldIndex !== undefined) return this.getPossibleLocationsOnSpecificFieldTile()
     const locations: Location[] = []
     for (const field of this.fieldsInGame.getIndexes()) {
       for (let x = 0; x < 4; x++) {
@@ -48,6 +53,19 @@ export class PlaceApprenticeHelper extends MaterialRulesPart {
           x
         })
       }
+    }
+    return locations.filter((loc) => this.checkLocationIsEmpty(loc))
+  }
+
+  private getPossibleLocationsOnSpecificFieldTile(): Location[] {
+    if (this.fieldIndex === undefined) return []
+    const locations: Location[] = []
+    for (let x = 0; x < 4; x++) {
+      locations.push({
+        type: LocationType.FieldApprenticeSpace,
+        parent: this.fieldIndex,
+        x
+      })
     }
     return locations.filter((loc) => this.checkLocationIsEmpty(loc))
   }
@@ -68,5 +86,11 @@ export class PlaceApprenticeHelper extends MaterialRulesPart {
 
   get fieldsInGame() {
     return this.material(MaterialType.FieldTile).location(LocationType.GameLayout)
+  }
+
+  isPlaceApprenticeMove(move: ItemMove): boolean {
+    if (!isMoveItem(move)) return false
+    const oldLocationType = this.material(MaterialType.ApprenticeToken).getItem(move.itemIndex).location.type
+    return oldLocationType === LocationType.PlayerActualRoundApprenticesSpace
   }
 }
