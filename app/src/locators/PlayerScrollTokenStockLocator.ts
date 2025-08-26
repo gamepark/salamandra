@@ -13,10 +13,10 @@ class PlayerScrollTokenStockLocator extends Locator {
       case 1:
         return { x: 51.7, y: 96.5 }
       case 2:
-        return { x: 62.4, y: 100 }
+        return { x: 62.4, y: 96.5 }
       case 3:
       default:
-        return { x: 73.1, y: 100 }
+        return { x: 73.1, y: 96.5 }
     }
   }
 

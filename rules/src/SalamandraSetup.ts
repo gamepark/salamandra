@@ -121,6 +121,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   private setupMemory() {
     this.memorize(MemoryType.ActualRound, 0)
+    this.memorize(MemoryType.PlayersWhoPassed, [])
   }
 
   private initializePlayerResources(player: PlayerColor) {

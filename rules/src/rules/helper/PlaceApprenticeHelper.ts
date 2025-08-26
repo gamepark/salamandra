@@ -37,12 +37,12 @@ export class PlaceApprenticeHelper extends MaterialRulesPart {
       if (move.location.x === 0) {
         moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
       }
-      moves.push(this.startPlayerTurn(RuleId.DoActions, this.nextPlayer))
+      moves.push(this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer))
     }
     return moves
   }
 
-  private getPossibleLocations(): Location[] {
+  getPossibleLocations(): Location[] {
     if (this.fieldIndex !== undefined) return this.getPossibleLocationsOnSpecificFieldTile()
     const locations: Location[] = []
     for (const field of this.fieldsInGame.getIndexes()) {

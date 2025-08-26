@@ -13,7 +13,7 @@ export class ActionsOnPassRule extends PlayerTurnRule {
   takeGroveTileHelper = new TakeGroveTileHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.PlayersWhoPassed, (old?: PlayerColor[]) => (old ? [...old, this.player] : [this.player]))
+    this.memorize<PlayerColor[]>(MemoryType.PlayersWhoPassed, (old: PlayerColor[]) => [...old, this.player])
     return this.activateApprenticeHelper.onRuleStart()
   }
 
@@ -38,7 +38,7 @@ export class ActionsOnPassRule extends PlayerTurnRule {
           .location(LocationType.PlayerDruidSpace)
           .player(this.player)
           .moveItem((item) => ({ ...item.location, rotation: !item.location.rotation })),
-        this.startPlayerTurn(RuleId.DoActions, this.nextPlayer)
+        this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)
       ]
     }
     return []

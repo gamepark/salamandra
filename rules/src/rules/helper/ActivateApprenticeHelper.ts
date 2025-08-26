@@ -49,7 +49,7 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
     const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
     if (fieldId) {
       if (fieldData[fieldId as FieldTile].type === FieldType.Cauldron) {
-        moves.push(this.startPlayerTurn(RuleId.DoActions, this.nextPlayer))
+        moves.push(this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer))
       }
     }
     return moves
@@ -61,15 +61,11 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
     const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
     if (field) {
       const effect = fieldData[field as FieldTile].activationEffect
-      if (effect.type === EffectType.Crystal) {
-        moves.push(
-          ...this.material(MaterialType.CrystalToken)
-            .money(crystalTokens)
-            .addMoney(effect.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-        )
-      } else {
-        this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-      }
+      moves.push(
+        ...this.material(MaterialType.CrystalToken)
+          .money(crystalTokens)
+          .addMoney(effect.type === EffectType.Crystal ? effect.amount : 1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      )
     }
     return moves
   }

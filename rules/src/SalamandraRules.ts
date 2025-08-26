@@ -13,9 +13,11 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
+import { CheckPassAndEmptyPlacesRule } from './rules/CheckPassAndEmptyPlacesRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
 import { MemoryType } from './rules/MemoryType'
+import { PrepareNextRoundRule } from './rules/PrepareNextRoundRule'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -30,6 +32,8 @@ export class SalamandraRules
     [RuleId.DoActions]: DoActionsRule,
     [RuleId.ActionsAfterBuildingField]: ActionsAfterBuildingFieldRule,
     [RuleId.ActionsOnPass]: ActionsOnPassRule,
+    [RuleId.CheckPassAndEmptyPlaces]: CheckPassAndEmptyPlacesRule,
+    [RuleId.PrepareNextRound]: PrepareNextRoundRule
   }
 
   locationsStrategies = {
@@ -90,7 +94,7 @@ export class SalamandraRules
         this.material(MaterialType.ScoreMarker)
           .location(LocationType.ScorePiste)
           .id(player)
-          .moveItem((item) => ({ ...item.location, id: newScore % 100 }))
+          .moveItem((item) => ({ ...item.location, id: newScore % 100, x: undefined }))
       )
     }
     return moves

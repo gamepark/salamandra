@@ -101,6 +101,8 @@ export class GroveTileHelper extends MaterialRulesPart {
   }
 
   checkIfHasField = (coordinates: XYCoordinates): boolean => {
+    if (coordinates.y === 0 && coordinates.x === 0) return true
+    if (coordinates.y === 0 && coordinates.x === 1) return true
     return (
       this.material(MaterialType.FieldTile).location((loc) => loc.type === LocationType.GameLayout && loc.y === coordinates.y && loc.x === coordinates.x)
         .length > 0
@@ -143,10 +145,10 @@ export class GroveTileHelper extends MaterialRulesPart {
         moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: b.amount }))
       }
       if (b.type === BonusType.DivinityCard) {
-        if(b.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
+        if (b.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
           moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, x: undefined, player: this.player }))
         }
-        if(b.divinity === DivinityType.Bear && this.bearCards.length > 0) {
+        if (b.divinity === DivinityType.Bear && this.bearCards.length > 0) {
           moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, x: undefined, player: this.player }))
         }
       }
@@ -155,10 +157,14 @@ export class GroveTileHelper extends MaterialRulesPart {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.EagleDivinityCard).location(LocationType.EagleDivinityStack).maxBy(item => item.location.x ?? 0)
+    return this.material(MaterialType.EagleDivinityCard)
+      .location(LocationType.EagleDivinityStack)
+      .maxBy((item) => item.location.x ?? 0)
   }
 
   get bearCards() {
-    return this.material(MaterialType.BearDivinityCard).location(LocationType.BearDivinityStack).maxBy(item => item.location.x ?? 0)
+    return this.material(MaterialType.BearDivinityCard)
+      .location(LocationType.BearDivinityStack)
+      .maxBy((item) => item.location.x ?? 0)
   }
 }

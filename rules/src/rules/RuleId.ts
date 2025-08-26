@@ -1,5 +1,8 @@
 export enum RuleId {
   DoActions = 1,
   ActionsAfterBuildingField,
-  ActionsOnPass
+  ActionsOnPass,
+  CheckPassAndEmptyPlaces,
+  PrepareNextRound,
+  CalculSocres
 }

@@ -22,12 +22,14 @@ import { RuleId } from '../RuleId'
 
 export class BuildFieldTileHelper extends MaterialRulesPart {
   player?: PlayerColor
+  isFree: boolean
   fieldTileHelper = new FieldTileHelper(this.game)
   groveTileHelper = new GroveTileHelper(this.game)
 
-  constructor(game: MaterialGame, player = game.rule?.player) {
+  constructor(game: MaterialGame, isFree = false, player = game.rule?.player) {
     super(game)
     this.player = player
+    this.isFree = isFree
   }
 
   getPlayerMoves() {
@@ -62,14 +64,16 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.FieldTile)(move) && this.isBuildFieldTileMove(move)) {
       this.memorize(MemoryType.LastFieldBuilded, move.itemIndex)
-      moves.push(...this.fieldTileHelper.payFieldCoast(move.itemIndex))
-      moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
+      if(!this.isFree) {
+        moves.push(...this.fieldTileHelper.payFieldCoast(move.itemIndex))
+        moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
+      }
       moves.push(...this.groveTileHelper.addGroveInEmptySpace(move.location))
       if (this.fieldTilesInStack.length > 0) {
         const oldLocation = this.material(MaterialType.FieldTile).getItem(move.itemIndex).location
         moves.push(this.fieldTilesInStack.moveItem(oldLocation))
       }
-      moves.push(this.startRule(RuleId.ActionsAfterBuildingField))
+      moves.push(this.startRule(this.isFree ? RuleId.DoActions : RuleId.ActionsAfterBuildingField))
     }
     return moves
   }
@@ -77,7 +81,7 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
   get fieldTilesInRiver() {
     return this.material(MaterialType.FieldTile)
       .location(LocationType.FieldSpace)
-      .filter((item) => this.playerCanBuildFieldTile(item))
+      .filter((item) => this.isFree || this.playerCanBuildFieldTile(item))
   }
 
   get fieldTilesInStack() {
