@@ -13,6 +13,8 @@ import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
+import { CalculScoresRule } from './rules/CalculScoresRule'
+import { CheckAndUseScrollTokensRule } from './rules/CheckAndUseScrollTokensRule'
 import { CheckPassAndEmptyPlacesRule } from './rules/CheckPassAndEmptyPlacesRule'
 import { ChooseApprenticeToActivateRule } from './rules/ChooseApprenticeToActivateRule'
 import { CustomMoveType } from './rules/CustomMove'
@@ -35,7 +37,9 @@ export class SalamandraRules
     [RuleId.ActionsOnPass]: ActionsOnPassRule,
     [RuleId.CheckPassAndEmptyPlaces]: CheckPassAndEmptyPlacesRule,
     [RuleId.PrepareNextRound]: PrepareNextRoundRule,
+    [RuleId.CalculScores]: CalculScoresRule,
     [RuleId.ChooseApprenticeToActivate]: ChooseApprenticeToActivateRule,
+    [RuleId.CheckAndUseScrollTokens]: CheckAndUseScrollTokensRule
   }
 
   locationsStrategies = {

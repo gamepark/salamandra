@@ -12,7 +12,7 @@ export class ChooseApprenticeToActivateRule extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.activateApprenticeHelper.isActivateApprenticeMove(move)) {
-      return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
+      return [this.startRule(RuleId.CheckAndUseScrollTokens)]
     }
     return []
   }

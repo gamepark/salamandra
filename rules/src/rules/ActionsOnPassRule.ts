@@ -38,7 +38,7 @@ export class ActionsOnPassRule extends PlayerTurnRule {
           .location(LocationType.PlayerDruidSpace)
           .player(this.player)
           .moveItem((item) => ({ ...item.location, rotation: !item.location.rotation })),
-        this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)
+        this.startRule(RuleId.CheckAndUseScrollTokens)
       ]
     }
     return []

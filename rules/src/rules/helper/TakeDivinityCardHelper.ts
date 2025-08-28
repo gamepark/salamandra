@@ -38,7 +38,7 @@ export class TakeDivinityCardHelper extends MaterialRulesPart {
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.BearDivinityCard)(move) || isMoveItemType(MaterialType.EagleDivinityCard)(move)) {
-      moves.push(this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer))
+      moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
     }
     return moves
   }

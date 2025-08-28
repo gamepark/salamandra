@@ -26,6 +26,7 @@ import { score100MarkerIdlePlaceLocator } from './Score100MarkerIdlePlaceLocator
 import { scorePisteLocator } from './ScorePisteLocator'
 import { scrollTokenStockLocator } from './ScrollTokenStockLocator'
 import { secondaryDivinitiesLayoutLocator } from './SecondaryDivinitiesLayoutLocator'
+import { spellBookApprenticeSpaceLocator } from './SpellBookApprenticeSpaceLocator'
 import { spellBookSpaceLocator } from './SpellBookSpaceLocator'
 import { venerationPointsLayoutLocator } from './VenerationPointsLayoutLocator'
 import { whiteSalamanderStackLocator } from './WhiteSalamanderStackLocator'
@@ -40,6 +41,7 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.FieldSpace]: fieldSpaceLocator,
   [LocationType.FieldApprenticeSpace]: fieldApprenticeSpaceLocator,
   [LocationType.SpellBookSpace]: spellBookSpaceLocator,
+  [LocationType.SpellBookApprenticeSpace]: spellBookApprenticeSpaceLocator,
   [LocationType.SecondaryDivinitiesLayout]: secondaryDivinitiesLayoutLocator,
   [LocationType.BearDivinityStack]: bearDivinityStackLocator,
   [LocationType.EagleDivinityStack]: eagleDivinityStackLocator,

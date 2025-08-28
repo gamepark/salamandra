@@ -42,7 +42,10 @@ class ApprenticeTokenDescription extends CardDescription {
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const activate =
       item.location.type === LocationType.FieldApprenticeSpace &&
-      legalMoves.find((move) => isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex)
+      legalMoves.find(
+        (move) =>
+          isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex && move.location.type !== LocationType.SpellBookApprenticeSpace
+      )
 
     if (activate) {
       return (

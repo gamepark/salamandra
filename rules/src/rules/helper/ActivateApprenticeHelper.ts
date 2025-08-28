@@ -49,7 +49,7 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
     const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
     if (fieldId) {
       if (fieldData[fieldId as FieldTile].type === FieldType.Cauldron) {
-        moves.push(this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer))
+        moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
       }
     }
     return moves

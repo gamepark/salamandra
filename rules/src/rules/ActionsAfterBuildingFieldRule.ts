@@ -14,7 +14,7 @@ export class ActionsAfterBuildingFieldRule extends PlayerTurnRule {
     const canPlaceApprentice = this.placeApprenticeHelper.getPlayerMoves().length > 0
     const canTakeDivinityCard = this.fieldTileHelper.checkIfAtLeastOneFieldAroundIsOfSameColor(this.remind(MemoryType.LastFieldBuilded))
     if (!canPlaceApprentice && !canTakeDivinityCard) {
-      return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
+      return [this.startRule(RuleId.CheckAndUseScrollTokens)]
     }
     return []
   }

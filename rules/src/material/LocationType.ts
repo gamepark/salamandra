@@ -8,6 +8,7 @@ export enum LocationType {
   FieldSpace,
   FieldApprenticeSpace,
   SpellBookSpace,
+  SpellBookApprenticeSpace,
   SecondaryDivinitiesLayout,
   BearDivinityStack,
   EagleDivinityStack,

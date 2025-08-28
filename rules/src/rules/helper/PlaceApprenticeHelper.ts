@@ -37,7 +37,7 @@ export class PlaceApprenticeHelper extends MaterialRulesPart {
       if (move.location.x === 0) {
         moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
       }
-      moves.push(this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer))
+      moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
     }
     return moves
   }
