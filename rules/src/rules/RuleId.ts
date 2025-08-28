@@ -4,5 +4,6 @@ export enum RuleId {
   ActionsOnPass,
   CheckPassAndEmptyPlaces,
   PrepareNextRound,
-  CalculSocres
+  CalculScores,
+  ChooseApprenticeToActivate
 }

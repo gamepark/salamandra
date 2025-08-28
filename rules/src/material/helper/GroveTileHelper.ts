@@ -49,23 +49,22 @@ export class GroveTileHelper extends MaterialRulesPart {
     return []
   }
 
-  addGroveInEmptySpace(location: Partial<Location>): MaterialMove[] {
-    if (this.grovesInStack.length === 0) return []
-    const moves: MaterialMove[] = []
+  getEmptyGroveLocations(location: Partial<Location>): Location[] {
+    const locations: Location[] = []
     const coordinates = { x: location.x ?? 0, y: location.y ?? 0 }
     if (this.checkIfEmptySpaceAtTopRight(coordinates)) {
-      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y - 0.5 }))
+      locations.push({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y - 0.5 })
     }
     if (this.checkIfEmptySpaceAtBottomRight(coordinates)) {
-      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y + 0.5 }))
+      locations.push({ type: LocationType.GameLayout, x: coordinates.x + 0.5, y: coordinates.y + 0.5 })
     }
     if (this.checkIfEmptySpaceAtBottomLeft(coordinates)) {
-      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y + 0.5 }))
+      locations.push({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y + 0.5 })
     }
     if (this.checkIfEmptySpaceAtTopLeft(coordinates)) {
-      moves.push(this.grovesInStack.moveItem({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y - 0.5 }))
+      locations.push({ type: LocationType.GameLayout, x: coordinates.x - 0.5, y: coordinates.y - 0.5 })
     }
-    return moves
+    return locations
   }
 
   checkIfEmptySpaceAtTopRight = (coordinates: XYCoordinates): boolean => {
@@ -121,12 +120,6 @@ export class GroveTileHelper extends MaterialRulesPart {
       .location((loc) => loc.type === LocationType.GameLayout && loc.y === coordinates.y && loc.x === coordinates.x)
       .getItem()?.id
     return groveId ? groveData[groveId as GroveTile].crystals[index] : 0
-  }
-
-  get grovesInStack() {
-    return this.material(MaterialType.GroveTile)
-      .location(LocationType.GroveStack)
-      .maxBy((item) => item.location.x ?? 0)
   }
 
   getGroveBonus(index: number): MaterialMove[] {

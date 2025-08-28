@@ -1,4 +1,5 @@
 import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { ActivateSalamanderTempleHelper } from './helper/ActivateSalamanderTempleHelper'
 import { PlaceApprenticeHelper } from './helper/PlaceApprenticeHelper'
 import { ActivateApprenticeHelper } from './helper/ActivateApprenticeHelper'
 import { BuildFieldTileHelper } from './helper/BuildFieldTileHelper'
@@ -8,6 +9,7 @@ import { RuleId } from './RuleId'
 export class DoActionsRule extends PlayerTurnRule {
   placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.nextPlayer)
   activateApprenticeHelper = new ActivateApprenticeHelper(this.game, this.nextPlayer)
+  activateSalamanderTempleHelper = new ActivateSalamanderTempleHelper(this.game, this.nextPlayer)
   buildFieldTileHelper = new BuildFieldTileHelper(this.game)
 
   getPlayerMoves() {
@@ -19,6 +21,7 @@ export class DoActionsRule extends PlayerTurnRule {
       moves.push(...placeApprenticeMoves)
     }
     moves.push(...this.activateApprenticeHelper.getPlayerMoves())
+    moves.push(...this.activateSalamanderTempleHelper.getPlayerMoves())
     moves.push(...this.buildFieldTileHelper.getPlayerMoves())
     return moves
   }
@@ -27,6 +30,7 @@ export class DoActionsRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     moves.push(...this.placeApprenticeHelper.beforeItemMove(move, context))
     moves.push(...this.activateApprenticeHelper.beforeItemMove(move, context))
+    moves.push(...this.activateSalamanderTempleHelper.beforeItemMove(move, context))
     moves.push(...this.buildFieldTileHelper.beforeItemMove(move, context))
     return moves
   }

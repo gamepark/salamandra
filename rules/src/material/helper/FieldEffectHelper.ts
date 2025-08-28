@@ -27,6 +27,12 @@ export class FieldEffectHelper extends MaterialRulesPart {
     return []
   }
 
+  takeGroveTile(): MaterialMove[] {
+    // This function should implement the logic to take a grove tile
+    // For now, it returns an empty array as a placeholder
+    return []
+  }
+
   takeScrollAndThreePoints(): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(
@@ -55,8 +61,8 @@ export class FieldEffectHelper extends MaterialRulesPart {
   }
 
   threePointsBySalamanderCard(): MaterialMove[] {
-    const playerWhiteSalamanderCards = this.material(MaterialType.WhiteSalamanderCard).location(LocationType.PlayerSalamanderCards).player(this.player)
-    const playerBlackSalamanderCards = this.material(MaterialType.BlackSalamanderCard).location(LocationType.PlayerSalamanderCards).player(this.player)
+    const playerWhiteSalamanderCards = this.material(MaterialType.WhiteSalamanderCard).location(LocationType.PlayerWhiteSalamanderCards).player(this.player)
+    const playerBlackSalamanderCards = this.material(MaterialType.BlackSalamanderCard).location(LocationType.PlayerBlackSalamanderCards).player(this.player)
     const total = playerBlackSalamanderCards.length + playerWhiteSalamanderCards.length
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 3 })]
   }

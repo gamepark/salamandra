@@ -68,7 +68,9 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
         moves.push(...this.fieldTileHelper.payFieldCoast(move.itemIndex))
         moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
       }
-      moves.push(...this.groveTileHelper.addGroveInEmptySpace(move.location))
+      if(this.grovesInStack.length) {
+        moves.push(...this.groveTileHelper.getEmptyGroveLocations(move.location).map((loc) => this.grovesInStack.moveItem(loc)))
+      }
       if (this.fieldTilesInStack.length > 0) {
         const oldLocation = this.material(MaterialType.FieldTile).getItem(move.itemIndex).location
         moves.push(this.fieldTilesInStack.moveItem(oldLocation))
@@ -92,6 +94,12 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
 
   get playerCrystals() {
     return this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player)
+  }
+
+  get grovesInStack() {
+    return this.material(MaterialType.GroveTile)
+      .location(LocationType.GroveStack)
+      .maxBy((item) => item.location.x ?? 0)
   }
 
   isBuildFieldTileMove(move: ItemMove): boolean {

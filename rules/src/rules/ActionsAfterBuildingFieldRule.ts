@@ -3,11 +3,21 @@ import { FieldTileHelper } from '../material/helper/FieldTileHelper'
 import { PlaceApprenticeHelper } from './helper/PlaceApprenticeHelper'
 import { TakeDivinityCardHelper } from './helper/TakeDivinityCardHelper'
 import { MemoryType } from './MemoryType'
+import { RuleId } from './RuleId'
 
 export class ActionsAfterBuildingFieldRule extends PlayerTurnRule {
   placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.nextPlayer, this.remind(MemoryType.LastFieldBuilded))
   takeDivinityCardHelper = new TakeDivinityCardHelper(this.game, this.nextPlayer)
   fieldTileHelper = new FieldTileHelper(this.game)
+
+  onRuleStart(): MaterialMove[] {
+    const canPlaceApprentice = this.placeApprenticeHelper.getPlayerMoves().length > 0
+    const canTakeDivinityCard = this.fieldTileHelper.checkIfAtLeastOneFieldAroundIsOfSameColor(this.remind(MemoryType.LastFieldBuilded))
+    if (!canPlaceApprentice && !canTakeDivinityCard) {
+      return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
+    }
+    return []
+  }
 
   getPlayerMoves() {
     const moves: MaterialMove[] = []

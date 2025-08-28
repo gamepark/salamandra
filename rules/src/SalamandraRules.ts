@@ -14,6 +14,7 @@ import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
 import { CheckPassAndEmptyPlacesRule } from './rules/CheckPassAndEmptyPlacesRule'
+import { ChooseApprenticeToActivateRule } from './rules/ChooseApprenticeToActivateRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
 import { MemoryType } from './rules/MemoryType'
@@ -33,18 +34,21 @@ export class SalamandraRules
     [RuleId.ActionsAfterBuildingField]: ActionsAfterBuildingFieldRule,
     [RuleId.ActionsOnPass]: ActionsOnPassRule,
     [RuleId.CheckPassAndEmptyPlaces]: CheckPassAndEmptyPlacesRule,
-    [RuleId.PrepareNextRound]: PrepareNextRoundRule
+    [RuleId.PrepareNextRound]: PrepareNextRoundRule,
+    [RuleId.ChooseApprenticeToActivate]: ChooseApprenticeToActivateRule,
   }
 
   locationsStrategies = {
     [MaterialType.WhiteSalamanderCard]: {
-      [LocationType.WhiteSalamanderStack]: new PositiveSequenceStrategy()
+      [LocationType.WhiteSalamanderStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerWhiteSalamanderCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.ScrollToken]: {
       [LocationType.PlayerScrollTokenStock]: new PositiveSequenceStrategy()
     },
     [MaterialType.BlackSalamanderCard]: {
-      [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy()
+      [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerBlackSalamanderCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.GroveTile]: {
       [LocationType.GroveStack]: new PositiveSequenceStrategy(),

@@ -124,6 +124,8 @@
       "header.take.actions.on.pass.player": "{player} peut récupérer des tuiles bosquet",
       "header.check.pass.and.empty.places.you": "Construisez une tuile champ gratuitement",
       "header.check.pass.and.empty.places.player": "{player} peut construire une tuile champ gratuitement",
+      "header.choose.apprentice.to.activate.you": "Activez un apprenti",
+      "header.choose.apprentice.to.activate.player": "{player} doit activer un apprenti",
       "header.prepare.next.round": "Préparation de la prochaine manche",
       "Menu": "Menu",
       "OK": "OK",

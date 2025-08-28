@@ -21,7 +21,8 @@ export enum LocationType {
   PlayerScrollTokenStock,
   PlayerEagleCards,
   PlayerBearCards,
-  PlayerSalamanderCards,
+  PlayerWhiteSalamanderCards,
+  PlayerBlackSalamanderCards,
   PlayerGroveTiles,
   Score100MarkerIdlePlace,
   ScorePiste

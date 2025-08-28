@@ -1,7 +1,11 @@
+import { MaterialGame, MaterialMove } from '@gamepark/rules-api'
+
 export enum BonusType {
   Scroll = 1,
   Points,
-  DivinityCard
+  DivinityCard,
+  Special,
+  Crystal
 }
 
 export enum DivinityType {
@@ -23,7 +27,17 @@ export type DivinityCardBonus = {
   divinity: DivinityType
 }
 
-export type Bonus = ScrollBonus | PointsBonus | DivinityCardBonus
+export type SpecialBonus = {
+  type: BonusType.Special
+  effect: (game: MaterialGame) => MaterialMove[]
+}
+
+export type CrystalBonus = {
+  type: BonusType.Crystal
+  amount: number
+}
+
+export type Bonus = ScrollBonus | PointsBonus | DivinityCardBonus | SpecialBonus | CrystalBonus
 
 export function scrollBonus(): ScrollBonus {
   return { type: BonusType.Scroll }
@@ -35,4 +49,12 @@ export function pointsBonus(amount: number): PointsBonus {
 
 export function divinityCardBonus(divinity: DivinityType): DivinityCardBonus {
   return { type: BonusType.DivinityCard, divinity }
+}
+
+export function specialBonus(effect: (game: MaterialGame) => MaterialMove[]): SpecialBonus {
+  return { type: BonusType.Special, effect }
+}
+
+export function crystalBonus(amount: number): CrystalBonus {
+  return { type: BonusType.Crystal, amount }
 }

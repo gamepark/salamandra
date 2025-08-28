@@ -14,11 +14,13 @@ import { groveStackLocator } from './GroveStackLocator'
 import { playerActualRoundApprenticesSpaceLocator } from './PlayerActualRoundApprenticesSpaceLocator'
 import { playerApprenticesSpaceLocator } from './PlayerApprenticesSpaceLocator'
 import { playerBearCardsLocator } from './PlayerBearCardsLocator'
+import { playerBlackSalamanderCardsLocator } from './PlayerBlackSalamanderCardsLocator'
 import { playerCrystalTokenStockLocator } from './PlayerCrystalTokenStockLocator'
 import { playerDruidSpaceLocator } from './PlayerDruidSpaceLocator'
 import { playerEagleCardsLocator } from './PlayerEagleCardsLocator'
 import { playerGroveTilesLocator } from './PlayerGroveTilesLocator'
 import { playerMatLayoutLocator } from './PlayerMatLayoutLocator'
+import { playerWhiteSalamanderCardsLocator } from './PlayerWhiteSalamanderCardsLocator'
 import { playerScrollTokenStockLocator } from './PlayerScrollTokenStockLocator'
 import { score100MarkerIdlePlaceLocator } from './Score100MarkerIdlePlaceLocator'
 import { scorePisteLocator } from './ScorePisteLocator'
@@ -52,6 +54,8 @@ export const Locators: Partial<Record<LocationType, Locator<PlayerColor, Materia
   [LocationType.PlayerGroveTiles]: playerGroveTilesLocator,
   [LocationType.PlayerEagleCards]: playerEagleCardsLocator,
   [LocationType.PlayerBearCards]: playerBearCardsLocator,
+  [LocationType.PlayerWhiteSalamanderCards]: playerWhiteSalamanderCardsLocator,
+  [LocationType.PlayerBlackSalamanderCards]: playerBlackSalamanderCardsLocator,
   [LocationType.Score100MarkerIdlePlace]: score100MarkerIdlePlaceLocator,
   [LocationType.ScorePiste]: scorePisteLocator
 }
