@@ -1,4 +1,6 @@
 export enum CustomMoveType {
   Pass,
-  Score
+  Score,
+  PayCristalsToGainResource,
+  ActivateApprenticeForGainCrystal
 }

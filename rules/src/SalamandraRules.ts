@@ -8,8 +8,10 @@ import {
   SecretMaterialRules,
   TimeLimit
 } from '@gamepark/rules-api'
+import { crystalTokens } from './material/CrystalToken'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
+import { PrimaryResource, primaryResources } from './material/PrimaryResource'
 import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
@@ -19,6 +21,7 @@ import { CheckPassAndEmptyPlacesRule } from './rules/CheckPassAndEmptyPlacesRule
 import { ChooseApprenticeToActivateRule } from './rules/ChooseApprenticeToActivateRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
+import { NextRuleHelper } from './rules/helper/NextRuleHelper'
 import { MemoryType } from './rules/MemoryType'
 import { PrepareNextRoundRule } from './rules/PrepareNextRoundRule'
 import { ReactivateApprenticeRule } from './rules/ReactivateApprenticeRule'
@@ -96,6 +99,22 @@ export class SalamandraRules
     }
   }
 
+  getLegalMoves(player: PlayerColor): MaterialMove[] {
+    const legalMoves = super.getLegalMoves(player)
+    const crystals = this.material(MaterialType.CrystalToken).player(player)
+    if (this.isTurnToPlay(player)) {
+      if (crystals.getQuantity() >= 4) {
+        primaryResources.forEach((resource) => {
+          legalMoves.push(this.customMove(CustomMoveType.PayCristalsToGainResource, { player, resource }))
+        })
+      }
+      if (this.getPlayerApprenticeTokenInField(player).length > 0) {
+        legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
+      }
+    }
+    return legalMoves
+  }
+
   protected onCustomMove(move: CustomMove) {
     const moves: MaterialMove[] = []
     if (move.type === CustomMoveType.Score) {
@@ -109,7 +128,27 @@ export class SalamandraRules
           .moveItem((item) => ({ ...item.location, id: newScore % 100, x: undefined }))
       )
     }
+    if (move.type === CustomMoveType.PayCristalsToGainResource) {
+      const { player, resource } = move.data as { player: PlayerColor; resource: PrimaryResource }
+      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(4, { type: LocationType.PlayerCrystalTokenStock, player }))
+      const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player)
+      playerResources[resource] += 1
+    }
+    if (move.type === CustomMoveType.ActivateApprenticeForGainCrystal) {
+      const { player } = move.data as { player: PlayerColor }
+      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+      this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
+      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    }
     return moves
+  }
+
+  getPlayerApprenticeTokenInField(player: PlayerColor) {
+    const rotation = this.remind(MemoryType.ActualRound) % 2 !== 0
+    return this.material(MaterialType.ApprenticeToken)
+      .location(LocationType.FieldApprenticeSpace)
+      .filter((item) => item.id !== undefined && item.id === player)
+      .rotation(rotation)
   }
 
   giveTime(): number {
