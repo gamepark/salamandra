@@ -1,5 +1,7 @@
 import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
+import { MemoryType } from '../../rules/MemoryType'
+import { RuleId } from '../../rules/RuleId'
 import { FieldColor, fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -22,14 +24,12 @@ export class FieldEffectHelper extends MaterialRulesPart {
   }
 
   reactivateApprentice(): MaterialMove[] {
-    // This function should implement the logic to reactivate an apprentice
-    // For now, it returns an empty array as a placeholder
+    this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.ReactivateApprentice])
     return []
   }
 
   takeGroveTile(): MaterialMove[] {
-    // This function should implement the logic to take a grove tile
-    // For now, it returns an empty array as a placeholder
+    this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.TakeGroveTile])
     return []
   }
 

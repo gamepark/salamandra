@@ -18,25 +18,29 @@ import { CustomMoveType } from '../CustomMove'
 
 export class TakeGroveTileHelper extends MaterialRulesPart {
   player?: PlayerColor
+  isBonus: boolean
   groveTileHelper = new GroveTileHelper(this.game)
 
-  constructor(game: MaterialGame, player = game.rule?.player) {
+  constructor(game: MaterialGame, isBonus = false, player = game.rule?.player) {
     super(game)
     this.player = player
+    this.isBonus = isBonus
   }
 
   getPlayerMoves() {
     if (this.groveTilesInGame.length === 0) return []
-    if (this.playerCrystal.getQuantity() < 3) return []
+    if (!this.isBonus && this.playerCrystal.getQuantity() < 3) return []
     return this.groveTilesInGame.moveItems({ type: LocationType.PlayerGroveTiles, player: this.player })
   }
 
   afterItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.GroveTile)(move) && move.location.type === LocationType.PlayerGroveTiles) {
-      moves.push(
-        ...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(3, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-      )
+      if(!this.isBonus) {
+        moves.push(
+          ...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(3, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+        )
+      }
       moves.push(...this.groveTileHelper.getGroveBonus(move.itemIndex))
       moves.push(...this.addPointsForSpecificPlayerGrovePosition())
     }
@@ -60,7 +64,7 @@ export class TakeGroveTileHelper extends MaterialRulesPart {
   get groveTilesInGame() {
     return this.material(MaterialType.GroveTile)
       .location(LocationType.GameLayout)
-      .filter((item) => this.canTakeGroveTile(item.location))
+      .filter((item) => this.isBonus || this.canTakeGroveTile(item.location))
   }
 
   canTakeGroveTile(location: Partial<Location>): boolean {

@@ -6,5 +6,7 @@ export enum RuleId {
   PrepareNextRound,
   CalculScores,
   ChooseApprenticeToActivate,
-  CheckAndUseScrollTokens
+  CheckAndUseScrollTokens,
+  ReactivateApprentice,
+  TakeGroveTile
 }

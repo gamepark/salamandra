@@ -8,6 +8,7 @@ import { MaterialType } from '../../material/MaterialType'
 import { PlayerColor } from '../../PlayerColor'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
+import { NextRuleHelper } from './NextRuleHelper'
 
 export class ActivateApprenticeHelper extends MaterialRulesPart {
   player?: PlayerColor
@@ -48,10 +49,11 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
     moves.push(...this.fieldTileHelper.payActivation(move.location.parent ?? 0))
     const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
     if (fieldId) {
-      if (fieldData[fieldId as FieldTile].type === FieldType.Cauldron) {
-        moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
+      if (fieldData[fieldId as FieldTile].type !== FieldType.Cauldron) {
+        this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.DoActions])
       }
     }
+    moves.push(...new NextRuleHelper(this.game).moveToNextRule())
     return moves
   }
 
@@ -75,7 +77,7 @@ export class ActivateApprenticeHelper extends MaterialRulesPart {
     return this.material(MaterialType.ApprenticeToken)
       .location(LocationType.FieldApprenticeSpace)
       .filter((item) => item.id !== undefined && item.id === this.player)
-      .filter((item) => this.fieldTileHelper.canActivate(item.location.parent ?? 0))
+      .filter((item) => this.isPassAction || this.fieldTileHelper.canActivate(item.location.parent ?? 0))
       .rotation(rotation)
   }
 

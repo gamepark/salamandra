@@ -11,6 +11,7 @@ import { PlayerColor } from '../../PlayerColor'
 import { CustomMoveType } from '../CustomMove'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
+import { NextRuleHelper } from './NextRuleHelper'
 
 export class ActivateSalamanderTempleHelper extends MaterialRulesPart {
   player?: PlayerColor
@@ -37,14 +38,16 @@ export class ActivateSalamanderTempleHelper extends MaterialRulesPart {
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.WhiteSalamanderCard)(move) && move.location.type === LocationType.PlayerWhiteSalamanderCards) {
+      this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.ChooseApprenticeToActivate])
       moves.push(...this.pay(whiteSalamanderCost))
       moves.push(...this.getWhiteSalamanderBonus(move.itemIndex))
-      moves.push(this.startRule(RuleId.ChooseApprenticeToActivate))
+      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
     }
     if (isMoveItemType(MaterialType.BlackSalamanderCard)(move) && move.location.type === LocationType.PlayerBlackSalamanderCards) {
+      this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.ChooseApprenticeToActivate])
       moves.push(...this.pay(blackSalamanderCost))
       moves.push(...this.getBlackSalamanderBonus(move.itemIndex))
-      moves.push(this.startRule(RuleId.ChooseApprenticeToActivate))
+      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
     }
     return moves
   }

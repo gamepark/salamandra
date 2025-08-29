@@ -84,44 +84,10 @@ export class FieldTileHelper extends MaterialRulesPart {
         }
       }
       if (effect.type === EffectType.Potion) {
-        if (effect.ingredient.ingredientType === IngredientType.PrimaryResource) {
-          if (effect.ingredient.ingredient) {
-            const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, this.player)
-            playerResources[effect.ingredient.ingredient as PrimaryResource] -= effect.ingredient.amount
-          }
-        }
-        if (effect.ingredient.ingredientType === IngredientType.Crystal) {
-          moves.push(
-            ...this.material(MaterialType.CrystalToken)
-              .money(crystalTokens)
-              .removeMoney(effect.ingredient.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-          )
-        }
         const playerPotions = this.remind<Record<Potion, number>>(MemoryType.PlayerPotions, this.player)
         playerPotions[effect.potion] += 1
       }
       if (effect.type === EffectType.Special) {
-        effect.ingredients.forEach((ingredient) => {
-          if (ingredient.ingredientType === IngredientType.PrimaryResource) {
-            if (ingredient.ingredient) {
-              const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, this.player)
-              playerResources[ingredient.ingredient as PrimaryResource] -= ingredient.amount
-            }
-          }
-          if (ingredient.ingredientType === IngredientType.Potion) {
-            if (ingredient.ingredient) {
-              const playerPotion = this.remind<Record<Potion, number>>(MemoryType.PlayerPotions, this.player)
-              playerPotion[ingredient.ingredient as Potion] -= ingredient.amount
-            }
-          }
-          if (ingredient.ingredientType === IngredientType.Crystal) {
-            moves.push(
-              ...this.material(MaterialType.CrystalToken)
-                .money(crystalTokens)
-                .removeMoney(ingredient.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-            )
-          }
-        })
         moves.push(...effect.effect(this.game))
       }
     }

@@ -4,6 +4,7 @@ export enum MemoryType {
   PlayerPrimaryResources,
   PlayerPotions,
   LastFieldBuilded,
-  PlayersWhoPassed
+  PlayersWhoPassed,
+  NextRules,
 }
 

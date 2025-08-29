@@ -1,12 +1,9 @@
 import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { Potion } from '../material/Potion'
-import { PrimaryResource } from '../material/PrimaryResource'
 import { ActivateSalamanderTempleHelper } from './helper/ActivateSalamanderTempleHelper'
 import { PlaceApprenticeHelper } from './helper/PlaceApprenticeHelper'
 import { ActivateApprenticeHelper } from './helper/ActivateApprenticeHelper'
 import { BuildFieldTileHelper } from './helper/BuildFieldTileHelper'
 import { CustomMoveType } from './CustomMove'
-import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class DoActionsRule extends PlayerTurnRule {
@@ -42,21 +39,6 @@ export class DoActionsRule extends PlayerTurnRule {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return [this.startRule(RuleId.ActionsOnPass)]
     }
-    return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    const initialResources: Record<PrimaryResource, number> = {
-      [PrimaryResource.Leaf]: 0,
-      [PrimaryResource.Fruit]: 0,
-      [PrimaryResource.Flower]: 0
-    }
-    this.memorize(MemoryType.PlayerPrimaryResources, initialResources, this.player)
-    const initialPotions: Record<Potion, number> = {
-      [Potion.Leaf]: 0,
-      [Potion.FlowerOrFruit]: 0
-    }
-    this.memorize(MemoryType.PlayerPotions, initialPotions, this.player)
     return []
   }
 }

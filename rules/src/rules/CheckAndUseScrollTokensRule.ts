@@ -1,6 +1,9 @@
 import { isMoveItemType, ItemMove, Location, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { Potion } from '../material/Potion'
+import { PrimaryResource } from '../material/PrimaryResource'
+import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
@@ -48,5 +51,20 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
     return this.material(MaterialType.ApprenticeToken)
       .location(LocationType.FieldApprenticeSpace)
       .filter((item) => item.id !== undefined && item.id === this.player)
+  }
+
+  onRuleEnd(): MaterialMove[] {
+    const initialResources: Record<PrimaryResource, number> = {
+      [PrimaryResource.Leaf]: 0,
+      [PrimaryResource.Fruit]: 0,
+      [PrimaryResource.Flower]: 0
+    }
+    this.memorize(MemoryType.PlayerPrimaryResources, initialResources, this.player)
+    const initialPotions: Record<Potion, number> = {
+      [Potion.Leaf]: 0,
+      [Potion.FlowerOrFruit]: 0
+    }
+    this.memorize(MemoryType.PlayerPotions, initialPotions, this.player)
+    return []
   }
 }

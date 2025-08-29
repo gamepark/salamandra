@@ -21,7 +21,9 @@ import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
 import { MemoryType } from './rules/MemoryType'
 import { PrepareNextRoundRule } from './rules/PrepareNextRoundRule'
+import { ReactivateApprenticeRule } from './rules/ReactivateApprenticeRule'
 import { RuleId } from './rules/RuleId'
+import { TakeGroveTileRule } from './rules/TakeGroveTileRule'
 
 /**
  * This class implements the rules of the board game.
@@ -39,6 +41,8 @@ export class SalamandraRules
     [RuleId.PrepareNextRound]: PrepareNextRoundRule,
     [RuleId.CalculScores]: CalculScoresRule,
     [RuleId.ChooseApprenticeToActivate]: ChooseApprenticeToActivateRule,
+    [RuleId.ReactivateApprentice]: ReactivateApprenticeRule,
+    [RuleId.TakeGroveTile]: TakeGroveTileRule,
     [RuleId.CheckAndUseScrollTokens]: CheckAndUseScrollTokensRule
   }
 
