@@ -120,7 +120,7 @@ export const fieldData: Record<FieldTile, FieldData> = {
     activationEffect: specialEffect([{ ingredientType: IngredientType.Crystal, amount: 1 }], (game) => new FieldEffectHelper(game).reactivateApprentice())
   },
   [FieldTile.Field10]: {
-    cost: [cost(1, PrimaryResource.Fruit), cost(1, PrimaryResource.Flower)],
+    cost: [cost(1, PrimaryResource.Leaf), cost(1, PrimaryResource.Flower)],
     bonus: [scrollBonus(), pointsBonus(1)],
     type: FieldType.Billhook,
     colors: [FieldColor.Orange],
