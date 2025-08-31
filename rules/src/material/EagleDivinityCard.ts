@@ -1,5 +1,4 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
 
 export enum EagleDivinityCard {
   EagleDivinity1 = 1,
@@ -16,4 +15,4 @@ export enum EagleDivinityCard {
   EagleDivinity12
 }
 
-export const eagleDivinityCards: EagleDivinityCard[] = shuffle(getEnumValues(EagleDivinityCard))
+export const eagleDivinityCards: EagleDivinityCard[] = getEnumValues(EagleDivinityCard)

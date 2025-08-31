@@ -1,5 +1,4 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
 import { Bonus, divinityCardBonus, DivinityType, pointsBonus, scrollBonus } from './Bonus'
 
 export enum GroveTile {
@@ -35,7 +34,7 @@ export enum GroveTile {
   Grove30
 }
 
-export const groveTiles: GroveTile[] = shuffle(getEnumValues(GroveTile))
+export const groveTiles: GroveTile[] = getEnumValues(GroveTile)
 
 export type GroveData = {
   bonus: Bonus[]

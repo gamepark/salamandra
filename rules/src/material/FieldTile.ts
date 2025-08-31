@@ -1,5 +1,4 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
 import { Bonus, pointsBonus, scrollBonus } from './Bonus'
 import { cost, Cost } from './Cost'
 import { crystalEffect, Effect, IngredientType, potionEffect, primaryResourceEffect, specialEffect } from './Effect'
@@ -36,7 +35,7 @@ export enum FieldTile {
 
 export const startFieldTiles: FieldTile[] = [FieldTile.Field1, FieldTile.Field2, FieldTile.Field3, FieldTile.Field4]
 
-export const fieldTiles: FieldTile[] = shuffle(getEnumValues(FieldTile).filter((field) => !startFieldTiles.includes(field)))
+export const fieldTiles: FieldTile[] = getEnumValues(FieldTile).filter((field) => !startFieldTiles.includes(field))
 
 export enum FieldType {
   Cauldron = 1,

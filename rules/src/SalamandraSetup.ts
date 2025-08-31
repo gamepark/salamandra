@@ -41,16 +41,26 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   private setupSalamandraCardsStacks() {
     this.material(MaterialType.WhiteSalamanderCard).createItems(
-      whiteSalamanderCards.map((it) => ({ id: it, location: { type: LocationType.WhiteSalamanderStack } }))
+      shuffle(whiteSalamanderCards).map((it) => ({ id: it, location: { type: LocationType.WhiteSalamanderStack } }))
     )
     this.material(MaterialType.BlackSalamanderCard).createItems(
-      blackSalamanderCards.map((it) => ({ id: it, location: { type: LocationType.BlackSalamanderStack } }))
+      shuffle(blackSalamanderCards).map((it) => ({ id: it, location: { type: LocationType.BlackSalamanderStack } }))
     )
   }
 
   private setupDivinitiesCardsStacks() {
-    this.material(MaterialType.BearDivinityCard).createItems(bearDivinityCards.map((it) => ({ id: it, location: { type: LocationType.BearDivinityStack } })))
-    this.material(MaterialType.EagleDivinityCard).createItems(eagleDivinityCards.map((it) => ({ id: it, location: { type: LocationType.EagleDivinityStack } })))
+    this.material(MaterialType.BearDivinityCard).createItems(
+      shuffle(bearDivinityCards).map((it) => ({
+        id: it,
+        location: { type: LocationType.BearDivinityStack }
+      }))
+    )
+    this.material(MaterialType.EagleDivinityCard).createItems(
+      shuffle(eagleDivinityCards).map((it) => ({
+        id: it,
+        location: { type: LocationType.EagleDivinityStack }
+      }))
+    )
   }
 
   private setUpFields() {
@@ -63,7 +73,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     const startFieldItems = shuffle(startFieldTiles).map((tile, index) => ({ id: tile, location: startFieldLocations[index] }))
     this.material(MaterialType.FieldTile).createItems(startFieldItems)
 
-    this.material(MaterialType.FieldTile).createItems(fieldTiles.map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
+    this.material(MaterialType.FieldTile).createItems(shuffle(fieldTiles).map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
     this.material(MaterialType.FieldTile).location(LocationType.FieldStack).limit(4).moveItems({ type: LocationType.FieldSpace })
   }
 
@@ -79,7 +89,8 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
       { type: LocationType.GameLayout, x: 0.5, y: 1.5 }
     ]
 
-    this.material(MaterialType.GroveTile).createItems(groveTiles.map((it) => ({ id: it, location: { type: LocationType.GroveStack } })))
+    const groves = shuffle(groveTiles)
+    this.material(MaterialType.GroveTile).createItems(groves.map((it) => ({ id: it, location: { type: LocationType.GroveStack } })))
     startGrovesLocations.forEach((loc) => {
       this.material(MaterialType.GroveTile).location(LocationType.GroveStack).moveItem(loc)
     })
@@ -88,7 +99,9 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   private setupSpellBooks() {
     const nbSpellBooks = this.players.length + 1
     this.material(MaterialType.SpellBookCard).createItems(
-      spellBookCards.slice(0, nbSpellBooks).map((tile) => ({ id: tile, location: { type: LocationType.SpellBookSpace } }))
+      shuffle(spellBookCards)
+        .slice(0, nbSpellBooks)
+        .map((tile) => ({ id: tile, location: { type: LocationType.SpellBookSpace } }))
     )
   }
 

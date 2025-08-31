@@ -1,5 +1,4 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
 import { Bonus, divinityCardBonus, DivinityType, pointsBonus, specialBonus } from './Bonus'
 import { cost, Cost, CostType } from './Cost'
 import { FieldColor } from './FieldTile'
@@ -17,7 +16,7 @@ export enum WhiteSalamanderCard {
   WhiteSalamander8
 }
 
-export const whiteSalamanderCards: WhiteSalamanderCard[] = shuffle(getEnumValues(WhiteSalamanderCard))
+export const whiteSalamanderCards: WhiteSalamanderCard[] = getEnumValues(WhiteSalamanderCard)
 
 export const whiteSalamanderCost: Cost[] = [{ type: CostType.Potion, potion: Potion.Leaf }, cost(2)]
 

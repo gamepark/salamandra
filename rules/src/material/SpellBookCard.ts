@@ -1,5 +1,4 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
 
 export enum SpellBookCard {
   SpellBook1 = 1,
@@ -14,4 +13,4 @@ export enum SpellBookCard {
   SpellBook10
 }
 
-export const spellBookCards: SpellBookCard[] = shuffle(getEnumValues(SpellBookCard))
+export const spellBookCards: SpellBookCard[] = getEnumValues(SpellBookCard)
