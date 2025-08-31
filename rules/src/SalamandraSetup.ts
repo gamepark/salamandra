@@ -1,4 +1,5 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
+import sampleSize from 'lodash/sampleSize'
 import shuffle from 'lodash/shuffle'
 import { bearDivinityCards } from './material/BearDivinityCard'
 import { blackSalamanderCards } from './material/BlackSalamanderCard'
@@ -99,9 +100,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   private setupSpellBooks() {
     const nbSpellBooks = this.players.length + 1
     this.material(MaterialType.SpellBookCard).createItems(
-      shuffle(spellBookCards)
-        .slice(0, nbSpellBooks)
-        .map((tile) => ({ id: tile, location: { type: LocationType.SpellBookSpace } }))
+      sampleSize(spellBookCards, nbSpellBooks).map((tile) => ({ id: tile, location: { type: LocationType.SpellBookSpace } }))
     )
   }
 
