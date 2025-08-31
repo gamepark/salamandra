@@ -1,5 +1,5 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import { reverse, shuffle } from 'lodash'
+import { shuffle } from 'lodash'
 import { bearDivinityCards } from './material/BearDivinityCard'
 import { blackSalamanderCards } from './material/BlackSalamanderCard'
 import { crystalTokens } from './material/CrystalToken'
@@ -78,6 +78,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
       { type: LocationType.GameLayout, x: 1.5, y: 0.5 },
       { type: LocationType.GameLayout, x: 0.5, y: 1.5 }
     ]
+
     this.material(MaterialType.GroveTile).createItems(groveTiles.map((it) => ({ id: it, location: { type: LocationType.GroveStack } })))
     startGrovesLocations.forEach((loc) => {
       this.material(MaterialType.GroveTile).location(LocationType.GroveStack).moveItem(loc)
@@ -92,22 +93,26 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setupPlayers() {
-    reverse([...this.players]).forEach((player) => {
-      this.initializePlayerResources(player)
-      this.memorize(MemoryType.Score, 0, player)
-      this.material(MaterialType.PlayerMat).createItem({ id: player, location: { type: LocationType.PlayerMatLayout, player } })
-      this.material(MaterialType.DruidTile).createItem({ id: player, location: { type: LocationType.PlayerDruidSpace, player, rotation: false } })
-      this.createApprenticeTokens(3, player, false, 0)
-      this.createApprenticeTokens(2, player, true, 1)
-      this.createApprenticeTokens(3, player, false, 2)
-      this.createApprenticeTokens(2, player, true, 3)
-      this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.Score100MarkerIdlePlace } })
-      this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.ScorePiste, id: 0 } })
-      this.material(MaterialType.ApprenticeToken)
-        .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === 0)
-        .moveItems((item) => ({ type: LocationType.PlayerActualRoundApprenticesSpace, player, rotation: item.location.rotation }))
-      this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player })
-    })
+    for (const player of [...this.players].reverse()) {
+      this.setupPlayer(player)
+    }
+  }
+
+  setupPlayer(player: PlayerColor) {
+    this.initializePlayerResources(player)
+    this.memorize(MemoryType.Score, 0, player)
+    this.material(MaterialType.PlayerMat).createItem({ id: player, location: { type: LocationType.PlayerMatLayout, player } })
+    this.material(MaterialType.DruidTile).createItem({ id: player, location: { type: LocationType.PlayerDruidSpace, player, rotation: false } })
+    this.createApprenticeTokens(3, player, false, 0)
+    this.createApprenticeTokens(2, player, true, 1)
+    this.createApprenticeTokens(3, player, false, 2)
+    this.createApprenticeTokens(2, player, true, 3)
+    this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.Score100MarkerIdlePlace } })
+    this.material(MaterialType.ScoreMarker).createItem({ id: player, location: { type: LocationType.ScorePiste, id: 0 } })
+    this.material(MaterialType.ApprenticeToken)
+      .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === 0)
+      .moveItems((item) => ({ type: LocationType.PlayerActualRoundApprenticesSpace, player, rotation: item.location.rotation }))
+    this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player })
   }
 
   private createApprenticeTokens(quantity: number, player: PlayerColor, rotation: boolean, locationId: number) {
