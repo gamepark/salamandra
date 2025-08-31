@@ -1,5 +1,5 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import { bearDivinityCards } from './material/BearDivinityCard'
 import { blackSalamanderCards } from './material/BlackSalamanderCard'
 import { crystalTokens } from './material/CrystalToken'
