@@ -34,7 +34,7 @@ class FieldTileDescription extends CardDescription {
   backImage = FieldTileBack
 
   images = {
-    [FieldTile.Field1]: FieldTile01,
+    [FieldTile.StartField1]: FieldTile01,
     [FieldTile.Field2]: FieldTile02,
     [FieldTile.Field3]: FieldTile03,
     [FieldTile.Field4]: FieldTile04,

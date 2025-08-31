@@ -7,10 +7,10 @@ import { Potion } from './Potion'
 import { PrimaryResource } from './PrimaryResource'
 
 export enum FieldTile {
-  Field1 = 1,
-  Field2,
-  Field3,
-  Field4,
+  StartField1 = 1,
+  StartField2,
+  StartField3,
+  StartField4,
   Field5,
   Field6,
   Field7,
@@ -33,9 +33,9 @@ export enum FieldTile {
   Field24
 }
 
-export const startFieldTiles: FieldTile[] = [FieldTile.Field1, FieldTile.Field2, FieldTile.Field3, FieldTile.Field4]
-
-export const fieldTiles: FieldTile[] = getEnumValues(FieldTile).filter((field) => !startFieldTiles.includes(field))
+const tiles = getEnumValues(FieldTile)
+export const startFieldTiles: FieldTile[] = tiles.filter((t) => t <= FieldTile.StartField4)
+export const fieldTiles: FieldTile[] = tiles.filter((t) => t > FieldTile.StartField4)
 
 export enum FieldType {
   Cauldron = 1,
@@ -58,22 +58,22 @@ export type FieldData = {
 }
 
 export const fieldData: Record<FieldTile, FieldData> = {
-  [FieldTile.Field1]: { cost: [], bonus: [pointsBonus(1)], type: FieldType.Billhook, colors: [FieldColor.Orange], activationEffect: crystalEffect(2) },
-  [FieldTile.Field2]: {
+  [FieldTile.StartField1]: { cost: [], bonus: [pointsBonus(1)], type: FieldType.Billhook, colors: [FieldColor.Orange], activationEffect: crystalEffect(2) },
+  [FieldTile.StartField2]: {
     cost: [],
     bonus: [pointsBonus(1)],
     type: FieldType.Billhook,
     colors: [FieldColor.Green],
     activationEffect: primaryResourceEffect(PrimaryResource.Leaf)
   },
-  [FieldTile.Field3]: {
+  [FieldTile.StartField3]: {
     cost: [],
     bonus: [pointsBonus(1)],
     type: FieldType.Billhook,
     colors: [FieldColor.White],
     activationEffect: primaryResourceEffect(PrimaryResource.Flower)
   },
-  [FieldTile.Field4]: {
+  [FieldTile.StartField4]: {
     cost: [],
     bonus: [pointsBonus(1)],
     type: FieldType.Billhook,
