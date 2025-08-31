@@ -35,9 +35,9 @@ class FieldTileDescription extends CardDescription {
 
   images = {
     [FieldTile.StartField1]: FieldTile01,
-    [FieldTile.Field2]: FieldTile02,
-    [FieldTile.Field3]: FieldTile03,
-    [FieldTile.Field4]: FieldTile04,
+    [FieldTile.StartField2]: FieldTile02,
+    [FieldTile.StartField3]: FieldTile03,
+    [FieldTile.StartField4]: FieldTile04,
     [FieldTile.Field5]: FieldTile05,
     [FieldTile.Field6]: FieldTile06,
     [FieldTile.Field7]: FieldTile07,
