@@ -6,8 +6,8 @@ import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class ActionsAfterBuildingFieldRule extends PlayerTurnRule {
-  placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.nextPlayer, this.remind(MemoryType.LastFieldBuilded))
-  takeDivinityCardHelper = new TakeDivinityCardHelper(this.game, this.nextPlayer)
+  placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.remind(MemoryType.LastFieldBuilded))
+  takeDivinityCardHelper = new TakeDivinityCardHelper(this.game)
   fieldTileHelper = new FieldTileHelper(this.game)
 
   onRuleStart(): MaterialMove[] {

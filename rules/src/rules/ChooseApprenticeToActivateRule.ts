@@ -4,7 +4,7 @@ import { ActivateApprenticeHelper } from './helper/ActivateApprenticeHelper'
 import { NextRuleHelper } from './helper/NextRuleHelper'
 
 export class ChooseApprenticeToActivateRule extends PlayerTurnRule {
-  activateApprenticeHelper = new ActivateApprenticeHelper(this.game, this.nextPlayer)
+  activateApprenticeHelper = new ActivateApprenticeHelper(this.game)
 
   getPlayerMoves() {
     return this.activateApprenticeHelper.getPlayerMoves()

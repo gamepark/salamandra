@@ -9,7 +9,7 @@ import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class ActionsOnPassRule extends PlayerTurnRule {
-  activateApprenticeHelper = new ActivateApprenticeHelper(this.game, this.nextPlayer, true)
+  activateApprenticeHelper = new ActivateApprenticeHelper(this.game, true)
   takeGroveTileHelper = new TakeGroveTileHelper(this.game)
 
   onRuleStart(): MaterialMove[] {

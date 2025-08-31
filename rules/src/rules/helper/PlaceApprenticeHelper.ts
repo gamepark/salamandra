@@ -1,22 +1,17 @@
-import { isMoveItem, isMoveItemType, ItemMove, Location, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { isMoveItem, isMoveItemType, ItemMove, Location, MaterialGame, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
 import { GroveTileHelper } from '../../material/helper/GroveTileHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { PlayerColor } from '../../PlayerColor'
 import { RuleId } from '../RuleId'
 
-export class PlaceApprenticeHelper extends MaterialRulesPart {
-  player?: PlayerColor
-  nextPlayer: PlayerColor
+export class PlaceApprenticeHelper extends PlayerTurnRule {
   fieldIndex?: number
   groveTileHelper = new GroveTileHelper(this.game)
   fieldTileHelper = new FieldTileHelper(this.game)
 
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, fieldIndex?: number, player = game.rule?.player) {
+  constructor(game: MaterialGame, fieldIndex?: number) {
     super(game)
-    this.nextPlayer = nextPlayer
-    this.player = player
     this.fieldIndex = fieldIndex
   }
 

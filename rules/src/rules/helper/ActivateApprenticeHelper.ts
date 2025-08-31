@@ -1,25 +1,20 @@
-import { isMoveItem, isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { isMoveItem, isMoveItemType, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { crystalTokens } from '../../material/CrystalToken'
 import { EffectType } from '../../material/Effect'
 import { fieldData, FieldTile, FieldType } from '../../material/FieldTile'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { PlayerColor } from '../../PlayerColor'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { NextRuleHelper } from './NextRuleHelper'
 
-export class ActivateApprenticeHelper extends MaterialRulesPart {
-  player?: PlayerColor
-  nextPlayer: PlayerColor
+export class ActivateApprenticeHelper extends PlayerTurnRule {
   isPassAction: boolean
   fieldTileHelper = new FieldTileHelper(this.game)
 
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, isPassAction = false, player = game.rule?.player) {
+  constructor(game: MaterialGame, isPassAction = false) {
     super(game)
-    this.nextPlayer = nextPlayer
-    this.player = player
     this.isPassAction = isPassAction
   }
 

@@ -7,9 +7,9 @@ import { CustomMoveType } from './CustomMove'
 import { RuleId } from './RuleId'
 
 export class DoActionsRule extends PlayerTurnRule {
-  placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.nextPlayer)
-  activateApprenticeHelper = new ActivateApprenticeHelper(this.game, this.nextPlayer)
-  activateSalamanderTempleHelper = new ActivateSalamanderTempleHelper(this.game, this.nextPlayer)
+  placeApprenticeHelper = new PlaceApprenticeHelper(this.game)
+  activateApprenticeHelper = new ActivateApprenticeHelper(this.game)
+  activateSalamanderTempleHelper = new ActivateSalamanderTempleHelper(this.game)
   buildFieldTileHelper = new BuildFieldTileHelper(this.game)
 
   getPlayerMoves() {

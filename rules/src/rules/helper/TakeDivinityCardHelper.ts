@@ -1,19 +1,9 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { PlayerColor } from '../../PlayerColor'
 import { RuleId } from '../RuleId'
 
-export class TakeDivinityCardHelper extends MaterialRulesPart {
-  player?: PlayerColor
-  nextPlayer: PlayerColor
-
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, player = game.rule?.player) {
-    super(game)
-    this.nextPlayer = nextPlayer
-    this.player = player
-  }
-
+export class TakeDivinityCardHelper extends PlayerTurnRule {
   getPlayerMoves() {
     const moves: MaterialMove[] = []
     if (this.bearCards.length > 0) {

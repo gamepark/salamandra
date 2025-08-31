@@ -12,7 +12,7 @@ import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
-  placeApprenticeHelper = new PlaceApprenticeHelper(this.game, this.nextPlayer)
+  placeApprenticeHelper = new PlaceApprenticeHelper(this.game)
   buildFieldTileHelper = new BuildFieldTileHelper(this.game, true)
 
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {

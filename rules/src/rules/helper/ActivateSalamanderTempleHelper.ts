@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, PlayMoveContext } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { blackSalamanderBonus, blackSalamanderCost } from '../../material/BlackSalamanderCard'
 import { Bonus, BonusType, DivinityType } from '../../material/Bonus'
 import { Cost, CostType } from '../../material/Cost'
@@ -7,22 +7,12 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Potion } from '../../material/Potion'
 import { whiteSalamanderBonus, WhiteSalamanderCard, whiteSalamanderCost } from '../../material/WhiteSalamanderCard'
-import { PlayerColor } from '../../PlayerColor'
 import { CustomMoveType } from '../CustomMove'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { NextRuleHelper } from './NextRuleHelper'
 
-export class ActivateSalamanderTempleHelper extends MaterialRulesPart {
-  player?: PlayerColor
-  nextPlayer: PlayerColor
-
-  constructor(game: MaterialGame, nextPlayer: PlayerColor, player = game.rule?.player) {
-    super(game)
-    this.player = player
-    this.nextPlayer = nextPlayer
-  }
-
+export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
   getPlayerMoves() {
     const moves: MaterialMove[] = []
     if (this.playerApprenticeTokenInField.length === 0) return moves
