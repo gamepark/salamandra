@@ -35,25 +35,25 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
   getPlayerMoves() {
     if (this.fieldTilesInRiver.length === 0) return []
     const moves: MaterialMove[] = []
-    this.getPossibleLocations().forEach((location: Location) => {
+    this.possibleLocations.forEach((location: Location) => {
       moves.push(...this.fieldTilesInRiver.moveItems(location))
     })
     return moves
   }
 
-  getPossibleLocations(): Location[] {
+  get possibleLocations(): Location[] {
     const locations: Location[] = []
-    this.material(MaterialType.FieldTile)
-      .location(LocationType.GameLayout)
-      .getItems()
-      .forEach(({ location }) => {
-        const x = location.x ?? 0
-        const y = location.y ?? 0
-        locations.push({ type: LocationType.GameLayout, x, y: y - 1 })
-        locations.push({ type: LocationType.GameLayout, x: x + 1, y })
-        locations.push({ type: LocationType.GameLayout, x, y: y + 1 })
-        locations.push({ type: LocationType.GameLayout, x: x - 1, y })
-      })
+    const tileInPlace = this.material(MaterialType.FieldTile).location(LocationType.GameLayout).getItems()
+
+    for (const { location } of tileInPlace) {
+      const x = location.x ?? 0
+      const y = location.y ?? 0
+      locations.push({ type: LocationType.GameLayout, x, y: y - 1 })
+      locations.push({ type: LocationType.GameLayout, x: x + 1, y })
+      locations.push({ type: LocationType.GameLayout, x, y: y + 1 })
+      locations.push({ type: LocationType.GameLayout, x: x - 1, y })
+    }
+
     locations.push({ type: LocationType.GameLayout, x: -1, y: 0 })
     locations.push({ type: LocationType.GameLayout, x: 2, y: 0 })
 
@@ -62,34 +62,35 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.FieldTile)(move) && this.isBuildFieldTileMove(move)) {
-      this.memorize(MemoryType.LastFieldBuilded, move.itemIndex)
-      if(!this.isFree) {
-        moves.push(...this.fieldTileHelper.payFieldCoast(move.itemIndex))
-        moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
-      }
-      if(this.grovesInStack.length) {
-        moves.push(...this.groveTileHelper.getEmptyGroveLocations(move.location).map((loc) => this.grovesInStack.moveItem(loc)))
-      }
-      if (this.fieldTilesInStack.length > 0) {
-        const oldLocation = this.material(MaterialType.FieldTile).getItem(move.itemIndex).location
-        moves.push(this.fieldTilesInStack.moveItem(oldLocation))
-      }
-      moves.push(this.startRule(this.isFree ? RuleId.DoActions : RuleId.ActionsAfterBuildingField))
+    if (!isMoveItemType(MaterialType.FieldTile)(move) || !this.isBuildFieldTileMove(move)) return moves
+
+    this.memorize(MemoryType.LastFieldBuilded, move.itemIndex)
+    if (!this.isFree) {
+      moves.push(...this.fieldTileHelper.payFieldCoast(move.itemIndex))
+      moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
     }
+    if (this.grovesInStack.length) {
+      moves.push(...this.groveTileHelper.getEmptyGroveLocations(move.location).map((loc) => this.grovesInStack.moveItem(loc)))
+    }
+    if (this.fieldTilesInStack.length > 0) {
+      const oldLocation = this.material(MaterialType.FieldTile).getItem(move.itemIndex).location
+      moves.push(this.fieldTilesInStack.moveItem(oldLocation))
+    }
+    moves.push(this.startRule(this.isFree ? RuleId.DoActions : RuleId.ActionsAfterBuildingField))
+
     return moves
   }
 
   get fieldTilesInRiver() {
     return this.material(MaterialType.FieldTile)
       .location(LocationType.FieldSpace)
-      .filter((item) => this.isFree || this.playerCanBuildFieldTile(item))
+      .filter<FieldTile>((item) => this.isFree || this.playerCanBuildFieldTile(item))
   }
 
   get fieldTilesInStack() {
     return this.material(MaterialType.FieldTile)
       .location(LocationType.FieldStack)
-      .maxBy(item => item.location.x ?? 0)
+      .maxBy((item) => item.location.x ?? 0)
   }
 
   get playerCrystals() {
@@ -108,8 +109,8 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
     return oldLocationType === LocationType.FieldSpace
   }
 
-  private playerCanBuildFieldTile(item: MaterialItem): boolean {
-    const costs = fieldData[item.id as FieldTile].cost
+  private playerCanBuildFieldTile(item: MaterialItem<PlayerColor, LocationType, FieldTile>): boolean {
+    const costs = fieldData[item.id].cost
     let canPay = true
 
     costs.forEach((cost) => {

@@ -25,7 +25,7 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
     }
 
     const playerHaveApprenticeToPlace = this.placeApprenticeHelper.playerApprenticeToken.length > 0
-    const cantPlaceApprentice = this.placeApprenticeHelper.getPossibleLocations().length === 0
+    const cantPlaceApprentice = this.placeApprenticeHelper.possibleLocations.length === 0
     const cantBuildFieldTile = !this.checkIfPlayerCanBuildTile()
     if (playerHaveApprenticeToPlace && cantPlaceApprentice && cantBuildFieldTile) {
       return []
@@ -47,7 +47,7 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
 
   checkIfPlayerCanBuildTile() {
     return this.fieldTilesInRiver.some((tile) => {
-      const cost = fieldData[tile.id as FieldTile].cost
+      const cost = fieldData[tile.id].cost
       let canBuildThisTile = true
       cost.forEach((c) => {
         if (c.type === CostType.Crystal) {
@@ -67,7 +67,7 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
   }
 
   get fieldTilesInRiver() {
-    return this.material(MaterialType.FieldTile).location(LocationType.FieldSpace).getItems()
+    return this.material(MaterialType.FieldTile).location(LocationType.FieldSpace).getItems<FieldTile>()
   }
 
   getPlayerApprenticeTokenInField(resource: PrimaryResource) {
@@ -80,9 +80,9 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
   }
 
   private fieldEffectIsCorrectResource(number: number, resource: PrimaryResource): boolean {
-    const fieldId = this.material(MaterialType.FieldTile).index(number).getItem()?.id
+    const fieldId = this.material(MaterialType.FieldTile).index(number).getItem<FieldTile>()?.id
     if (fieldId) {
-      const effect = fieldData[fieldId as FieldTile].activationEffect
+      const effect = fieldData[fieldId].activationEffect
       if (effect.type === EffectType.PrimaryResource && effect.resource === resource) {
         return true
       }

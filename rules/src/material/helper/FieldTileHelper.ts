@@ -21,9 +21,9 @@ export class FieldTileHelper extends MaterialRulesPart {
 
   getFieldBonus(fieldIndex: number): MaterialMove[] {
     const moves: MaterialMove[] = []
-    const fieldTileId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem()?.id
+    const fieldTileId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem<FieldTile>()?.id
     if (fieldTileId) {
-      const bonuses = fieldData[fieldTileId as FieldTile].bonus
+      const bonuses = fieldData[fieldTileId].bonus
       bonuses.forEach((bonus) => {
         if (bonus.type === BonusType.Scroll) {
           moves.push(
@@ -42,9 +42,9 @@ export class FieldTileHelper extends MaterialRulesPart {
 
   payFieldCoast(fieldIndex: number): MaterialMove[] {
     const moves: MaterialMove[] = []
-    const fieldTileId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem()?.id
+    const fieldTileId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem<FieldTile>()?.id
     if (fieldTileId) {
-      const costs = fieldData[fieldTileId as FieldTile].cost
+      const costs = fieldData[fieldTileId].cost
       costs.forEach((cost) => {
         if (cost.type === CostType.Crystal) {
           moves.push(
@@ -64,9 +64,9 @@ export class FieldTileHelper extends MaterialRulesPart {
 
   getActivationEffet(location: Partial<Location>): MaterialMove[] {
     const moves: MaterialMove[] = []
-    const fieldTileId = this.material(MaterialType.FieldTile).index(location.parent).getItem()?.id
+    const fieldTileId = this.material(MaterialType.FieldTile).index(location.parent).getItem<FieldTile>()?.id
     if (fieldTileId) {
-      const effect = fieldData[fieldTileId as FieldTile].activationEffect
+      const effect = fieldData[fieldTileId].activationEffect
       if (effect.type === EffectType.Crystal) {
         moves.push(
           ...this.material(MaterialType.CrystalToken)
@@ -95,10 +95,10 @@ export class FieldTileHelper extends MaterialRulesPart {
   }
 
   checkIfAtLeastOneFieldAroundIsOfSameColor(fieldIndex: number): boolean {
-    const field = this.material(MaterialType.FieldTile).index(fieldIndex).getItem()
+    const field = this.material(MaterialType.FieldTile).index(fieldIndex).getItem<FieldTile>()
     const fieldLocation = field?.location
     if (!field || !fieldLocation || fieldLocation.x === undefined || fieldLocation.y === undefined) return false
-    const fieldColors = fieldData[field.id as FieldTile].colors
+    const fieldColors = fieldData[field.id].colors
     const topFieldHasSameColor = this.checkFieldColors({ x: fieldLocation.x, y: fieldLocation.y - 1 }, fieldColors)
     const rightFieldHasSameColor = this.checkFieldColors({ x: fieldLocation.x + 1, y: fieldLocation.y }, fieldColors)
     const bottomFieldHasSameColor = this.checkFieldColors({ x: fieldLocation.x, y: fieldLocation.y + 1 }, fieldColors)
@@ -109,16 +109,16 @@ export class FieldTileHelper extends MaterialRulesPart {
   checkFieldColors(coordinates: XYCoordinates, fieldColors: FieldColor[]): boolean {
     const field = this.material(MaterialType.FieldTile)
       .location((loc) => loc.type === LocationType.GameLayout && loc.x === coordinates.x && loc.y === coordinates.y)
-      .getItem()
+      .getItem<FieldTile>()
     if (!field) return false
-    const colors = fieldData[field.id as FieldTile].colors
+    const colors = fieldData[field.id].colors
     return colors.some((color) => fieldColors.includes(color))
   }
 
   canActivate(fieldIndex: number): boolean {
-    const fieldId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem()?.id
+    const fieldId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem<FieldTile>()?.id
     if (fieldId === undefined) return false
-    const data = fieldData[fieldId as FieldTile]
+    const data = fieldData[fieldId]
     switch (data.activationEffect.type) {
       case EffectType.Crystal:
         return true
@@ -164,9 +164,9 @@ export class FieldTileHelper extends MaterialRulesPart {
   }
 
   payActivation(fieldIndex: number): MaterialMove[] {
-    const fieldId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem()?.id
+    const fieldId = this.material(MaterialType.FieldTile).index(fieldIndex).getItem<FieldTile>()?.id
     if (fieldId === undefined) return []
-    const data = fieldData[fieldId as FieldTile]
+    const data = fieldData[fieldId]
     switch (data.activationEffect.type) {
       case EffectType.Crystal:
         return []

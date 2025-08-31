@@ -20,18 +20,18 @@ export class DoActionsRule extends PlayerTurnRule {
     } else {
       moves.push(...placeApprenticeMoves)
     }
+    moves.push(...this.buildFieldTileHelper.getPlayerMoves())
     moves.push(...this.activateApprenticeHelper.getPlayerMoves())
     moves.push(...this.activateSalamanderTempleHelper.getPlayerMoves())
-    moves.push(...this.buildFieldTileHelper.getPlayerMoves())
     return moves
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.placeApprenticeHelper.beforeItemMove(move, context))
+    moves.push(...this.buildFieldTileHelper.beforeItemMove(move, context))
     moves.push(...this.activateApprenticeHelper.beforeItemMove(move, context))
     moves.push(...this.activateSalamanderTempleHelper.beforeItemMove(move, context))
-    moves.push(...this.buildFieldTileHelper.beforeItemMove(move, context))
     return moves
   }
 

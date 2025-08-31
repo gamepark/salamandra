@@ -16,29 +16,30 @@ export class PlaceApprenticeHelper extends PlayerTurnRule {
   }
 
   getPlayerMoves() {
-    if (this.playerApprenticeToken.length === 0) return []
+    const playerApprenticeTokens = this.playerApprenticeToken
+    if (playerApprenticeTokens.length === 0) return []
 
     const moves: MaterialMove[] = []
-    this.getPossibleLocations().forEach((location: Location) => {
-      moves.push(this.playerApprenticeToken.moveItem((item) => ({ ...location, rotation: item.location.rotation })))
+    this.possibleLocations.forEach((location: Location) => {
+      moves.push(playerApprenticeTokens.moveItem((item) => ({ ...location, rotation: item.location.rotation })))
     })
     return moves
   }
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.isPlaceApprenticeMove(move)) {
-      moves.push(...this.groveTileHelper.getGroveCrystals(move.location))
-      if (move.location.x === 0) {
-        moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
-      }
-      moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move) || !this.isPlaceApprenticeMove(move)) return moves
+    moves.push(...this.groveTileHelper.getGroveCrystals(move.location))
+
+    if (move.location.x === 0) {
+      moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
     }
+    moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
     return moves
   }
 
-  getPossibleLocations(): Location[] {
-    if (this.fieldIndex !== undefined) return this.getPossibleLocationsOnSpecificFieldTile()
+  get possibleLocations(): Location[] {
+    if (this.fieldIndex !== undefined) return this.possibleLocationsOnSpecificFieldTile
     const locations: Location[] = []
     for (const field of this.fieldsInGame.getIndexes()) {
       for (let x = 0; x < 4; x++) {
@@ -52,7 +53,7 @@ export class PlaceApprenticeHelper extends PlayerTurnRule {
     return locations.filter((loc) => this.checkLocationIsEmpty(loc))
   }
 
-  private getPossibleLocationsOnSpecificFieldTile(): Location[] {
+  private get possibleLocationsOnSpecificFieldTile(): Location[] {
     if (this.fieldIndex === undefined) return []
     const locations: Location[] = []
     for (let x = 0; x < 4; x++) {

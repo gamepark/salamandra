@@ -42,9 +42,9 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     moves.push(...this.fieldTileHelper.getActivationEffet(move.location))
     moves.push(...this.fieldTileHelper.payActivation(move.location.parent ?? 0))
-    const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
+    const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem<FieldTile>()?.id
     if (fieldId) {
-      if (fieldData[fieldId as FieldTile].type !== FieldType.Cauldron) {
+      if (fieldData[fieldId].type !== FieldType.Cauldron) {
         this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.DoActions])
       }
     }
@@ -55,9 +55,9 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
   beforeItemMoveOnPassAction(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return []
     const moves: MaterialMove[] = []
-    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()?.id
+    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem<FieldTile>()?.id
     if (field) {
-      const effect = fieldData[field as FieldTile].activationEffect
+      const effect = fieldData[field].activationEffect
       moves.push(
         ...this.material(MaterialType.CrystalToken)
           .money(crystalTokens)
@@ -71,8 +71,7 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     const rotation = this.remind(MemoryType.ActualRound) % 2 !== 0
     return this.material(MaterialType.ApprenticeToken)
       .location(LocationType.FieldApprenticeSpace)
-      .filter((item) => item.id !== undefined && item.id === this.player)
-      .filter((item) => this.isPassAction || this.fieldTileHelper.canActivate(item.location.parent ?? 0))
+      .filter((item) => item.id !== undefined && item.id === this.player && (this.isPassAction || this.fieldTileHelper.canActivate(item.location.parent ?? 0)))
       .rotation(rotation)
   }
 

@@ -17,7 +17,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
   gainPointsForSpecificField(points: number, fieldColor: FieldColor): MaterialMove[] {
     const fieldsIndexes = this.material(MaterialType.FieldTile)
       .location(LocationType.GameLayout)
-      .filter((item) => fieldData[item.id as FieldTile].colors.includes(fieldColor))
+      .filter<FieldTile>((item) => fieldData[item.id].colors.includes(fieldColor))
       .getIndexes()
     const total = this.getNbFieldsWithPlayerApprentice(fieldsIndexes)
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * points })]
@@ -47,7 +47,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
   twoPointsByCauldron(): MaterialMove[] {
     const cauldronIndexes = this.material(MaterialType.FieldTile)
       .location(LocationType.GameLayout)
-      .filter((item) => fieldData[item.id as FieldTile].type === FieldType.Cauldron)
+      .filter<FieldTile>((item) => fieldData[item.id].type === FieldType.Cauldron)
       .getIndexes()
     const total = this.getNbFieldsWithPlayerApprentice(cauldronIndexes)
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 2 })]
