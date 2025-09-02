@@ -22,12 +22,12 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     if (!this.ignoreResourcesCheck) return []
     if (this.playerApprenticeTokenInField.length === 0) return []
-    return this.playerApprenticeTokenInField.moveItems((item) => ({ ...item.location, rotation: !item.location.rotation }))
+    return this.playerApprenticeTokenInField.rotateItems((item) => !item.location.rotation)
   }
 
   getPlayerMoves() {
     if (this.playerApprenticeTokenInField.length === 0) return []
-    return this.playerApprenticeTokenInField.moveItems((item) => ({ ...item.location, rotation: !item.location.rotation }))
+    return this.playerApprenticeTokenInField.rotateItems((item) => !item.location.rotation)
   }
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
