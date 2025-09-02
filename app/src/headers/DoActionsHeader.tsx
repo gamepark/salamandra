@@ -12,7 +12,7 @@ export const DoActionsHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
-  const winOneCristal = useLegalMove(isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal))
+  /**const winOneCristal = useLegalMove(isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal))
 
   if (winOneCristal) {
     return (
@@ -23,7 +23,7 @@ export const DoActionsHeader = () => {
         }}
       />
     )
-  }
+  }**/
 
   if (itsMe) {
     return (
