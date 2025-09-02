@@ -2,6 +2,7 @@ import {
   CustomMove,
   FillGapStrategy,
   hideItemId,
+  ItemMove,
   MaterialGame,
   MaterialMove,
   PositiveSequenceStrategy,
@@ -9,9 +10,12 @@ import {
   TimeLimit
 } from '@gamepark/rules-api'
 import { crystalTokens } from './material/CrystalToken'
+import { BearDivinityCardHelper } from './material/helper/BearDivinityCardHelper'
+import { EagleDivinityCardHelper } from './material/helper/EagleDivinityCardHelper'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
-import { PrimaryResource, primaryResources } from './material/PrimaryResource'
+import { Potion } from './material/Potion'
+import { PrimaryResource } from './material/PrimaryResource'
 import { PlayerColor } from './PlayerColor'
 import { ActionsAfterBuildingFieldRule } from './rules/ActionsAfterBuildingFieldRule'
 import { ActionsOnPassRule } from './rules/ActionsOnPassRule'
@@ -101,13 +105,9 @@ export class SalamandraRules
 
   getLegalMoves(player: PlayerColor): MaterialMove[] {
     const legalMoves = super.getLegalMoves(player)
-    const crystals = this.material(MaterialType.CrystalToken).player(player)
     if (this.isTurnToPlay(player)) {
-      if (crystals.getQuantity() >= 4) {
-        primaryResources.forEach((resource) => {
-          legalMoves.push(this.customMove(CustomMoveType.PayCristalsToGainResource, { player, resource }))
-        })
-      }
+      legalMoves.push(...new EagleDivinityCardHelper(this.game).getLegalMoves())
+      legalMoves.push(...new BearDivinityCardHelper(this.game).getLegalMoves())
 
       if (this.game.rule?.id !== RuleId.ChooseApprenticeToActivate && this.getPlayerApprenticeTokenInField(player).length > 0) {
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
@@ -116,33 +116,63 @@ export class SalamandraRules
     return legalMoves
   }
 
+  protected afterItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = super.afterItemMove(move)
+    moves.push(...new EagleDivinityCardHelper(this.game).afterItemMove(move))
+    moves.push(...new BearDivinityCardHelper(this.game).afterItemMove(move))
+    return moves
+  }
+
   protected onCustomMove(move: CustomMove) {
     const moves: MaterialMove[] = super.onCustomMove(move)
-    if (move.type === CustomMoveType.Score) {
-      const { player, score } = move.data as { player: PlayerColor; score: number }
-      this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-      const newScore = this.getMemory(player).remind(MemoryType.Score)
-      moves.push(
-        this.material(MaterialType.ScoreMarker)
-          .location(LocationType.ScorePiste)
-          .id(player)
-          .moveItem((item) => ({ ...item.location, id: newScore % 100, x: undefined }))
-      )
-    }
-    if (move.type === CustomMoveType.PayCristalsToGainResource) {
-      const { player, resource } = move.data as { player: PlayerColor; resource: PrimaryResource }
-      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(4, { type: LocationType.PlayerCrystalTokenStock, player }))
-      const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player)
-      playerResources[resource] += 1
-    }
-
-    if (move.type === CustomMoveType.ActivateApprenticeForGainCrystal) {
-      const { player } = move.data as { player: PlayerColor }
-      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
-      this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
-      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    switch (move.type) {
+      case CustomMoveType.Score:
+        moves.push(this.addScore(move))
+        break
+      case CustomMoveType.PayCristalsToGainResource:
+        moves.push(...this.payCristalsToGainResource(move))
+        break
+      case CustomMoveType.PayCristalsToGainPotion:
+        moves.push(...this.payCristalsToGainPotion(move))
+        break
+      case CustomMoveType.ActivateApprenticeForGainCrystal:
+        moves.push(...this.activateApprenticeForCrystal(move))
+        break
     }
     return moves
+  }
+
+  private activateApprenticeForCrystal(move: CustomMove) {
+    const moves: MaterialMove[] = []
+    const { player } = move.data as { player: PlayerColor }
+    moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+    this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
+    moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    return moves
+  }
+
+  private addScore(move: CustomMove): MaterialMove {
+    const { player, score } = move.data as { player: PlayerColor; score: number }
+    this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
+    const newScore = this.getMemory(player).remind(MemoryType.Score)
+    return this.material(MaterialType.ScoreMarker)
+      .location(LocationType.ScorePiste)
+      .id(player)
+      .moveItem((item) => ({ ...item.location, id: newScore % 100, x: undefined }))
+  }
+
+  payCristalsToGainResource(move: CustomMove): MaterialMove[] {
+    const { player, resource, amount } = move.data as { player: PlayerColor; resource: PrimaryResource; amount: number }
+    const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player)
+    playerResources[resource] += 1
+    return this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(amount, { type: LocationType.PlayerCrystalTokenStock, player })
+  }
+
+  payCristalsToGainPotion(move: CustomMove): MaterialMove[] {
+    const { player, potion, amount } = move.data as { player: PlayerColor; potion: Potion; amount: number }
+    const playerPtions = this.remind<Record<Potion, number>>(MemoryType.PlayerPotions, player)
+    playerPtions[potion] += 1
+    return this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(amount, { type: LocationType.PlayerCrystalTokenStock, player })
   }
 
   getPlayerApprenticeTokenInField(player: PlayerColor) {
@@ -157,3 +187,4 @@ export class SalamandraRules
     return 60
   }
 }
+
