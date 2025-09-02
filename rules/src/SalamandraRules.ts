@@ -109,8 +109,7 @@ export class SalamandraRules
         })
       }
 
-      // TODO: this is not working, locked in the rule
-      if (this.getPlayerApprenticeTokenInField(player).length > 0) {
+      if (this.game.rule?.id !== RuleId.ChooseApprenticeToActivate && this.getPlayerApprenticeTokenInField(player).length > 0) {
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
       }
     }
@@ -136,6 +135,7 @@ export class SalamandraRules
       const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player)
       playerResources[resource] += 1
     }
+
     if (move.type === CustomMoveType.ActivateApprenticeForGainCrystal) {
       const { player } = move.data as { player: PlayerColor }
       moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
