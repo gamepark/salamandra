@@ -116,6 +116,8 @@
   "fr": {
     "translation": {
       "button.activate": "Activer",
+      "button.reactivate": "Réactiver",
+      "button.flip": "Retourner",
       "header.take.actions.you": "Réalisez vos actions ou <pass>Passez</pass>",
       "header.take.actions.player": "{player} peut faire ses actions",
       "header.take.actions.after.building.you": "Réalisez vos actions",

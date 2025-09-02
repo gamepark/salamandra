@@ -9,12 +9,12 @@ class PlayerMatLayoutLocator extends Locator {
       case 0:
         return { x: -64, y: 13.5 }
       case 1:
-        if (context.rules.players.length === 2) return { x: 66, y: 13.5 }
-        return { x: -64, y: -13.5 }
+        if (context.rules.players.length === 2) return { x: 63, y: 13.5 }
+        return { x: -64, y: -14 }
       case 2:
-        return { x: 66, y: -13.5 }
+        return { x: 63, y: -13.5 }
       default:
-        return { x: 66, y: 13.5 }
+        return { x: 63, y: 13.5 }
     }
   }
 }

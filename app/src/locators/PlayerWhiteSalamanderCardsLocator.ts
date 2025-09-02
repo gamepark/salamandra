@@ -1,11 +1,12 @@
 import { DropAreaDescription, ListLocator, MaterialContext } from '@gamepark/react-game'
-import { MaterialItem, Location } from '@gamepark/rules-api'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { whiteSalamanderCardDescription } from '../material/WhiteSalamanderCardDescription'
+import { playerEagleCardsLocator } from './PlayerEagleCardsLocator'
 
 class PlayerWhiteSalamanderCardsLocator extends ListLocator {
   parentItemType = MaterialType.PlayerMat
-  positionOnParent = { x: 154, y: 54 }
+  positionOnParent = { x: playerEagleCardsLocator.positionOnParent.x, y: playerEagleCardsLocator.positionOnParent.y + 22 }
   gap = { y: 3.5 }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {

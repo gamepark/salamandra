@@ -10,6 +10,7 @@ class PlayerGroveTilesLocator extends Locator {
   }
 
   getPositionOnParent(location: Location): XYCoordinates {
+    if (location.x === undefined) return { x: 50, y: 1.5 }
     switch (location.x) {
       case 0:
         return { x: 0.8, y: 1.5 }
@@ -23,11 +24,9 @@ class PlayerGroveTilesLocator extends Locator {
         return { x: 66.5, y: 1.5 }
       case 5:
         return { x: 82.9, y: -11 }
-      case 6:
-        return { x: 99.3, y: 1.5 }
       // Default is for location (the green one) that has no x
       default:
-        return { x: 50, y: 0 }
+        return { x: 99.3 + (location.x - 6) * 0.3, y: 1.5 + (location.x - 6) * 0.3 }
     }
   }
 

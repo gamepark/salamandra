@@ -5,6 +5,7 @@ import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
+import { RuleId } from '@gamepark/salamandra/rules/RuleId'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import ApprenticeBlueDay from '../images/tokens/apprentice/ApprenticeBlueDay.jpg'
@@ -40,16 +41,23 @@ class ApprenticeTokenDescription extends CardDescription {
   menuAlwaysVisible = true
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
-    const activate =
-      item.location.type === LocationType.FieldApprenticeSpace &&
-      legalMoves.find(
-        (move) =>
-          isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex && move.location.type !== LocationType.SpellBookApprenticeSpace
-      )
+    const isOnFieldApprenticeSpace = item.location.type === LocationType.FieldApprenticeSpace
+    if (!isOnFieldApprenticeSpace) return undefined
+    const flip = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex && move.location.type !== LocationType.SpellBookApprenticeSpace
+    )
 
-    if (activate) {
+    const flipWithoutEffect = context.rules.game.rule?.id === RuleId.ChooseApprenticeToActivate
+    const reactivate = context.rules.game.rule?.id === RuleId.ReactivateApprentice
+
+    if (flip) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.activate" />} y={-1} move={activate}>
+        <ItemMenuButton
+          label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
+          y={-1}
+          move={flip}
+        >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
         </ItemMenuButton>
       )

@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { DropAreaDescription, ItemContext, LocationDescription, Locator } from '@gamepark/react-game'
+import { DropAreaDescription, ItemContext, LocationDescription, Locator, MaterialContext } from '@gamepark/react-game'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
+import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { fieldTileDescription } from '../material/FieldTileDescription'
 
@@ -15,15 +16,22 @@ class GameLayoutLocator extends Locator {
     return 0
   }
 
-  getCoordinates(location: Location): Partial<Coordinates> {
+  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const locationX = location.x ?? 0
     const locationY = location.y ?? 0
-    const base = this.getBaseCoordinates()
+    const base = this.getBaseCoordinates(context)
     return { x: (base.x ?? 0) + locationX * this.gap.x, y: (base.y ?? 0) + locationY * this.gap.y }
   }
 
-  getBaseCoordinates(): Partial<Coordinates> {
-    return { x: -fieldTileDescription.width * 0.5, y: 0 }
+  getBaseCoordinates(context: MaterialContext): Partial<Coordinates> {
+    const boundaries = new GameBoundaries(context.rules.game).boudaries
+    const coordinates = { x: 0, y: 0 }
+    const deltaX = (boundaries.minX + boundaries.maxX) / 2
+    const deltaY = (boundaries.minY + boundaries.maxY) / 2
+    coordinates.x += fieldTileDescription.width * -deltaX
+    coordinates.y += fieldTileDescription.height * -deltaY
+
+    return coordinates
   }
 
   getHoverTransform(): string[] {

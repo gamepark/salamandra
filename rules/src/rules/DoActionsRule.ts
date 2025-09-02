@@ -20,6 +20,7 @@ export class DoActionsRule extends PlayerTurnRule {
     } else {
       moves.push(...placeApprenticeMoves)
     }
+
     moves.push(...this.buildFieldTileHelper.getPlayerMoves())
     moves.push(...this.activateApprenticeHelper.getPlayerMoves())
     moves.push(...this.activateSalamanderTempleHelper.getPlayerMoves())
