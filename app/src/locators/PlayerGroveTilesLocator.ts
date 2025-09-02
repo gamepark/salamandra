@@ -24,8 +24,10 @@ class PlayerGroveTilesLocator extends Locator {
       case 5:
         return { x: 82.9, y: -11 }
       case 6:
-      default:
         return { x: 99.3, y: 1.5 }
+      // Default is for location (the green one) that has no x
+      default:
+        return { x: 50, y: 0 }
     }
   }
 

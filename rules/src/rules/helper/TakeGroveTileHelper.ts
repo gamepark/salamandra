@@ -36,7 +36,7 @@ export class TakeGroveTileHelper extends MaterialRulesPart {
   afterItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.GroveTile)(move) && move.location.type === LocationType.PlayerGroveTiles) {
-      if(!this.isBonus) {
+      if (!this.isBonus) {
         moves.push(
           ...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(3, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
         )

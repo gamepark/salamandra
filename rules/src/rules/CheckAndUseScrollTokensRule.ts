@@ -15,7 +15,9 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   }
 
   getPlayerMoves() {
-    return this.getPossibleLocations().flatMap((location: Location) => this.playerApprenticeTokenInField.moveItems((item) => ({...location, rotation: item.location.rotation})))
+    return this.getPossibleLocations().flatMap((location: Location) =>
+      this.playerApprenticeTokenInField.moveItems((item) => ({ ...location, rotation: item.location.rotation }))
+    )
   }
 
   getPossibleLocations(): Location[] {

@@ -10,16 +10,17 @@ import { RuleId } from '../RuleId'
 import { NextRuleHelper } from './NextRuleHelper'
 
 export class ActivateApprenticeHelper extends PlayerTurnRule {
-  isPassAction: boolean
   fieldTileHelper = new FieldTileHelper(this.game)
 
-  constructor(game: MaterialGame, isPassAction = false) {
+  constructor(
+    game: MaterialGame,
+    readonly ignoreResourcesCheck = false
+  ) {
     super(game)
-    this.isPassAction = isPassAction
   }
 
   onRuleStart(): MaterialMove[] {
-    if (!this.isPassAction) return []
+    if (!this.ignoreResourcesCheck) return []
     if (this.playerApprenticeTokenInField.length === 0) return []
     return this.playerApprenticeTokenInField.moveItems((item) => ({ ...item.location, rotation: !item.location.rotation }))
   }
@@ -31,7 +32,7 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.isActivateApprenticeMove(move)) {
-      if (this.isPassAction) return this.beforeItemMoveOnPassAction(move)
+      if (this.ignoreResourcesCheck) return this.beforeItemMoveOnPassAction(move)
       else return this.beforeItemMoveOnStepAction(move)
     }
     return []
@@ -71,7 +72,9 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     const rotation = this.remind(MemoryType.ActualRound) % 2 !== 0
     return this.material(MaterialType.ApprenticeToken)
       .location(LocationType.FieldApprenticeSpace)
-      .filter((item) => item.id !== undefined && item.id === this.player && (this.isPassAction || this.fieldTileHelper.canActivate(item.location.parent ?? 0)))
+      .filter(
+        (item) => item.id !== undefined && item.id === this.player && (this.ignoreResourcesCheck || this.fieldTileHelper.canActivate(item.location.parent ?? 0))
+      )
       .rotation(rotation)
   }
 

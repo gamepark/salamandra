@@ -1,13 +1,8 @@
 import { PileLocator } from '@gamepark/react-game'
-import { MaterialItem } from '@gamepark/rules-api'
 
 class ScrollTokenStockLocator extends PileLocator {
-  radius = 4
-  coordinates = { x: 10, y: -35 }
-
-  getPileId(item: MaterialItem) {
-    return item.id
-  }
+  radius = 2
+  coordinates = { x: 33, y: -35 }
 }
 
 export const scrollTokenStockLocator = new ScrollTokenStockLocator()

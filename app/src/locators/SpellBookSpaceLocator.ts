@@ -1,27 +1,18 @@
-import { Locator } from '@gamepark/react-game'
-import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
-import { Location } from '@gamepark/rules-api'
+import { FlexLocator, MaterialContext } from '@gamepark/react-game'
+import { Coordinates, Location } from '@gamepark/rules-api'
+import { spellBookCardDescription } from '../material/SpellBookCardDescription'
 
-class SpellBookSpaceLocator extends Locator {
-  parentItemType = MaterialType.VenerationPointsBoard
+class SpellBookSpaceLocator extends FlexLocator {
+  gap = { x: spellBookCardDescription.width + 0.5 }
+  lineSize = 3
+  lineGap = { y: spellBookCardDescription.height + 0.5, z: 2 }
 
-  getPositionOnParent(location: Location) {
-    switch (location.x) {
-      case 0:
-        return { x: 5, y: -10 }
-      case 1:
-        return { x: 27.5, y: -10 }
-      case 2:
-        return { x: 50, y: -10 }
-      case 3:
-        return { x: 72.5, y: -10 }
-      case 4:
-      default:
-        return { x: 95, y: -10 }
-    }
+  getCoordinates(location: Location, _context: MaterialContext): Partial<Coordinates> {
+    const { x = 0, y } = { x: -50, y: -36.5 }
+    return location.x && location.x >= 3 ? { x: x + this.gap.x / 2, y } : { x, y }
   }
 
-  getHoverTransform = () => ['translateZ(10em)', 'scale(2.5)']
+  getHoverTransform = () => ['translateZ(10em)', 'scale(2.5)', 'translateY(30%)']
 }
 
 export const spellBookSpaceLocator = new SpellBookSpaceLocator()

@@ -1,5 +1,5 @@
-import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { MaterialDescription } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { apprenticeTokenDescription } from './ApprenticeTokenDescription'
 import { bearDivinityCardDescription } from './BearDivinityCardDescription'
 import { blackSalamanderCardDescription } from './BlackSalamanderCardDescription'
@@ -10,16 +10,14 @@ import { fieldTileDescription } from './FieldTileDescription'
 import { groveTileDescription } from './GroveTileDescription'
 import { playerMatDescription } from './PlayerMatDescription'
 import { salamanderTempleTileDescription } from './SalamanderTempleTileDescription'
-import { scoreMarkerDescription } from './ScoreMarkerDescription'
 import { scrollTokenDescription } from './ScrollTokenDescription'
 import { secondaryDivinitiesBoardDescription } from './SecondaryDivinitiesBoardDescription'
 import { spellBookCardDescription } from './SpellBookCardDescription'
-import { venerationPointsBoardDescription } from './VenerationPointsBoardDescription'
 import { whiteSalamanderCardDescription } from './WhiteSalamanderCardDescription'
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.SalamanderTempleTile]: salamanderTempleTileDescription,
-  [MaterialType.VenerationPointsBoard]: venerationPointsBoardDescription,
+  //[MaterialType.VenerationPointsBoard]: venerationPointsBoardDescription,
   [MaterialType.SecondaryDivinitiesBoard]: secondaryDivinitiesBoardDescription,
   [MaterialType.PlayerMat]: playerMatDescription,
   [MaterialType.DruidTile]: druidTileDescription,
@@ -32,6 +30,6 @@ export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.EagleDivinityCard]: eagleDivinityCardDescription,
   [MaterialType.BlackSalamanderCard]: blackSalamanderCardDescription,
   [MaterialType.WhiteSalamanderCard]: whiteSalamanderCardDescription,
-  [MaterialType.ApprenticeToken]: apprenticeTokenDescription,
-  [MaterialType.ScoreMarker]: scoreMarkerDescription
+  [MaterialType.ApprenticeToken]: apprenticeTokenDescription
+  //[MaterialType.ScoreMarker]: scoreMarkerDescription
 }

@@ -74,8 +74,8 @@ export class SalamandraRules
       [LocationType.PlayerEagleCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.ApprenticeToken]: {
-      [LocationType.PlayerApprenticesSpace]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerActualRoundApprenticesSpace]: new PositiveSequenceStrategy()
+      [LocationType.PlayerApprenticesSpace]: new FillGapStrategy(),
+      [LocationType.PlayerActualRoundApprenticesSpace]: new FillGapStrategy()
     },
     [MaterialType.FieldTile]: {
       [LocationType.FieldStack]: new PositiveSequenceStrategy(),
@@ -108,6 +108,8 @@ export class SalamandraRules
           legalMoves.push(this.customMove(CustomMoveType.PayCristalsToGainResource, { player, resource }))
         })
       }
+
+      // TODO: this is not working, locked in the rule
       if (this.getPlayerApprenticeTokenInField(player).length > 0) {
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
       }
@@ -116,7 +118,7 @@ export class SalamandraRules
   }
 
   protected onCustomMove(move: CustomMove) {
-    const moves: MaterialMove[] = []
+    const moves: MaterialMove[] = super.onCustomMove(move)
     if (move.type === CustomMoveType.Score) {
       const { player, score } = move.data as { player: PlayerColor; score: number }
       this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)

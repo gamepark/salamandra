@@ -12,6 +12,18 @@ export const DoActionsHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
+  const winOneCristal = useLegalMove(isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal))
+
+  if (winOneCristal) {
+    return (
+      <Trans
+        defaults="<win>Win cristal</win>"
+        components={{
+          win: <PlayMoveButton move={winOneCristal} />
+        }}
+      />
+    )
+  }
 
   if (itsMe) {
     return (

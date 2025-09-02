@@ -23,7 +23,11 @@ class GameLayoutLocator extends Locator {
   }
 
   getBaseCoordinates(): Partial<Coordinates> {
-    return { x: 0, y: 0 }
+    return { x: -fieldTileDescription.width * 0.5, y: 0 }
+  }
+
+  getHoverTransform(): string[] {
+    return ['scale(2)', 'translateZ(1em)']
   }
 
   getLocationDescription(_location: Location, context: ItemContext): LocationDescription | undefined {
