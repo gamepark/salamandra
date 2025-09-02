@@ -15,7 +15,7 @@ class FieldStackLocator extends DeckLocator {
     const deckSize = Math.min(rules.material(MaterialType.FieldTile).location(LocationType.FieldStack).length, 20)
     return {
       x: this.coordinates.x + -0.05 * (deckSize - 1),
-      y: this.coordinates.y + -0.05 * (deckSize - 1),
+      y: this.coordinates.y + -0.05 * (deckSize - 1) - 0.5,
       z: 5
     }
   }
