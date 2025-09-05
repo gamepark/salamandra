@@ -39,8 +39,8 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const rules = useRules<SalamandraRules>()!
   const activePlayer = rules.getActivePlayer()
   const isPlayerCrystal = item.location?.player === me
-  const payCristalsToGainResource: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCristalsToGainResource)) as CustomMove[]
-  const payCristalsToGainPotion: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCristalsToGainPotion)) as CustomMove[]
+  const payCristalsToGainResource: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)) as CustomMove[]
+  const payCristalsToGainPotion: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCrystalsToGainPotion)) as CustomMove[]
 
   return (
     <div css={buttonGridCss}>

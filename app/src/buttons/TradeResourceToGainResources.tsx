@@ -33,7 +33,7 @@ export const TradeResourceToGainResources = (props: TradeResourceToGainResources
 }
 
 export const isWinThisResource = (move: MaterialMove, resource: PrimaryResource) => {
-  if (!isCustomMoveType(CustomMoveType.PayCristalsToGainResource)(move)) return false
+  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)) return false
   const data = move.data as { resource: PrimaryResource }
   return data.resource === resource
 }

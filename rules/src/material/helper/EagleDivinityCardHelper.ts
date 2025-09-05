@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { crystalTokens } from '../CrystalToken'
 import { EagleDivinityCard } from '../EagleDivinityCard'
@@ -50,7 +50,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
-      return [this.customMove(CustomMoveType.PayCristalsToGainPotion, { player: this.player, amount: 5, potion: Potion.Leaf })]
+      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.Leaf })]
     }
     return []
   }
@@ -67,7 +67,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
-      return [this.customMove(CustomMoveType.PayCristalsToGainPotion, { player: this.player, amount: 5, potion: Potion.FlowerOrFruit })]
+      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.FlowerOrFruit })]
     }
     return []
   }
@@ -110,7 +110,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= amount) {
       primaryResources.forEach((resource) => {
-        moves.push(this.customMove(CustomMoveType.PayCristalsToGainResource, { player: this.player, resource, amount }))
+        moves.push(this.customMove(CustomMoveType.PayCrystalsToGainResource, { player: this.player, resource, amount }))
       })
     }
     return moves
@@ -163,10 +163,15 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {
-    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return false
-    if (move.location.type !== LocationType.FieldApprenticeSpace) return false
-    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
+    const field = this.getFieldItem(move)
     if (field === undefined) return false
     return fieldData[field.id as FieldTile].type === FieldType.Cauldron
+  }
+
+  getFieldItem(move: ItemMove): MaterialItem | undefined {
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return
+    const item = this.material(MaterialType.ApprenticeToken).getItem(move.itemIndex)
+    if (item.location.type === LocationType.FieldApprenticeSpace || move.location.type !== LocationType.FieldApprenticeSpace) return
+    return this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
   }
 }

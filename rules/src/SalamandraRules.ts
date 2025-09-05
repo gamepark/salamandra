@@ -140,10 +140,10 @@ export class SalamandraRules
       case CustomMoveType.Score:
         moves.push(this.addScore(move))
         break
-      case CustomMoveType.PayCristalsToGainResource:
+      case CustomMoveType.PayCrystalsToGainResource:
         moves.push(...this.payCristalsToGainResource(move))
         break
-      case CustomMoveType.PayCristalsToGainPotion:
+      case CustomMoveType.PayCrystalsToGainPotion:
         moves.push(...this.payCristalsToGainPotion(move))
         break
       case CustomMoveType.ActivateApprenticeForGainCrystal:

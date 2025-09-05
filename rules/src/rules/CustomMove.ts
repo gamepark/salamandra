@@ -1,8 +1,8 @@
 export enum CustomMoveType {
   Pass,
   Score,
-  PayCristalsToGainResource,
-  PayCristalsToGainPotion,
+  PayCrystalsToGainResource,
+  PayCrystalsToGainPotion,
   ActivateApprenticeForGainCrystal,
   ActivateApprenticeForFieldEffect
 }

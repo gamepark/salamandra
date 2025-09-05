@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { BearDivinityCard } from '../BearDivinityCard'
 import { crystalTokens } from '../CrystalToken'
@@ -26,6 +26,10 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.getBearCard9Effect(move))
+    moves.push(...this.getBearCard2Effect(move))
+    moves.push(...this.getBearCard10Effect(move))
+    moves.push(...this.getBearCard11Effect(move))
+    moves.push(...this.getBearCard12Effect(move))
     return moves
   }
 
@@ -37,9 +41,6 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     moves.push(...this.getBearCard4Effect(move))
     moves.push(...this.getBearCard5Effect(move))
     moves.push(...this.getBearCard7Effect(move))
-    moves.push(...this.getBearCard10Effect(move))
-    moves.push(...this.getBearCard11Effect(move))
-    moves.push(...this.getBearCard12Effect(move))
     return moves
   }
 
@@ -88,7 +89,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     if (this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
-      return [this.customMove(CustomMoveType.PayCristalsToGainPotion, { player: this.player, amount: 6, potion: Potion.FlowerOrFruit })]
+      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.FlowerOrFruit })]
     }
     return []
   }
@@ -106,7 +107,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     if (this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
-      return [this.customMove(CustomMoveType.PayCristalsToGainPotion, { player: this.player, amount: 6, potion: Potion.Leaf })]
+      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.Leaf })]
     }
     return []
   }
@@ -152,18 +153,21 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {
-    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return false
-    if (move.location.type !== LocationType.FieldApprenticeSpace) return false
-    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
+    const field = this.getFieldItem(move)
     if (field === undefined) return false
     return fieldData[field.id as FieldTile].type === FieldType.Cauldron
   }
 
   isPlaceApprenticeInSpecificColorField(move: ItemMove, color: FieldColor): move is MoveItem {
-    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return false
-    if (move.location.type !== LocationType.FieldApprenticeSpace) return false
-    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
+    const field = this.getFieldItem(move)
     if (field === undefined) return false
     return fieldData[field.id as FieldTile].colors.includes(color)
+  }
+
+  getFieldItem(move: ItemMove): MaterialItem | undefined {
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return
+    const item = this.material(MaterialType.ApprenticeToken).getItem(move.itemIndex)
+    if (item.location.type === LocationType.FieldApprenticeSpace || move.location.type !== LocationType.FieldApprenticeSpace) return
+    return this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
   }
 }

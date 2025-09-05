@@ -100,7 +100,7 @@ const getPrimaryResourceCounter = (
 }
 
 export const isWinThisResource = (move: MaterialMove, player: PlayerColor, resource: PrimaryResource) => {
-  if (!isCustomMoveType(CustomMoveType.PayCristalsToGainResource)(move)) return false
+  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)) return false
   const data = move.data as { resource: PrimaryResource; player: PlayerColor }
   return data.resource === resource && data.player === player
 }
