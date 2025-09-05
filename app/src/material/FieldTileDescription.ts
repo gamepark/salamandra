@@ -26,6 +26,7 @@ import FieldTile22 from '../images/tiles/field/FieldTile22.png'
 import FieldTile23 from '../images/tiles/field/FieldTile23.png'
 import FieldTile24 from '../images/tiles/field/FieldTile24.png'
 import FieldTileBack from '../images/tiles/field/FieldTileBack.png'
+import { FieldHelp } from './help/FieldHelp'
 
 class FieldTileDescription extends CardDescription {
   width = 9.2
@@ -65,6 +66,14 @@ class FieldTileDescription extends CardDescription {
       clip-path: polygon(32% 1%, 67% 1%, 99% 32%, 99% 67%, 67% 99%, 32% 99%, 1% 67%, 1% 32%);
     `
   }
+
+  getHelpDisplayExtraCss(): Interpolation<Theme> {
+    return css`
+      font-size: 5em;
+    `
+  }
+
+  help = FieldHelp
 }
 
 export const fieldTileDescription = new FieldTileDescription()

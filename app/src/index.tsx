@@ -23,6 +23,11 @@ ReactDOM.render(
       material={Material}
       locators={Locators}
       animations={gameAnimations}
+      theme={{
+        dialog: {
+          backgroundColor: '#efeadc'
+        }
+      }}
     >
       <App />
     </GameProvider>

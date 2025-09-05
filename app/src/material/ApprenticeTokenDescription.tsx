@@ -1,10 +1,11 @@
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
-import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove, MaterialMoveBuilder } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
+import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { RuleId } from '@gamepark/salamandra/rules/RuleId'
 import React from 'react'
 import { Trans } from 'react-i18next'
@@ -16,6 +17,7 @@ import ApprenticeRedDay from '../images/tokens/apprentice/ApprenticeRedDay.jpg'
 import ApprenticeRedNight from '../images/tokens/apprentice/ApprenticeRedNight.jpg'
 import ApprenticeYellowDay from '../images/tokens/apprentice/ApprenticeYellowDay.jpg'
 import ApprenticeYellowNight from '../images/tokens/apprentice/ApprenticeYellowNight.jpg'
+import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 class ApprenticeTokenDescription extends CardDescription {
   width = 2.1
@@ -43,25 +45,45 @@ class ApprenticeTokenDescription extends CardDescription {
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const isOnFieldApprenticeSpace = item.location.type === LocationType.FieldApprenticeSpace
     if (!isOnFieldApprenticeSpace) return undefined
-    const flip = legalMoves.find(
+    const flipActions = legalMoves.filter(
       (move) =>
         isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex && move.location.type !== LocationType.SpellBookApprenticeSpace
     )
 
+    const deactivateToGainCrystal = legalMoves.filter((move) => {
+      if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal)(move)) return false
+      const data = move.data as { itemIndex?: number }
+      return data.itemIndex === context.index
+    })
+
     const flipWithoutEffect = context.rules.game.rule?.id === RuleId.ChooseApprenticeToActivate
     const reactivate = context.rules.game.rule?.id === RuleId.ReactivateApprentice
 
-    if (flip) {
+    if (flipActions.length && deactivateToGainCrystal.length) {
       return (
         <ItemMenuButton
-          label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
+          label={<Trans defaults="button.activate" />}
           y={-1}
-          move={flip}
+          move={displayMaterialHelp(MaterialType.ApprenticeToken, item, context.index)}
+          options={{ local: true }}
         >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
         </ItemMenuButton>
       )
     }
+
+    if (flipActions.length === 1) {
+      return (
+        <ItemMenuButton
+          label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
+          y={-1}
+          move={flipActions[0]}
+        >
+          <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+
     return undefined
   }
 }

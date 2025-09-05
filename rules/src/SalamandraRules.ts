@@ -105,12 +105,17 @@ export class SalamandraRules
 
   getLegalMoves(player: PlayerColor): MaterialMove[] {
     const legalMoves = super.getLegalMoves(player)
+    const apprenticeTokenInField = this.getPlayerApprenticeTokenInField(player)
     if (this.isTurnToPlay(player)) {
       legalMoves.push(...new EagleDivinityCardHelper(this.game).getLegalMoves())
       legalMoves.push(...new BearDivinityCardHelper(this.game).getLegalMoves())
 
-      if (this.game.rule?.id !== RuleId.ChooseApprenticeToActivate && this.getPlayerApprenticeTokenInField(player).length > 0) {
+      if (this.game.rule?.id !== RuleId.ChooseApprenticeToActivate && apprenticeTokenInField.length > 0) {
+        if (!apprenticeTokenInField.length) return legalMoves
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
+        legalMoves.push(
+          ...apprenticeTokenInField.getIndexes().map((itemIndex) => this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player, itemIndex }))
+        )
       }
     }
     return legalMoves
@@ -150,10 +155,17 @@ export class SalamandraRules
 
   private activateApprenticeForCrystal(move: CustomMove) {
     const moves: MaterialMove[] = []
-    const { player } = move.data as { player: PlayerColor }
-    moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
-    this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
-    moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    const { player, itemIndex } = move.data as { player: PlayerColor; itemIndex?: number }
+    if (itemIndex !== undefined) {
+      const apprenticeToken = this.material(MaterialType.ApprenticeToken).index(itemIndex)
+      moves.push(...apprenticeToken.rotateItems((item) => !item.location.rotation))
+      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+    } else {
+      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+      this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
+      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    }
+
     return moves
   }
 
