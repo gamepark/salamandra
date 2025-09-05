@@ -53,7 +53,7 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
 
 const dialogCss = css`
   > p {
-    font-size: 2em;
+    font-size: 2.5em;
   }
 
   > h1 {

@@ -48,7 +48,7 @@ const pictureCss = css`
   height: 1em;
 
   > img {
-    height: 1em;
+    height: 0.9em;
     position: relative;
     top: 0.1em;
   }
