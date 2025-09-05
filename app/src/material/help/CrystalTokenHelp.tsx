@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { MaterialHelpProps, PlayMoveButton, useLegalMove, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
-import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
+import { MaterialHelpProps, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
+import { CustomMove, isCustomMoveType } from '@gamepark/rules-api'
 import { Potion } from '@gamepark/salamandra/material/Potion'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { TradeResourceToGainResources } from '../../buttons/TradeResourceToGainResources'
 import { components } from './utils'
 
@@ -40,11 +41,6 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const isPlayerCrystal = item.location?.player === me
   const payCristalsToGainResource: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCristalsToGainResource)) as CustomMove[]
   const payCristalsToGainPotion: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCristalsToGainPotion)) as CustomMove[]
-  const activateApprenticeForGainCrystal = useLegalMove((move: MaterialMove) => {
-    if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal)(move)) return false
-    const data = move.data as { itemIndex?: number }
-    return data.itemIndex === undefined
-  })
 
   return (
     <div css={buttonGridCss}>
@@ -62,11 +58,7 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
           </PlayMoveButton>
         )
       })}
-      {activateApprenticeForGainCrystal && isPlayerCrystal && activePlayer === me && (
-        <PlayMoveButton move={activateApprenticeForGainCrystal} onPlay={closeDialog}>
-          <Trans defaults="button.crystal.activate.apprentice" components={components} />
-        </PlayMoveButton>
-      )}
+      <ActivateApprenticeToGainCrystal onPlay={closeDialog} />
     </div>
   )
 }

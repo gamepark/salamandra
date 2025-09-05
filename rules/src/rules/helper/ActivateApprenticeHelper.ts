@@ -1,10 +1,11 @@
-import { isMoveItem, isMoveItemType, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItem, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { crystalTokens } from '../../material/CrystalToken'
 import { EffectType } from '../../material/Effect'
 import { fieldData, FieldTile, FieldType } from '../../material/FieldTile'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { CustomMoveType } from '../CustomMove'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { NextRuleHelper } from './NextRuleHelper'
@@ -21,29 +22,38 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
 
   onRuleStart(): MaterialMove[] {
     if (!this.ignoreResourcesCheck) return []
-    if (this.playerApprenticeTokenInField.length === 0) return []
-    return this.playerApprenticeTokenInField.rotateItems((item) => !item.location.rotation)
+    const playerApprenticeTokenInField = this.playerApprenticeTokenInField
+    if (playerApprenticeTokenInField.length === 0) return []
+    return playerApprenticeTokenInField.getIndexes().map((index) => this.customMove(CustomMoveType.ActivateApprenticeForFieldEffect, index))
   }
 
   getPlayerMoves() {
-    if (this.playerApprenticeTokenInField.length === 0) return []
-    return this.playerApprenticeTokenInField.rotateItems((item) => !item.location.rotation)
+    const playerApprenticeTokenInField = this.playerApprenticeTokenInField
+    if (playerApprenticeTokenInField.length === 0) return []
+    return playerApprenticeTokenInField.getIndexes().map((index) => this.customMove(CustomMoveType.ActivateApprenticeForFieldEffect, index))
   }
 
-  beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
-    if (isMoveItemType(MaterialType.ApprenticeToken)(move) && this.isActivateApprenticeMove(move)) {
-      if (this.ignoreResourcesCheck) return this.beforeItemMoveOnPassAction(move)
-      else return this.beforeItemMoveOnStepAction(move)
-    }
-    return []
-  }
-
-  beforeItemMoveOnStepAction(move: ItemMove): MaterialMove[] {
-    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return []
+  onCustomMove(move: CustomMove) {
+    if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move)) return []
     const moves: MaterialMove[] = []
-    moves.push(...this.fieldTileHelper.getActivationEffet(move.location))
-    moves.push(...this.fieldTileHelper.payActivation(move.location.parent ?? 0))
-    const fieldId = this.material(MaterialType.FieldTile).index(move.location.parent).getItem<FieldTile>()?.id
+    const apprentice = this.material(MaterialType.ApprenticeToken).index(move.data as number)
+    moves.push(apprentice.rotateItem((item) => !item.location.rotation))
+    if (this.ignoreResourcesCheck) {
+      moves.push(...this.onCustomMoveOnPassAction(move))
+    } else {
+      moves.push(...this.onCustomMoveOnStepAction(move))
+    }
+
+    return moves
+  }
+
+  onCustomMoveOnStepAction(move: CustomMove): MaterialMove[] {
+    if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move)) return []
+    const apprentice = this.material(MaterialType.ApprenticeToken).getItem(move.data as number)
+    const moves: MaterialMove[] = []
+    moves.push(...this.fieldTileHelper.getActivationEffet(apprentice.location))
+    moves.push(...this.fieldTileHelper.payActivation(apprentice.location.parent ?? 0))
+    const fieldId = this.material(MaterialType.FieldTile).index(apprentice.location.parent).getItem<FieldTile>()?.id
     if (fieldId) {
       if (fieldData[fieldId].type !== FieldType.Cauldron) {
         this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.DoActions])
@@ -53,10 +63,11 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     return moves
   }
 
-  beforeItemMoveOnPassAction(move: ItemMove): MaterialMove[] {
-    if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return []
+  onCustomMoveOnPassAction(move: CustomMove): MaterialMove[] {
+    if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move)) return []
+    const apprentice = this.material(MaterialType.ApprenticeToken).getItem(move.data as number)
     const moves: MaterialMove[] = []
-    const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem<FieldTile>()?.id
+    const field = this.material(MaterialType.FieldTile).index(apprentice.location.parent).getItem<FieldTile>()?.id
     if (field) {
       const effect = fieldData[field].activationEffect
       moves.push(

@@ -37,9 +37,11 @@ export class DoActionsRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    moves.push(...this.activateApprenticeHelper.onCustomMove(move))
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [this.startRule(RuleId.ActionsOnPass)]
+      moves.push(this.startRule(RuleId.ActionsOnPass))
     }
-    return []
+    return moves
   }
 }

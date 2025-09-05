@@ -17,6 +17,7 @@ import ApprenticeRedDay from '../images/tokens/apprentice/ApprenticeRedDay.jpg'
 import ApprenticeRedNight from '../images/tokens/apprentice/ApprenticeRedNight.jpg'
 import ApprenticeYellowDay from '../images/tokens/apprentice/ApprenticeYellowDay.jpg'
 import ApprenticeYellowNight from '../images/tokens/apprentice/ApprenticeYellowNight.jpg'
+import { ApprenticeTokenHelp } from './help/ApprenticeTokenHelp'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 class ApprenticeTokenDescription extends CardDescription {
@@ -45,11 +46,9 @@ class ApprenticeTokenDescription extends CardDescription {
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const isOnFieldApprenticeSpace = item.location.type === LocationType.FieldApprenticeSpace
     if (!isOnFieldApprenticeSpace) return undefined
-    const flipActions = legalMoves.filter(
-      (move) =>
-        isMoveItemType(MaterialType.ApprenticeToken)(move) && context.index === move.itemIndex && move.location.type !== LocationType.SpellBookApprenticeSpace
-    )
 
+    const activateField = legalMoves.find((move) => isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move) && move.data === context.index)
+    const flipActions = legalMoves.filter((move) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.rotation !== item.location.rotation)
     const deactivateToGainCrystal = legalMoves.filter((move) => {
       if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal)(move)) return false
       const data = move.data as { itemIndex?: number }
@@ -59,7 +58,7 @@ class ApprenticeTokenDescription extends CardDescription {
     const flipWithoutEffect = context.rules.game.rule?.id === RuleId.ChooseApprenticeToActivate
     const reactivate = context.rules.game.rule?.id === RuleId.ReactivateApprentice
 
-    if (flipActions.length && deactivateToGainCrystal.length) {
+    if (activateField && deactivateToGainCrystal.length) {
       return (
         <ItemMenuButton
           label={<Trans defaults="button.activate" />}
@@ -72,7 +71,7 @@ class ApprenticeTokenDescription extends CardDescription {
       )
     }
 
-    if (flipActions.length === 1) {
+    if (activateField && !deactivateToGainCrystal.length) {
       return (
         <ItemMenuButton
           label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
@@ -86,6 +85,8 @@ class ApprenticeTokenDescription extends CardDescription {
 
     return undefined
   }
+
+  help = ApprenticeTokenHelp
 }
 
 export const apprenticeTokenDescription = new ApprenticeTokenDescription()

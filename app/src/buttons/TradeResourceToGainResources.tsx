@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { Picture, PlayMoveButton, useLegalMoves } from '@gamepark/react-game'
+import { Picture, PlayMoveButton, useLegalMove } from '@gamepark/react-game'
 import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
-import { CrystalToken } from '@gamepark/salamandra/material/CrystalToken'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { HTMLAttributes } from 'react'
-import { crystalTokenDescription } from '../material/CrystalTokenDescription'
-import { primaryResourceImages } from '../material/help/utils'
+import { Trans } from 'react-i18next'
+import { components, primaryResourceImages } from '../material/help/utils'
 
 type TradeResourceToGainResourcesProps = {
   resource: PrimaryResource
@@ -16,13 +15,19 @@ type TradeResourceToGainResourcesProps = {
 
 export const TradeResourceToGainResources = (props: TradeResourceToGainResourcesProps) => {
   const { onPlay, resource } = props
-  const moves = useLegalMoves<MaterialMove>()
-  const canBuy = moves.find((move) => isWinThisResource(move, resource)) as CustomMove
+  const canBuy = useLegalMove((move: MaterialMove) => isWinThisResource(move, resource)) as CustomMove | undefined
+  if (!canBuy) return null
+  const amount = (canBuy.data as { amount: number }).amount
   return (
     <PlayMoveButton css={buttonCss} move={canBuy} onPlay={onPlay}>
-      Echanger {(canBuy.data as { amount: number }).amount}{' '}
-      <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={crystalTokenDescription.images[CrystalToken.Crystal1]} /> contre{' '}
-      <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} css={resourceCss} src={primaryResourceImages[resource]} />
+      <Trans
+        defaults="button.crystal.trade"
+        values={{ given: amount, taken: 1 }}
+        components={{
+          resourceA: components.crystal,
+          resourceB: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} css={resourceCss} src={primaryResourceImages[resource]} />
+        }}
+      />
     </PlayMoveButton>
   )
 }
