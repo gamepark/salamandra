@@ -246,6 +246,6 @@ export const fieldData: Record<FieldTile, FieldData> = {
     bonus: [pointsBonus(4)],
     type: FieldType.Cauldron,
     colors: [FieldColor.Orange, FieldColor.White],
-    activationEffect: specialEffect([{ ingredientType: IngredientType.Crystal, amount: 3 }], (game) => new FieldEffectHelper(game).threePointsByGroveTile())
+    activationEffect: specialEffect([{ ingredientType: IngredientType.Crystal, amount: 3 }], (game) => new FieldEffectHelper(game).pointsByGroveTile(2))
   }
 }

@@ -67,10 +67,10 @@ export class FieldEffectHelper extends MaterialRulesPart {
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 3 })]
   }
 
-  threePointsByGroveTile(): MaterialMove[] {
+  pointsByGroveTile(points: number): MaterialMove[] {
     const playerGroveTiles = this.material(MaterialType.GroveTile).location(LocationType.PlayerGroveTiles).player(this.player)
     const total = playerGroveTiles.length
-    return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 3 })]
+    return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * points })]
   }
 
   private getNbFieldsWithPlayerApprentice(fieldsIndexes: number[]) {

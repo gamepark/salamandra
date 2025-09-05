@@ -116,10 +116,16 @@ export class SalamandraRules
     return legalMoves
   }
 
-  protected afterItemMove(move: ItemMove): MaterialMove[] {
+  afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = super.afterItemMove(move)
     moves.push(...new EagleDivinityCardHelper(this.game).afterItemMove(move))
     moves.push(...new BearDivinityCardHelper(this.game).afterItemMove(move))
+    return moves
+  }
+
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = super.beforeItemMove(move)
+    moves.push(...new BearDivinityCardHelper(this.game).beforeItemMove(move))
     return moves
   }
 
@@ -187,4 +193,3 @@ export class SalamandraRules
     return 60
   }
 }
-

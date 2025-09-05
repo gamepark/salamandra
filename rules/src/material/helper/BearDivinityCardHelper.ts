@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { BearDivinityCard } from '../BearDivinityCard'
 import { crystalTokens } from '../CrystalToken'
@@ -23,6 +23,12 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     return moves
   }
 
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    moves.push(...this.getBearCard9Effect(move))
+    return moves
+  }
+
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.getBearCard1Effect(move))
@@ -31,7 +37,6 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     moves.push(...this.getBearCard4Effect(move))
     moves.push(...this.getBearCard5Effect(move))
     moves.push(...this.getBearCard7Effect(move))
-    moves.push(...this.getBearCard9Effect(move))
     moves.push(...this.getBearCard10Effect(move))
     moves.push(...this.getBearCard11Effect(move))
     moves.push(...this.getBearCard12Effect(move))
@@ -108,10 +113,10 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
 
   getBearCard9Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity9)) return []
-    if (this.isPlaceApprenticeInSpecificColorField(move, FieldColor.Purple)) {
-      return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
-    }
-    return []
+    if (!this.isPlaceApprenticeInSpecificColorField(move, FieldColor.Purple)) return []
+    const item = this.material(move.itemType).getItem(move.itemIndex)
+    if (item.location.rotation !== move.location.rotation) return []
+    return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
   }
 
   getBearCard10Effect(move: ItemMove): MaterialMove[] {
@@ -154,7 +159,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     return fieldData[field.id as FieldTile].type === FieldType.Cauldron
   }
 
-  isPlaceApprenticeInSpecificColorField(move: ItemMove, color: FieldColor): boolean {
+  isPlaceApprenticeInSpecificColorField(move: ItemMove, color: FieldColor): move is MoveItem {
     if (!isMoveItemType(MaterialType.ApprenticeToken)(move)) return false
     if (move.location.type !== LocationType.FieldApprenticeSpace) return false
     const field = this.material(MaterialType.FieldTile).index(move.location.parent).getItem()
