@@ -36,3 +36,14 @@ export const whiteSalamanderBonus: Record<WhiteSalamanderCard, Bonus[]> = {
   [WhiteSalamanderCard.WhiteSalamander7]: [specialBonus((game) => new FieldEffectHelper(game).takeGroveTile()), pointsBonus(5)],
   [WhiteSalamanderCard.WhiteSalamander8]: [divinityCardBonus(DivinityType.Eagle), pointsBonus(6)]
 }
+
+export const whiteSalamanderCardPoints: Record<WhiteSalamanderCard, number> = {
+  [WhiteSalamanderCard.WhiteSalamander1]: 1,
+  [WhiteSalamanderCard.WhiteSalamander2]: 1,
+  [WhiteSalamanderCard.WhiteSalamander3]: 2,
+  [WhiteSalamanderCard.WhiteSalamander4]: 2,
+  [WhiteSalamanderCard.WhiteSalamander5]: 2,
+  [WhiteSalamanderCard.WhiteSalamander6]: 2,
+  [WhiteSalamanderCard.WhiteSalamander7]: 3,
+  [WhiteSalamanderCard.WhiteSalamander8]: 2
+}

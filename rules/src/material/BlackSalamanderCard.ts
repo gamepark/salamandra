@@ -30,3 +30,14 @@ export const blackSalamanderBonus: Record<BlackSalamanderCard, Bonus[]> = {
   [BlackSalamanderCard.BlackSalamander7]: [scrollBonus(), specialBonus((game) => new FieldEffectHelper(game).twoPointsByDivinityCard())],
   [BlackSalamanderCard.BlackSalamander8]: [scrollBonus(), scrollBonus()]
 }
+
+export const blackSalamanderCardPoints: Record<BlackSalamanderCard, number> = {
+  [BlackSalamanderCard.BlackSalamander1]: 1,
+  [BlackSalamanderCard.BlackSalamander2]: 1,
+  [BlackSalamanderCard.BlackSalamander3]: 1,
+  [BlackSalamanderCard.BlackSalamander4]: 2,
+  [BlackSalamanderCard.BlackSalamander5]: 2,
+  [BlackSalamanderCard.BlackSalamander6]: 2,
+  [BlackSalamanderCard.BlackSalamander7]: 3,
+  [BlackSalamanderCard.BlackSalamander8]: 2
+}

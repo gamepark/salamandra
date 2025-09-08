@@ -13,7 +13,7 @@ export class PrepareNextRoundRule extends SimultaneousRule {
     this.memorize(MemoryType.PlayersWhoPassed, [])
     const actualRound = this.remind<number>(MemoryType.ActualRound)
     if (actualRound === 3) {
-      return [this.startSimultaneousRule(RuleId.CalculScores)]
+      return [this.startRule(RuleId.CalculScores)]
     }
     this.memorize(MemoryType.ActualRound, actualRound + 1)
     const moves: MaterialMove[] = []

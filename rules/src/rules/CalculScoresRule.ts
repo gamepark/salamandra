@@ -1,16 +1,9 @@
-import { MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
+import { MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
+import { ScoreHelper } from './helper/ScoreHelper'
 
-export class CalculScoresRule extends SimultaneousRule {
+export class CalculScoresRule extends MaterialRulesPart {
   onRuleStart(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    return moves
-  }
-
-  getActivePlayerLegalMoves(_player: number): MaterialMove[] {
-    return []
-  }
-
-  getMovesAfterPlayersDone(): MaterialMove[] {
+    new ScoreHelper(this.game).setTotalScore()
     return [this.endGame()]
   }
 }

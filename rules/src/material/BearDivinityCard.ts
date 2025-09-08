@@ -16,3 +16,18 @@ export enum BearDivinityCard {
 }
 
 export const bearDivinityCards: BearDivinityCard[] = getEnumValues(BearDivinityCard)
+
+export const bearDivinityCardPoints: Record<BearDivinityCard, number> = {
+  [BearDivinityCard.BearDivinity1]: 1,
+  [BearDivinityCard.BearDivinity2]: 1,
+  [BearDivinityCard.BearDivinity3]: 1,
+  [BearDivinityCard.BearDivinity4]: 1,
+  [BearDivinityCard.BearDivinity5]: 2,
+  [BearDivinityCard.BearDivinity6]: 2,
+  [BearDivinityCard.BearDivinity7]: 2,
+  [BearDivinityCard.BearDivinity8]: 2,
+  [BearDivinityCard.BearDivinity9]: 4,
+  [BearDivinityCard.BearDivinity10]: 4,
+  [BearDivinityCard.BearDivinity11]: 4,
+  [BearDivinityCard.BearDivinity12]: 4
+}

@@ -1,4 +1,5 @@
 import {
+  CompetitiveScore,
   CustomMove,
   FillGapStrategy,
   hideItemId,
@@ -38,7 +39,9 @@ import { TakeGroveTileRule } from './rules/TakeGroveTileRule'
  */
 export class SalamandraRules
   extends SecretMaterialRules<PlayerColor, MaterialType, LocationType>
-  implements TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>
+  implements
+    TimeLimit<MaterialGame<PlayerColor, MaterialType, LocationType>, MaterialMove<PlayerColor, MaterialType, LocationType>, PlayerColor>,
+    CompetitiveScore
 {
   rules = {
     [RuleId.DoActions]: DoActionsRule,
@@ -203,5 +206,9 @@ export class SalamandraRules
 
   giveTime(): number {
     return 60
+  }
+
+  getScore(playerId: PlayerColor): number {
+    return this.getMemory(playerId).remind(MemoryType.Score)
   }
 }
