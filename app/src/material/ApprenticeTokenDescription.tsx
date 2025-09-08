@@ -47,8 +47,10 @@ class ApprenticeTokenDescription extends CardDescription {
     const isOnFieldApprenticeSpace = item.location.type === LocationType.FieldApprenticeSpace
     if (!isOnFieldApprenticeSpace) return undefined
 
-    const activateField = legalMoves.find((move) => isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move) && move.data === context.index)
-    const flipActions = legalMoves.filter((move) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.rotation !== item.location.rotation)
+    const activateField = legalMoves.filter((move) => isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move) && move.data === context.index)
+    const flipActions = legalMoves.filter(
+      (move) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.rotation !== item.location.rotation && move.itemIndex === context.index
+    )
     const deactivateToGainCrystal = legalMoves.filter((move) => {
       if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal)(move)) return false
       const data = move.data as { itemIndex?: number }
@@ -58,7 +60,9 @@ class ApprenticeTokenDescription extends CardDescription {
     const flipWithoutEffect = context.rules.game.rule?.id === RuleId.ChooseApprenticeToActivate
     const reactivate = context.rules.game.rule?.id === RuleId.ReactivateApprentice
 
-    if (activateField && deactivateToGainCrystal.length) {
+    const allMoves = [...activateField, ...flipActions, ...deactivateToGainCrystal]
+    const countMoves = allMoves.length
+    if (countMoves > 1) {
       return (
         <ItemMenuButton
           label={<Trans defaults="button.activate" />}
@@ -71,12 +75,13 @@ class ApprenticeTokenDescription extends CardDescription {
       )
     }
 
-    if (activateField && !deactivateToGainCrystal.length) {
+    if (countMoves === 1) {
+      console.log(allMoves[0], context.index)
       return (
         <ItemMenuButton
           label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
           y={-1}
-          move={flipActions[0]}
+          move={allMoves[0]}
         >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
         </ItemMenuButton>
