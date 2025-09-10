@@ -1,5 +1,6 @@
 import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
+import { RuleId } from '../../rules/RuleId'
 import { crystalTokens } from '../CrystalToken'
 import { EagleDivinityCard } from '../EagleDivinityCard'
 import { fieldData, FieldTile, FieldType } from '../FieldTile'
@@ -107,6 +108,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   getEagleCard9Effect(): MaterialMove[] {
     const amount = this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity9) ? 3 : 4
     const moves: MaterialMove[] = []
+    if (this.game.rule?.id === RuleId.ChooseApprenticeToActivate || this.game.rule?.id === RuleId.ReactivateApprentice) return moves
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= amount) {
       primaryResources.forEach((resource) => {

@@ -7,7 +7,7 @@ export class ChooseApprenticeToActivateRule extends PlayerTurnRule {
   activateApprenticeHelper = new ActivateApprenticeHelper(this.game, true)
 
   getPlayerMoves() {
-    return this.activateApprenticeHelper.getPlayerMoves()
+    return this.activateApprenticeHelper.rotateApprentice()
   }
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {

@@ -14,17 +14,11 @@ export class ActionsOnPassRule extends PlayerTurnRule {
 
   onRuleStart(): MaterialMove[] {
     this.memorize<PlayerColor[]>(MemoryType.PlayersWhoPassed, (old: PlayerColor[]) => [...old, this.player])
-    return this.activateApprenticeHelper.onRuleStart()
+    return this.activateApprenticeHelper.activateRemainingApprentice()
   }
 
   getPlayerMoves() {
     return [...this.takeGroveTileHelper.getPlayerMoves(), this.customMove(CustomMoveType.Pass)]
-  }
-
-  beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    moves.push(...this.activateApprenticeHelper.beforeItemMove(move, context))
-    return moves
   }
 
   afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
@@ -32,15 +26,16 @@ export class ActionsOnPassRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
+    const moves: MaterialMove[] = this.activateApprenticeHelper.onCustomMove(move)
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [
+      moves.push(
         this.material(MaterialType.DruidTile)
           .location(LocationType.PlayerDruidSpace)
           .player(this.player)
-          .moveItem((item) => ({ ...item.location, rotation: !item.location.rotation })),
+          .rotateItem((item) => !item.location.rotation),
         this.startRule(RuleId.CheckAndUseScrollTokens)
-      ]
+      )
     }
-    return []
+    return moves
   }
 }

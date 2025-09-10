@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { MaterialComponent, MaterialHelpProps, useRules } from '@gamepark/react-game'
-import { MaterialRules } from '@gamepark/rules-api'
+import { MaterialComponent, MaterialHelpProps, usePlay, useRules } from '@gamepark/react-game'
+import { MaterialMoveBuilder, MaterialRules } from '@gamepark/rules-api'
+import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { ActivateTile } from '../../buttons/ActivateTile'
 import { components } from './utils'
+import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
   const { item } = props
@@ -17,6 +19,8 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
   const druitIndex = druid.getIndex()
   const druitRotation = druid.getItem()!.location.rotation
   const isSameRotation = item.location?.rotation === druitRotation
+  const field = item.location?.type === LocationType.FieldApprenticeSpace ? rules.material(MaterialType.FieldTile).index(item.location.parent!) : undefined
+  const play = usePlay()
 
   return (
     <div css={descriptionCss}>
@@ -28,10 +32,30 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
         <Trans defaults="help.apprentice.state" components={components} />
       </p>
       <div css={druitImageCss}>
-        <MaterialComponent type={MaterialType.DruidTile} itemIndex={druitIndex} itemId={item.id} />
+        <MaterialComponent
+          type={MaterialType.DruidTile}
+          itemIndex={druitIndex}
+          itemId={item.id}
+          css={pointerCss}
+          onClick={() => play(displayMaterialHelp(MaterialType.DruidTile, item, druitIndex), { transient: true })}
+        />
         <span>
           <Trans defaults={isSameRotation ? 'help.apprentice.active' : 'help.apprentice.inactive'} components={components} />
         </span>
+        {!!field && (
+          <>
+            <MaterialComponent
+              type={MaterialType.FieldTile}
+              css={pointerCss}
+              onClick={() => play(displayMaterialHelp(MaterialType.FieldTile, field.getItem(), field.getIndex()), { transient: true })}
+              itemIndex={field.getIndex()}
+              itemId={field.getItem()!.id}
+            />
+            <span>
+              <Trans defaults="help.apprentice.field" components={components} />
+            </span>
+          </>
+        )}
       </div>
       <hr />
       <HelpButtons {...props} />
@@ -43,8 +67,8 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const { itemIndex, closeDialog } = props
   return (
     <div css={buttonGridCss}>
-      <ActivateTile onPlay={closeDialog} itemIndex={itemIndex} />
       <ActivateApprenticeToGainCrystal onPlay={closeDialog} itemIndex={itemIndex} />
+      <ActivateTile onPlay={closeDialog} itemIndex={itemIndex} />
     </div>
   )
 }
@@ -73,7 +97,13 @@ const druitImageCss = css`
   width: 100%;
   flex-direction: row;
   align-items: center;
+
   > span {
     margin-left: 1em;
+    flex: 1;
   }
+`
+
+const pointerCss = css`
+  cursor: pointer;
 `

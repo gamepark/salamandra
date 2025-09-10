@@ -13,7 +13,6 @@ type ActivateApprenticeToGainCrystalProps = {
 export const ActivateTile = (props: ActivateApprenticeToGainCrystalProps) => {
   const { onPlay, itemIndex } = props
   const work = useLegalMove<MaterialMove>((move) => {
-    console.log(move)
     return isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move) && move.data === itemIndex
   })
 

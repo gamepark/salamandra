@@ -19,7 +19,7 @@ export const FieldHelp: FC<MaterialHelpProps> = (props) => {
     <div css={descriptionCss}>
       <h4>Bosquet</h4>
       <p css={costContainerCss}>
-        <span>Cost: </span>
+        <span> Cost: </span>
         <br />
         {isFree && <Trans defaults="help.field.free" />}
         {!isFree && (
@@ -62,19 +62,14 @@ const getImages = (cost: Cost) => {
 
 const descriptionCss = css`
   min-height: 100%;
-  width: 100%;
-  border: 0.1em solid #002945;
-  border-radius: 1em;
+  width: 100%
   overflow: hidden;
-  color: #002945;
 
   > h4 {
     margin: 0;
-    color: white;
     text-transform: uppercase;
     text-align: center;
     padding: 0.3em;
-    background-color: #002945;
   }
 `
 

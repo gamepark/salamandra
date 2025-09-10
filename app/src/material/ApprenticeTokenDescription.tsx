@@ -6,7 +6,6 @@ import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
-import { RuleId } from '@gamepark/salamandra/rules/RuleId'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import ApprenticeBlueDay from '../images/tokens/apprentice/ApprenticeBlueDay.jpg'
@@ -57,31 +56,15 @@ class ApprenticeTokenDescription extends CardDescription {
       return data.itemIndex === context.index
     })
 
-    const flipWithoutEffect = context.rules.game.rule?.id === RuleId.ChooseApprenticeToActivate
-    const reactivate = context.rules.game.rule?.id === RuleId.ReactivateApprentice
-
     const allMoves = [...activateField, ...flipActions, ...deactivateToGainCrystal]
     const countMoves = allMoves.length
-    if (countMoves > 1) {
+    if (countMoves) {
       return (
         <ItemMenuButton
           label={<Trans defaults="button.activate" />}
           y={-1}
           move={displayMaterialHelp(MaterialType.ApprenticeToken, item, context.index)}
           options={{ local: true }}
-        >
-          <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
-        </ItemMenuButton>
-      )
-    }
-
-    if (countMoves === 1) {
-      console.log(allMoves[0], context.index)
-      return (
-        <ItemMenuButton
-          label={<Trans defaults={reactivate ? 'button.reactivate' : flipWithoutEffect ? 'button.flip' : 'button.activate'} />}
-          y={-1}
-          move={allMoves[0]}
         >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
         </ItemMenuButton>

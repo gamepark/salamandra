@@ -20,11 +20,13 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     super(game)
   }
 
-  onRuleStart(): MaterialMove[] {
+  activateRemainingApprentice(): MaterialMove[] {
     if (!this.ignoreResourcesCheck) return []
     const playerApprenticeTokenInField = this.playerApprenticeTokenInField
     if (playerApprenticeTokenInField.length === 0) return []
-    return playerApprenticeTokenInField.getIndexes().map((index) => this.customMove(CustomMoveType.ActivateApprenticeForFieldEffect, index))
+    return playerApprenticeTokenInField
+      .getIndexes()
+      .map((index) => this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { itemIndex: index, player: this.player }))
   }
 
   getPlayerMoves() {
@@ -79,6 +81,10 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     return moves
   }
 
+  rotateApprentice() {
+    return this.playerApprenticeTokenInField.rotateItems((item) => !item.location.rotation)
+  }
+
   get playerApprenticeTokenInField() {
     const rotation = this.remind(MemoryType.ActualRound) % 2 !== 0
     return this.material(MaterialType.ApprenticeToken)
@@ -91,7 +97,7 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
 
   isActivateApprenticeMove(move: ItemMove): boolean {
     if (!isMoveItem(move)) return false
-    const oldLocationType = this.material(MaterialType.ApprenticeToken).getItem(move.itemIndex).location.type
-    return oldLocationType === LocationType.FieldApprenticeSpace
+    const oldRotation = this.material(MaterialType.ApprenticeToken).getItem(move.itemIndex).location.rotation
+    return oldRotation !== move.location.rotation
   }
 }
