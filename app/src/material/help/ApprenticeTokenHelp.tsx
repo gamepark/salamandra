@@ -6,6 +6,7 @@ import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { ActivateApprenticeForSalamandra } from '../../buttons/ActivateApprenticeForSalamandra'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { ActivateTile } from '../../buttons/ActivateTile'
 import { components } from './utils'
@@ -69,6 +70,7 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
     <div css={buttonGridCss}>
       <ActivateApprenticeToGainCrystal onPlay={closeDialog} itemIndex={itemIndex} />
       <ActivateTile onPlay={closeDialog} itemIndex={itemIndex} />
+      <ActivateApprenticeForSalamandra onPlay={closeDialog} itemIndex={itemIndex} />
     </div>
   )
 }
