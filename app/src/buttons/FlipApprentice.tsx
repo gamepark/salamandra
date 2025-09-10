@@ -5,12 +5,12 @@ import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { Trans } from 'react-i18next'
 import { components } from '../material/help/utils'
 
-type ActivateApprenticeForSalamandraProps = {
+type FlipApprenticeProps = {
   itemIndex?: number
   onPlay?: () => void
 }
 
-export const ActivateApprenticeForSalamandra = (props: ActivateApprenticeForSalamandraProps) => {
+export const FlipApprentice = (props: FlipApprenticeProps) => {
   const { onPlay, itemIndex } = props
   const activateApprenticeForSalamandra: MoveItem | undefined = useLegalMove<MoveItem>(
     (move: MaterialMove) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.itemIndex === itemIndex
