@@ -21,7 +21,6 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
       return [this.startSimultaneousRule(RuleId.PrepareNextRound)]
     }
     if (playersWhoPassed.includes(this.player)) {
-      console.log(this.player, playersWhoPassed)
       return [this.startRule(RuleId.CheckAndUseScrollTokens)]
     }
 
