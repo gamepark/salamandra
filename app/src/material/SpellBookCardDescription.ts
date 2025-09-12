@@ -10,6 +10,7 @@ import SpellBookCard07 from '../images/cards/spellbook/SpellbookCard07.jpg'
 import SpellBookCard08 from '../images/cards/spellbook/SpellbookCard08.jpg'
 import SpellBookCard09 from '../images/cards/spellbook/SpellbookCard09.jpg'
 import SpellBookCard10 from '../images/cards/spellbook/SpellbookCard10.jpg'
+import { SpellBookCardHelp } from './help/SpellBookCardHelp'
 
 class SpellBookCardDescription extends CardDescription {
   width = 8
@@ -27,6 +28,8 @@ class SpellBookCardDescription extends CardDescription {
     [SpellBookCard.SpellBook9]: SpellBookCard09,
     [SpellBookCard.SpellBook10]: SpellBookCard10
   }
+
+  help = SpellBookCardHelp
 }
 
 export const spellBookCardDescription = new SpellBookCardDescription()

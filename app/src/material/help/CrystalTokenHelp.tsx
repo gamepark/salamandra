@@ -10,7 +10,7 @@ import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { TradeResourceToGainResources } from '../../buttons/TradeResourceToGainResources'
-import { components } from './utils'
+import { components, descriptionCss } from './utils'
 
 export const CrystalTokenHelp = (props: MaterialHelpProps) => {
   const { t } = useTranslation()
@@ -68,15 +68,4 @@ const buttonGridCss = css`
   flex-wrap: wrap;
   gap: 0.5em;
   margin-top: 1em;
-`
-
-const descriptionCss = css`
-  font-size: 0.8em;
-  white-space: pre-wrap;
-  max-width: 45em;
-
-  > h2 {
-    text-align: center;
-    margin-top: 0;
-  }
 `

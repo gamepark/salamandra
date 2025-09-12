@@ -9,7 +9,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { ActivateTile } from '../../buttons/ActivateTile'
 import { FlipApprentice } from '../../buttons/FlipApprentice'
-import { components } from './utils'
+import { components, descriptionCss } from './utils'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
@@ -80,17 +80,6 @@ const buttonGridCss = css`
   flex-wrap: wrap;
   gap: 0.5em;
   margin-top: 1em;
-`
-
-const descriptionCss = css`
-  font-size: 0.8em;
-  white-space: pre-wrap;
-  max-width: 45em;
-
-  > h2 {
-    text-align: center;
-    margin-top: 0;
-  }
 `
 
 const druitImageCss = css`

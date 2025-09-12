@@ -32,6 +32,7 @@ import GroveTile28 from '../images/tiles/grove/GroveTile28.png'
 import GroveTile29 from '../images/tiles/grove/GroveTile29.png'
 import GroveTile30 from '../images/tiles/grove/GroveTile30.png'
 import GroveTileBack from '../images/tiles/grove/GroveTileBack.png'
+import { GroveTileHelp } from './help/GroveTileHelp'
 
 class GroveTileDescription extends CardDescription {
   width = 4.2
@@ -78,6 +79,8 @@ class GroveTileDescription extends CardDescription {
       transform: rotateZ(-45deg) scale(0.8);
     `
   }
+
+  help = GroveTileHelp
 }
 
 export const groveTileDescription = new GroveTileDescription()
