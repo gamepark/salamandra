@@ -13,6 +13,7 @@ import BearDivinityCard10 from '../images/cards/bear/BearCard10.jpg'
 import BearDivinityCard11 from '../images/cards/bear/BearCard11.jpg'
 import BearDivinityCard12 from '../images/cards/bear/BearCard12.jpg'
 import BearDivinityCardBack from '../images/cards/bear/BearCardBack.jpg'
+import { BearDivinityCardHelp } from './help/BearDivinityCardHelp'
 
 class BearDivinityCardDescription extends CardDescription {
   width = 4.1
@@ -35,6 +36,8 @@ class BearDivinityCardDescription extends CardDescription {
     [BearDivinityCard.BearDivinity11]: BearDivinityCard11,
     [BearDivinityCard.BearDivinity12]: BearDivinityCard12
   }
+
+  help = BearDivinityCardHelp
 }
 
 export const bearDivinityCardDescription = new BearDivinityCardDescription()

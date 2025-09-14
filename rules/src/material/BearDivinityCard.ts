@@ -26,8 +26,8 @@ export const bearDivinityCardPoints: Record<BearDivinityCard, number> = {
   [BearDivinityCard.BearDivinity6]: 2,
   [BearDivinityCard.BearDivinity7]: 2,
   [BearDivinityCard.BearDivinity8]: 2,
-  [BearDivinityCard.BearDivinity9]: 4,
-  [BearDivinityCard.BearDivinity10]: 4,
-  [BearDivinityCard.BearDivinity11]: 4,
-  [BearDivinityCard.BearDivinity12]: 4
+  [BearDivinityCard.BearDivinity9]: 3,
+  [BearDivinityCard.BearDivinity10]: 3,
+  [BearDivinityCard.BearDivinity11]: 3,
+  [BearDivinityCard.BearDivinity12]: 3
 }

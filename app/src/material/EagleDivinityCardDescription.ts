@@ -13,6 +13,7 @@ import EagleDivinityCard10 from '../images/cards/eagle/EagleCard10.jpg'
 import EagleDivinityCard11 from '../images/cards/eagle/EagleCard11.jpg'
 import EagleDivinityCard12 from '../images/cards/eagle/EagleCard12.jpg'
 import EagleDivinityCardBack from '../images/cards/eagle/EagleCardBack.jpg'
+import { EagleDivinityCardHelp } from './help/EagleDivinityCardHelp'
 
 class EagleDivinityCardDescription extends CardDescription {
   width = 4.1
@@ -35,6 +36,8 @@ class EagleDivinityCardDescription extends CardDescription {
     [EagleDivinityCard.EagleDivinity11]: EagleDivinityCard11,
     [EagleDivinityCard.EagleDivinity12]: EagleDivinityCard12
   }
+
+  help = EagleDivinityCardHelp
 }
 
 export const eagleDivinityCardDescription = new EagleDivinityCardDescription()
