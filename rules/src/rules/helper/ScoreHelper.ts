@@ -77,12 +77,14 @@ export class ScoreHelper extends MaterialRulesPart {
         })
       } else {
         this.getMemory(playersWithHighestScore[0]).memorize<number>(MemoryType.Score, (previousScore) => previousScore + bearMajorityPoints[0])
-        const secondScore = playersBearScores[1].bearScore
-        const playersWithSecondScore = playersBearScores.filter((p) => p.bearScore === secondScore).map((p) => p.player)
-        playersWithSecondScore.forEach((player) => {
-          const score = Math.floor(bearMajorityPoints[1] / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
+        if (playersBearScores.length > 1) {
+          const secondScore = playersBearScores[1].bearScore
+          const playersWithSecondScore = playersBearScores.filter((p) => p.bearScore === secondScore).map((p) => p.player)
+          playersWithSecondScore.forEach((player) => {
+            const score = Math.floor(bearMajorityPoints[1] / playersWithHighestScore.length)
+            this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
+          })
+        }
       }
     }
   }
