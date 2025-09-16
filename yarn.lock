@@ -1221,17 +1221,17 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@datadog/browser-core@4.50.1":
-  version "4.50.1"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.50.1.tgz#f9014628c697c1cedfd85103094934286c4339ca"
-  integrity sha512-2ypS19XngsMu6W4qUBtDwvImFz886Im+PziOnEycO1w41TVS5LH8/vWBMvjSf8Suer+CeRjRN9IOu0ocRx9BVw==
+"@datadog/browser-core@6.19.0":
+  version "6.19.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-6.19.0.tgz#a417d4a516d956dd87d69fcb3cebcf18c9bf6f2a"
+  integrity sha512-cyqmTXJlysZ3Tx/ZWm3dnDCUh3BT4ndtkkoBKqgEfqpM6DkUSnEFdVtsiF0gvcAkkqassaCq7OIzKo0vR24Qww==
 
-"@datadog/browser-logs@^4.42.0":
-  version "4.50.1"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.50.1.tgz#238b4562de657aed9b4804f97467c8282fb12708"
-  integrity sha512-uSM+T+hAQDH4lUjWNNyj8MfhQKp+sFo88UBaHUzpg0Kio/gZ+tIL7/HmTLCN5eLDWNJfH8eJuCb5Gtcvo14Pkg==
+"@datadog/browser-logs@^6.18.1":
+  version "6.19.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-6.19.0.tgz#e53a81f2d8bcadb0e0c5aa860f6eb85ed25df0ef"
+  integrity sha512-Kiz/5JDuJzisW3U8s+aBYwHJO/3XLzB/C6Tk8m31VzjrLhrKFkGPFUxSHvC0RSUoWsipmauf6qPGPLohaWfP8w==
   dependencies:
-    "@datadog/browser-core" "4.50.1"
+    "@datadog/browser-core" "6.19.0"
 
 "@dnd-kit/accessibility@^3.1.0":
   version "3.1.1"
@@ -1597,13 +1597,13 @@
     pusher-js "^7.0.0"
     redux "^4.2.1"
 
-"@gamepark/react-game@~6.38.5":
-  version "6.38.5"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-game/-/react-game-6.38.5.tgz#66c0c254d6503bad3d0466a41b443d2cbc6623f0"
-  integrity sha512-uI3IiuDVLmlukJje2R4VX+NxT3i/TDiWores2Vwy1Up2XcMS6V7i6eAUwwav57zxCfTm9ALw5aBzgxAjohVSDQ==
+"@gamepark/react-game@~6.38.6":
+  version "6.38.6"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-game/-/react-game-6.38.6.tgz#da7f9d0d944d44dda7d057f754ebb633f3c186ed"
+  integrity sha512-6zIi9AtT+UF6swYfdd35KV8sWhy/uAAA5thVTj7yUzfNKx8FiAVN1NX8tZfHzNprZSyqaGPYHPKxIO/UvoIIOA==
   dependencies:
     "@apollo/client" "^3.5.0"
-    "@datadog/browser-logs" "^4.42.0"
+    "@datadog/browser-logs" "^6.18.1"
     "@dnd-kit/modifiers" "^6.0.1"
     "@fortawesome/fontawesome-svg-core" "^6.6.0"
     "@fortawesome/free-regular-svg-icons" "^6.6.0"
