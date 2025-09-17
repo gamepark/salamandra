@@ -10,6 +10,7 @@ import LeafPotion from '../../images/icons/leaf-potion.jpg'
 import Leaf from '../../images/icons/leaf.jpg'
 import Bear from '../../images/icons/bear.jpg'
 import Eagle from '../../images/icons/eagle.jpg'
+import Salamander from '../../images/icons/salamander.png'
 import CristalToken1 from '../../images/tokens/CristalToken1.png'
 
 const pictureCss = css`
@@ -45,7 +46,8 @@ export const components = {
   flower: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Flower]} />,
   fruit: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Fruit]} />,
   bear: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Bear} />,
-  eagle: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Eagle} />
+  eagle: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Eagle} />,
+  salamander: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Salamander} />
 }
 
 export const descriptionCss = css`

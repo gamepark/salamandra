@@ -9,6 +9,7 @@ import WhiteSalamander6 from '../images/cards/salamander/white/WhiteSalamander6.
 import WhiteSalamander7 from '../images/cards/salamander/white/WhiteSalamander7.jpg'
 import WhiteSalamander8 from '../images/cards/salamander/white/WhiteSalamander8.jpg'
 import WhiteSalamanderCardBack from '../images/cards/salamander/white/WhiteSalamanderBack.jpg'
+import { WhiteSalamanderCardHelp } from './help/WhiteSalamanderCardHelp'
 
 class WhiteSalamanderCardDescription extends CardDescription {
   width = 4.1
@@ -27,6 +28,8 @@ class WhiteSalamanderCardDescription extends CardDescription {
     [WhiteSalamanderCard.WhiteSalamander7]: WhiteSalamander7,
     [WhiteSalamanderCard.WhiteSalamander8]: WhiteSalamander8
   }
+
+  help = WhiteSalamanderCardHelp
 }
 
 export const whiteSalamanderCardDescription = new WhiteSalamanderCardDescription()

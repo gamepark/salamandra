@@ -9,6 +9,7 @@ import BlackSalamander6 from '../images/cards/salamander/black/BlackSalamander6.
 import BlackSalamander7 from '../images/cards/salamander/black/BlackSalamander7.jpg'
 import BlackSalamander8 from '../images/cards/salamander/black/BlackSalamander8.jpg'
 import BlackSalamanderCardBack from '../images/cards/salamander/black/BlackSalamanderBack.jpg'
+import { BlackSalamanderCardHelp } from './help/BlackSalamanderCardHelp'
 
 class BlackSalamanderCardDescription extends CardDescription {
   width = 4.1
@@ -27,6 +28,8 @@ class BlackSalamanderCardDescription extends CardDescription {
     [BlackSalamanderCard.BlackSalamander7]: BlackSalamander7,
     [BlackSalamanderCard.BlackSalamander8]: BlackSalamander8
   }
+
+  help = BlackSalamanderCardHelp
 }
 
 export const blackSalamanderCardDescription = new BlackSalamanderCardDescription()
