@@ -61,9 +61,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
   }
 
   threePointsBySalamanderCard(): MaterialMove[] {
-    const playerWhiteSalamanderCards = this.material(MaterialType.WhiteSalamanderCard).location(LocationType.PlayerWhiteSalamanderCards).player(this.player)
-    const playerBlackSalamanderCards = this.material(MaterialType.BlackSalamanderCard).location(LocationType.PlayerBlackSalamanderCards).player(this.player)
-    const total = playerBlackSalamanderCards.length + playerWhiteSalamanderCards.length
+    const total = this.material(MaterialType.SalamanderCard).player(this.player).length
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 3 })]
   }
 

@@ -2,7 +2,6 @@ import { MaterialGameSetup } from '@gamepark/rules-api'
 import sampleSize from 'lodash/sampleSize'
 import shuffle from 'lodash/shuffle'
 import { bearDivinityCards } from './material/BearDivinityCard'
-import { blackSalamanderCards } from './material/BlackSalamanderCard'
 import { crystalTokens } from './material/CrystalToken'
 import { eagleDivinityCards } from './material/EagleDivinityCard'
 import { fieldTiles, startFieldTiles } from './material/FieldTile'
@@ -11,8 +10,8 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { Potion } from './material/Potion'
 import { PrimaryResource } from './material/PrimaryResource'
+import { blackSalamanderCards, SalamanderCardColor, whiteSalamanderCards } from './material/SalamanderCard'
 import { spellBookCards } from './material/SpellBookCard'
-import { whiteSalamanderCards } from './material/WhiteSalamanderCard'
 import { PlayerColor } from './PlayerColor'
 import { MemoryType } from './rules/MemoryType'
 import { RuleId } from './rules/RuleId'
@@ -41,11 +40,11 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setupSalamandraCardsStacks() {
-    this.material(MaterialType.WhiteSalamanderCard).createItems(
-      shuffle(whiteSalamanderCards).map((it) => ({ id: it, location: { type: LocationType.WhiteSalamanderStack } }))
+    this.material(MaterialType.SalamanderCard).createItems(
+      shuffle(whiteSalamanderCards).map((it) => ({ id: { front: it, back: SalamanderCardColor.White }, location: { type: LocationType.WhiteSalamanderStack } }))
     )
-    this.material(MaterialType.BlackSalamanderCard).createItems(
-      shuffle(blackSalamanderCards).map((it) => ({ id: it, location: { type: LocationType.BlackSalamanderStack } }))
+    this.material(MaterialType.SalamanderCard).createItems(
+      shuffle(blackSalamanderCards).map((it) => ({ id: { front: it, back: SalamanderCardColor.Black }, location: { type: LocationType.BlackSalamanderStack } }))
     )
   }
 

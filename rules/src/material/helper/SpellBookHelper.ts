@@ -34,10 +34,8 @@ export class SpellBookHelper extends MaterialRulesPart {
     return playerBearDivinityCards.length + playerEagleDivinityCards.length
   }
 
-  getSalamanderCards(): number {
-    const playerWhiteSalamanderCards = this.material(MaterialType.WhiteSalamanderCard).location(LocationType.PlayerWhiteSalamanderCards).player(this.player)
-    const playerBlackSalamanderCards = this.material(MaterialType.BlackSalamanderCard).location(LocationType.PlayerBlackSalamanderCards).player(this.player)
-    return playerBlackSalamanderCards.length + playerWhiteSalamanderCards.length
+  get salamanderCount(): number {
+    return this.material(MaterialType.SalamanderCard).player(this.player).length
   }
 
   getGroveTiles(): number {

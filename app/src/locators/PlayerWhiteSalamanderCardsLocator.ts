@@ -1,7 +1,7 @@
 import { DropAreaDescription, ListLocator, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
-import { whiteSalamanderCardDescription } from '../material/WhiteSalamanderCardDescription'
+import { salamanderCardDescription } from '../material/SalamanderCardDescription'
 import { playerEagleCardsLocator } from './PlayerEagleCardsLocator'
 
 class PlayerWhiteSalamanderCardsLocator extends ListLocator {
@@ -13,7 +13,7 @@ class PlayerWhiteSalamanderCardsLocator extends ListLocator {
     return context.rules.material(this.parentItemType).player(location.player).getItem()
   }
 
-  locationDescription = new DropAreaDescription(whiteSalamanderCardDescription)
+  locationDescription = new DropAreaDescription(salamanderCardDescription)
 }
 
 export const playerWhiteSalamanderCardsLocator = new PlayerWhiteSalamanderCardsLocator()

@@ -57,16 +57,14 @@ export class SalamandraRules
   }
 
   locationsStrategies = {
-    [MaterialType.WhiteSalamanderCard]: {
+    [MaterialType.SalamanderCard]: {
       [LocationType.WhiteSalamanderStack]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerWhiteSalamanderCards]: new PositiveSequenceStrategy('y')
+      [LocationType.PlayerWhiteSalamanderCards]: new PositiveSequenceStrategy('y'),
+      [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerBlackSalamanderCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.ScrollToken]: {
       [LocationType.PlayerScrollTokenStock]: new PositiveSequenceStrategy()
-    },
-    [MaterialType.BlackSalamanderCard]: {
-      [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerBlackSalamanderCards]: new PositiveSequenceStrategy('y')
     },
     [MaterialType.GroveTile]: {
       [LocationType.GroveStack]: new PositiveSequenceStrategy(),

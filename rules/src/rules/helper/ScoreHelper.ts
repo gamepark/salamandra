@@ -1,11 +1,10 @@
 import { MaterialRulesPart } from '@gamepark/rules-api'
 import { BearDivinityCard, bearDivinityCardPoints } from '../../material/BearDivinityCard'
-import { BlackSalamanderCard, blackSalamanderCardPoints } from '../../material/BlackSalamanderCard'
 import { EagleDivinityCard, eagleDivinityCardPoints } from '../../material/EagleDivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { SalamanderCard, salamanderCardPoints } from '../../material/SalamanderCard'
 import { SpellBookCard, spellBookData } from '../../material/SpellBookCard'
-import { WhiteSalamanderCard, whiteSalamanderCardPoints } from '../../material/WhiteSalamanderCard'
 import { PlayerColor } from '../../PlayerColor'
 import { MemoryType } from '../MemoryType'
 
@@ -129,23 +128,11 @@ export class ScoreHelper extends MaterialRulesPart {
   }
 
   getPlayerSalamanderScore(player: PlayerColor) {
-    return this.getPlayerWhiteSalamanderScore(player) + this.getPlayerBlackSalamanderScore(player)
-  }
-  getPlayerWhiteSalamanderScore(player: PlayerColor) {
-    return this.material(MaterialType.WhiteSalamanderCard)
-      .location(LocationType.PlayerWhiteSalamanderCards)
-      .player(player)
-      .getItems()
-      .map((it) => whiteSalamanderCardPoints[it.id as WhiteSalamanderCard])
-      .reduce((a, b) => a + b, 0)
-  }
-
-  getPlayerBlackSalamanderScore(player: PlayerColor) {
-    return this.material(MaterialType.BlackSalamanderCard)
+    return this.material(MaterialType.SalamanderCard)
       .location(LocationType.PlayerBlackSalamanderCards)
       .player(player)
       .getItems()
-      .map((it) => blackSalamanderCardPoints[it.id as BlackSalamanderCard])
+      .map((it) => salamanderCardPoints[it.id as SalamanderCard])
       .reduce((a, b) => a + b, 0)
   }
 

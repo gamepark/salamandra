@@ -1,19 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import { PlayMoveButton, useLegalMove } from '@gamepark/react-game'
-import { isMoveItemType, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { Trans } from 'react-i18next'
 import { components } from '../material/help/utils'
 
 type FlipApprenticeProps = {
   itemIndex?: number
+  item: Partial<MaterialItem>
   onPlay?: () => void
 }
 
 export const FlipApprentice = (props: FlipApprenticeProps) => {
-  const { onPlay, itemIndex } = props
+  const { onPlay, itemIndex, item } = props
   const activateApprenticeForSalamandra: MoveItem | undefined = useLegalMove<MoveItem>(
-    (move: MaterialMove) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.itemIndex === itemIndex
+    (move: MaterialMove) =>
+      isMoveItemType(MaterialType.ApprenticeToken)(move) && move.itemIndex === itemIndex && item.location?.type === LocationType.FieldApprenticeSpace
   )
 
   if (!activateApprenticeForSalamandra) return null

@@ -154,14 +154,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   isTakeSalamanderCardMove(move: ItemMove): boolean {
-    return (
-      (isMoveItemType(MaterialType.BlackSalamanderCard)(move) &&
-        move.location.type === LocationType.PlayerBlackSalamanderCards &&
-        move.location.player === this.player) ||
-      (isMoveItemType(MaterialType.WhiteSalamanderCard)(move) &&
-        move.location.type === LocationType.PlayerWhiteSalamanderCards &&
-        move.location.player === this.player)
-    )
+    return isMoveItemType(MaterialType.SalamanderCard)(move) && move.location.player === this.player
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {

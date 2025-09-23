@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
-import { WhiteSalamanderCard, whiteSalamanderCardPoints } from '@gamepark/salamandra/material/WhiteSalamanderCard'
+import { SalamanderCard, salamanderCardPoints } from '@gamepark/salamandra/material/SalamanderCard'
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { components, descriptionCss } from './utils'
 
-export const WhiteSalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
+export const SalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
   const { item } = props
   if (!item.id) return null
-  const points = whiteSalamanderCardPoints[item.id as WhiteSalamanderCard]
+  const points = salamanderCardPoints[item.id as SalamanderCard]
 
   return (
     <div css={descriptionCss}>
@@ -32,7 +32,7 @@ export const WhiteSalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
       </p>
       <p>
         <Trans defaults="help.salamander.bonus" components={components} />
-        <Trans defaults={`help.salamander.bonus.white.${item.id}`} components={components} />
+        <Trans defaults={`help.salamander.bonus.${item.id.front}`} components={components} />
       </p>
       <hr />
     </div>

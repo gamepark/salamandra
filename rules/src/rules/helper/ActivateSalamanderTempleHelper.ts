@@ -1,12 +1,12 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { blackSalamanderBonus, blackSalamanderCost } from '../../material/BlackSalamanderCard'
+import { isMoveItemType, ItemMove, MaterialItem, MaterialMove, MoveItem, PlayerTurnRule } from '@gamepark/rules-api'
 import { Bonus, BonusType, DivinityType } from '../../material/Bonus'
 import { Cost, CostType } from '../../material/Cost'
 import { crystalTokens } from '../../material/CrystalToken'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Potion } from '../../material/Potion'
-import { whiteSalamanderBonus, WhiteSalamanderCard, whiteSalamanderCost } from '../../material/WhiteSalamanderCard'
+import { blackSalamanderCost, salamanderBonus, SalamanderCard, SalamanderCardColor, whiteSalamanderCost } from '../../material/SalamanderCard'
+import { PlayerColor } from '../../PlayerColor'
 import { CustomMoveType } from '../CustomMove'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
@@ -25,49 +25,41 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     return moves
   }
 
-  beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
+  afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.WhiteSalamanderCard)(move) && move.location.type === LocationType.PlayerWhiteSalamanderCards) {
-      this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.ChooseApprenticeToActivate])
-      moves.push(...this.pay(whiteSalamanderCost))
-      moves.push(...this.getWhiteSalamanderBonus(move.itemIndex))
-      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
-    }
-    if (isMoveItemType(MaterialType.BlackSalamanderCard)(move) && move.location.type === LocationType.PlayerBlackSalamanderCards) {
-      this.memorize<RuleId[]>(MemoryType.NextRules, (old?: RuleId[]) => [...(old ?? []), RuleId.ChooseApprenticeToActivate])
-      moves.push(...this.pay(blackSalamanderCost))
-      moves.push(...this.getBlackSalamanderBonus(move.itemIndex))
-      moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    if (
+      isMoveItemType(MaterialType.SalamanderCard)(move) &&
+      (move.location.type === LocationType.PlayerBlackSalamanderCards || move.location.type === LocationType.PlayerWhiteSalamanderCards)
+    ) {
+      moves.push(...this.onBuySalamanderCard(move))
     }
     return moves
   }
 
-  getWhiteSalamanderBonus(itemIndex: number): MaterialMove[] {
-    const salamanderId = this.material(MaterialType.WhiteSalamanderCard).index(itemIndex).getItem()?.id
-    if (salamanderId) {
-      const bonuses: Bonus[] = whiteSalamanderBonus[salamanderId as WhiteSalamanderCard]
-      return bonuses.flatMap((bonus) => this.getSalamanderCardBonus(bonus))
-    }
-    return []
+  onBuySalamanderCard(move: MoveItem) {
+    const moves: MaterialMove[] = []
+    this.memorize<RuleId[]>(MemoryType.NextRules, (old: RuleId[] = []) => old.concat(RuleId.ChooseApprenticeToActivate))
+    const item = this.material(MaterialType.SalamanderCard).index(move.itemIndex).getItem<{ front: SalamanderCard; back: SalamanderCardColor }>()!
+    moves.push(...this.pay(item))
+    moves.push(...this.getSalamanderBonus(item))
+    moves.push(...new NextRuleHelper(this.game).moveToNextRule())
+    return moves
   }
 
-  getBlackSalamanderBonus(itemIndex: number): MaterialMove[] {
-    const salamanderId = this.material(MaterialType.BlackSalamanderCard).index(itemIndex).getItem()?.id
-    if (salamanderId) {
-      const bonuses: Bonus[] = blackSalamanderBonus[salamanderId as WhiteSalamanderCard]
-      return bonuses.flatMap((bonus) => this.getSalamanderCardBonus(bonus))
-    }
-    return []
+  getSalamanderBonus(item: MaterialItem<PlayerColor, LocationType, { front: SalamanderCard; back: SalamanderCardColor }>): MaterialMove[] {
+    const salamanderId = item.id
+    const bonuses: Bonus[] = salamanderBonus[salamanderId.front]
+    return bonuses.flatMap((bonus) => this.getSalamanderCardBonus(bonus))
   }
 
   get whiteSalamanderCards() {
-    return this.material(MaterialType.WhiteSalamanderCard)
+    return this.material(MaterialType.SalamanderCard)
       .location(LocationType.WhiteSalamanderStack)
       .maxBy((item) => item.location.x ?? 0)
   }
 
   get blackSalamanderCards() {
-    return this.material(MaterialType.BlackSalamanderCard)
+    return this.material(MaterialType.SalamanderCard)
       .location(LocationType.BlackSalamanderStack)
       .maxBy((item) => item.location.x ?? 0)
   }
@@ -92,8 +84,9 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
       .maxBy((item) => item.location.x ?? 0)
   }
 
-  private pay(cost: Cost[]): MaterialMove[] {
+  private pay(item: MaterialItem<PlayerColor, LocationType, { front: SalamanderCard; back: SalamanderCardColor }>): MaterialMove[] {
     const moves: MaterialMove[] = []
+    const cost = item.id.back === SalamanderCardColor.Black ? blackSalamanderCost : whiteSalamanderCost
     for (const c of cost) {
       if (c.type === CostType.Potion) {
         const playerPotions = this.remind<Record<Potion, number>>(MemoryType.PlayerPotions, this.player)

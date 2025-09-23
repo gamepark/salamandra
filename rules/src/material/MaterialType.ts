@@ -14,6 +14,6 @@ export enum MaterialType {
   ScrollToken,
   BearDivinityCard,
   EagleDivinityCard,
-  BlackSalamanderCard,
-  WhiteSalamanderCard
+  SalamanderCard
+  //WhiteSalamanderCard
 }
