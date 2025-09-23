@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
 import { Trans } from 'react-i18next'
@@ -11,11 +10,7 @@ export const CheckPassAndEmptyPlacesHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans
-        defaults="header.check.pass.and.empty.places.you"
-      />
-    )
+    return <Trans defaults="header.check.pass.and.empty.places.you" />
   }
 
   return <Trans defaults="header.check.pass.and.empty.places.player" values={{ player: name }} />

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { PlayMoveButton, useLegalMove } from '@gamepark/react-game'
 import { isMoveItemType, MaterialItem, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'

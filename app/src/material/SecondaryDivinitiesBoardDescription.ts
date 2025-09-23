@@ -6,6 +6,8 @@ class SecondaryDivinitiesBoardDescription extends BoardDescription {
   width = 16.65
   height = 10.65
 
+  transparency = true
+
   image = SecondaryDivinitiesBoard
   staticItem = { location: { type: LocationType.SecondaryDivinitiesLayout } }
 }

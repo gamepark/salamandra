@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { SalamanderCard, salamanderCardPoints } from '@gamepark/salamandra/material/SalamanderCard'
 import { FC } from 'react'

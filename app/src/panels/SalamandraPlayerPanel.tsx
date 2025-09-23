@@ -1,14 +1,12 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { Player } from '@gamepark/react-client'
 import { CounterProps, shineEffect, StyledPlayerPanel, useLegalMoves, useRules } from '@gamepark/react-game'
-import { isCustomMoveType, MaterialMove, MaterialRules } from '@gamepark/rules-api'
+import { MaterialMove, MaterialRules } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { Potion } from '@gamepark/salamandra/material/Potion'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
-import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { MemoryType } from '@gamepark/salamandra/rules/MemoryType'
 import { FC, HTMLAttributes, useState } from 'react'
 import Crystal from '../images/icons/crystal.jpg'
@@ -18,7 +16,11 @@ import FruitSelected from '../images/icons/fruit-selected.png'
 import LeafPotion from '../images/icons/leaf-potion.jpg'
 import LeafSelected from '../images/icons/leaf-selected.png'
 import { primaryResourceImages } from '../material/help/utils'
-import { scoreMarkerDescription } from '../material/ScoreMarkerDescription'
+import ScoreMarkerBlue from '../images/tiles/scoreMarker/ScoreMarkerBlue.jpg'
+import ScoreMarkerRed from '../images/tiles/scoreMarker/ScoreMarkerRed.jpg'
+import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
+import ScoreMarkerYellow from '../images/tiles/scoreMarker/ScoreMarkerYellow.jpg'
+import { isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import { ResourceDialog } from './ResourceDialog'
 
 type SalamandraPlayerPanelProps = { player: Player<PlayerColor> } & HTMLAttributes<HTMLDivElement>
@@ -38,7 +40,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
         countersPerLine={3}
         css={[backgroundColorCss(player.id)]}
         {...rest}
-        mainCounter={{ image: scoreMarkerDescription.images[player.id], imageCss, value: score }}
+        mainCounter={{ image: markerImages[player.id], imageCss, value: score }}
         counters={[
           getPrimaryResourceCounter(moves, player.id, PrimaryResource.Flower, primaryResources[PrimaryResource.Flower], () =>
             setDialogResource(PrimaryResource.Flower)
@@ -63,7 +65,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
   )
 }
 
-export const primaryResourceImagesSelected = {
+const primaryResourceImagesSelected = {
   [PrimaryResource.Flower]: FlowerSelected,
   [PrimaryResource.Fruit]: FruitSelected,
   [PrimaryResource.Leaf]: LeafSelected
@@ -76,7 +78,7 @@ const getPrimaryResourceCounter = (
   value: number,
   onClick: () => void
 ): CounterProps => {
-  const canBuy = legalMoves.find((move) => isWinThisResource(move, player, resource))
+  const canBuy = legalMoves.find((move) => isPlayerWinThisResource(move, player, resource))
 
   if (!canBuy) {
     return {
@@ -99,10 +101,11 @@ const getPrimaryResourceCounter = (
   }
 }
 
-export const isWinThisResource = (move: MaterialMove, player: PlayerColor, resource: PrimaryResource) => {
-  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)) return false
-  const data = move.data as { resource: PrimaryResource; player: PlayerColor }
-  return data.resource === resource && data.player === player
+const markerImages = {
+  [PlayerColor.Blue]: ScoreMarkerBlue,
+  [PlayerColor.Grey]: ScoreMarkerGrey,
+  [PlayerColor.Red]: ScoreMarkerRed,
+  [PlayerColor.Yellow]: ScoreMarkerYellow
 }
 
 const backgroundColorCss = (player: PlayerColor) => css`

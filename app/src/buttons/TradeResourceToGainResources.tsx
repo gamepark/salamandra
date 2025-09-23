@@ -1,12 +1,11 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { Picture, PlayMoveButton, useLegalMove } from '@gamepark/react-game'
-import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, MaterialMove } from '@gamepark/rules-api'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
-import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { HTMLAttributes } from 'react'
 import { Trans } from 'react-i18next'
 import { components, primaryResourceImages } from '../material/help/utils'
+import { isWinThisResource } from '../utils/resource.utils.ts'
 
 type TradeResourceToGainResourcesProps = {
   resource: PrimaryResource
@@ -30,12 +29,6 @@ export const TradeResourceToGainResources = (props: TradeResourceToGainResources
       />
     </PlayMoveButton>
   )
-}
-
-export const isWinThisResource = (move: MaterialMove, resource: PrimaryResource) => {
-  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)) return false
-  const data = move.data as { resource: PrimaryResource }
-  return data.resource === resource
 }
 
 const resourceCss = css`

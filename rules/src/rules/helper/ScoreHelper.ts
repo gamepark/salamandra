@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { groupBy, orderBy, values } from 'lodash'
+import { groupBy, orderBy } from 'es-toolkit'
 import { DivinityType } from '../../material/Bonus'
 import { DivinityCard, divinityCardPoints } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
@@ -28,7 +28,7 @@ export class ScoreHelper extends MaterialRulesPart {
 
     const orderedScores = orderBy(scores, (s) => s.score, 'desc')
     const groupedByScore = groupBy(orderedScores, (s) => s.score)
-    return values(groupedByScore)
+    return Object.values(groupedByScore)
   }
 
   getMyScore(allScore: { player: PlayerColor; score: number }[][], majorities: number[]) {

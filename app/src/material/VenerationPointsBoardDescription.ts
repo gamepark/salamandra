@@ -6,6 +6,8 @@ class VenerationPointsBoardDescription extends BoardDescription {
   width = 40
   height = 20
 
+  transparency = true
+
   image = VenerationPointsBoard
   staticItem = { location: { type: LocationType.VenerationPointsLayout } }
 }

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { getRelativePlayerIndex, MaterialContext, useMaterialContext, usePlayers } from '@gamepark/react-game'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'

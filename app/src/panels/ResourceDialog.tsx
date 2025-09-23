@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { linkButtonCss, PlayMoveButton, RulesDialog, useGame, useLegalMoves } from '@gamepark/react-game'
 import { CustomMove, MaterialGame, MaterialMove, MaterialMoveBuilder } from '@gamepark/rules-api'
@@ -11,7 +10,7 @@ import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { TradeResourceToGainResources } from '../buttons/TradeResourceToGainResources'
 import { components } from '../material/help/utils'
-import { isWinThisResource } from './SalamandraPlayerPanel'
+import { isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 type ResourceDialogProps = {
@@ -25,7 +24,7 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
   const game = useGame<MaterialGame>()!
   const moves = useLegalMoves<MaterialMove>()
   const open = !!resource
-  const canBuy = open ? (moves.find((move) => isWinThisResource(move, player, resource)) as CustomMove | undefined) : undefined
+  const canBuy = open ? (moves.find((move) => isPlayerWinThisResource(move, player, resource)) as CustomMove | undefined) : undefined
   const eagleDivinityHelper = new EagleDivinityCardHelper(game, player)
   const hasDivinityThatDecreaseAmount = eagleDivinityHelper.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity9)
 

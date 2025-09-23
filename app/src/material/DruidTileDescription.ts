@@ -15,6 +15,8 @@ class DruidTileDescription extends CardDescription {
   height = 4.7 * 1.7
   borderRadius = 0
 
+  transparency = true
+
   images = {
     [PlayerColor.Blue]: DruidTileDayBlue,
     [PlayerColor.Grey]: DruidTileDayGrey,

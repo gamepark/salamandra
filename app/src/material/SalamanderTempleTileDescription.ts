@@ -6,6 +6,8 @@ class SalamanderTempleTileDescription extends CardDescription {
   width = 18.2
   height = 9.2
 
+  transparency = true
+
   image = SalamanderTempleTile
 
   staticItem = { location: { type: LocationType.GameLayout, x: 0.5, y: 0 } }

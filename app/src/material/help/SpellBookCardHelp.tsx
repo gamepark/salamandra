@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { SpellBookCard, spellBookData } from '@gamepark/salamandra/material/SpellBookCard'
 import { FC } from 'react'

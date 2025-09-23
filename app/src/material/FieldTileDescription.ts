@@ -32,6 +32,8 @@ class FieldTileDescription extends CardDescription {
   width = 9.2
   height = 9.2
 
+  transparency = true
+
   backImage = FieldTileBack
 
   images = {

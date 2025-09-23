@@ -1,10 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import { SalamandraOptionsSpec } from '@gamepark/salamandra/SalamandraOptions'
-import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
-import { SalamandraSetup } from '@gamepark/salamandra/SalamandraSetup'
 import { GameProvider, setupTranslation } from '@gamepark/react-game'
+import { SalamandraOptionsSpec } from '@gamepark/salamandra/SalamandraOptions.ts'
+import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules.ts'
+import { SalamandraSetup } from '@gamepark/salamandra/SalamandraSetup.ts'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
@@ -13,7 +12,7 @@ import translations from './translations.json'
 
 setupTranslation(translations, { debug: false })
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
       game="salamandra"
@@ -31,6 +30,5 @@ ReactDOM.render(
     >
       <App />
     </GameProvider>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 )

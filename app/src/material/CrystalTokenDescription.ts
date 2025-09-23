@@ -9,6 +9,8 @@ class CrystalTokenDescription extends MoneyDescription {
   width = 1.8
   height = 1.6
 
+  transparency = true
+
   images = {
     [CrystalToken.Crystal1]: CristalToken1,
     [CrystalToken.Crystal5]: CristalToken5

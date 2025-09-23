@@ -8,7 +8,7 @@ export class TakeGroveTileRule extends PlayerTurnRule {
   takeGroveTileHelper = new TakeGroveTileHelper(this.game, true)
 
   onRuleStart(): MaterialMove[] {
-    if(this.takeGroveTileHelper.groveTilesInGame.length === 0) {
+    if (this.takeGroveTileHelper.groveTilesInGame.length === 0) {
       return new NextRuleHelper(this.game).moveToNextRule()
     }
     return []

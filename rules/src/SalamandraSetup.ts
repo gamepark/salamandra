@@ -1,6 +1,5 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import sampleSize from 'lodash/sampleSize'
-import shuffle from 'lodash/shuffle'
+import { sampleSize, shuffle } from 'es-toolkit'
 import { DivinityType } from './material/Bonus'
 import { crystalTokens } from './material/CrystalToken'
 import { bearDivinityCards, eagleDivinityCards } from './material/DivinityCard'

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { PlayMoveButton, useLegalMove } from '@gamepark/react-game'
 import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'

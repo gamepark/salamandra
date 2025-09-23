@@ -5,6 +5,8 @@ class ScrollTokenDescription extends TokenDescription {
   width = 0.34 * 3.5
   height = 0.91 * 3.5
 
+  transparency = true
+
   image = ScrollToken
 }
 

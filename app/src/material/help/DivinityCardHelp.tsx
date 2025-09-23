@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { DivinityType } from '@gamepark/salamandra/material/Bonus'
 import { DivinityCard, divinityCardPoints } from '@gamepark/salamandra/material/DivinityCard'

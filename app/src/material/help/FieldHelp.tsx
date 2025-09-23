@@ -1,10 +1,9 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { MaterialHelpProps, Picture } from '@gamepark/react-game'
 import { Cost, CostType } from '@gamepark/salamandra/material/Cost'
 import { CrystalToken } from '@gamepark/salamandra/material/CrystalToken'
 import { fieldData, FieldTile } from '@gamepark/salamandra/material/FieldTile'
-import { times } from 'lodash'
+import { times } from 'es-toolkit/compat'
 import { FC, HTMLAttributes } from 'react'
 import { Trans } from 'react-i18next'
 import { crystalTokenDescription } from '../CrystalTokenDescription'

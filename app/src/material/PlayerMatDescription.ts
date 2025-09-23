@@ -9,6 +9,8 @@ class PlayerMatDescription extends BoardDescription {
   width = 6.6 * 3.5
   height = 4.8 * 3.5
 
+  transparency = true
+
   images = {
     [PlayerColor.Blue]: PlayerMatBlue,
     [PlayerColor.Grey]: PlayerMatGrey,

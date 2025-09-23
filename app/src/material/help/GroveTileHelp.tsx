@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { Bonus, BonusType } from '@gamepark/salamandra/material/Bonus'
 import { groveData, GroveTile } from '@gamepark/salamandra/material/GroveTile'

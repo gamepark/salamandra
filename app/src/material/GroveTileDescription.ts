@@ -41,6 +41,8 @@ class GroveTileDescription extends CardDescription {
 
   backImage = GroveTileBack
 
+  transparency = true
+
   images = {
     [GroveTile.Grove1]: GroveTile01,
     [GroveTile.Grove2]: GroveTile02,

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
 import { Trans } from 'react-i18next'
