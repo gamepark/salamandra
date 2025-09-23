@@ -40,12 +40,14 @@ export class ScoreHelper extends MaterialRulesPart {
         })
       } else {
         this.getMemory(playersWithHighestScore[0]).memorize<number>(MemoryType.Score, (previousScore) => previousScore + eagleMajorityPoints[0])
-        const secondScore = playersEagleScores[1].eagleScore
-        const playersWithSecondScore = playersEagleScores.filter((p) => p.eagleScore === secondScore).map((p) => p.player)
-        playersWithSecondScore.forEach((player) => {
-          const score = Math.floor(eagleMajorityPoints[1] / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
+        if (playersEagleScores.length > 1) {
+          const secondScore = playersEagleScores[1].eagleScore
+          const playersWithSecondScore = playersEagleScores.filter((p) => p.eagleScore === secondScore).map((p) => p.player)
+          playersWithSecondScore.forEach((player) => {
+            const score = Math.floor(eagleMajorityPoints[1] / playersWithHighestScore.length)
+            this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
+          })
+        }
       }
     }
   }

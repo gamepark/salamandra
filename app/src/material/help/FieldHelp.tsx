@@ -18,7 +18,7 @@ export const FieldHelp: FC<MaterialHelpProps> = (props) => {
   return (
     <div css={descriptionCss}>
       <h4>Bosquet</h4>
-      <p css={costContainerCss}>
+      <div css={costContainerCss}>
         <span> Cost: </span>
         <br />
         {isFree && <Trans defaults="help.field.free" />}
@@ -27,7 +27,7 @@ export const FieldHelp: FC<MaterialHelpProps> = (props) => {
             <CostDisplay resources={fieldData[item.id as FieldTile].cost} />
           </div>
         )}
-      </p>
+      </div>
     </div>
   )
 }
