@@ -1,9 +1,9 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
 import sampleSize from 'lodash/sampleSize'
 import shuffle from 'lodash/shuffle'
-import { bearDivinityCards } from './material/BearDivinityCard'
+import { DivinityType } from './material/Bonus'
 import { crystalTokens } from './material/CrystalToken'
-import { eagleDivinityCards } from './material/EagleDivinityCard'
+import { bearDivinityCards, eagleDivinityCards } from './material/DivinityCard'
 import { fieldTiles, startFieldTiles } from './material/FieldTile'
 import { groveTiles } from './material/GroveTile'
 import { LocationType } from './material/LocationType'
@@ -49,15 +49,15 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setupDivinitiesCardsStacks() {
-    this.material(MaterialType.BearDivinityCard).createItems(
+    this.material(MaterialType.DivinityCard).createItems(
       shuffle(bearDivinityCards).map((it) => ({
-        id: it,
+        id: { front: it, back: DivinityType.Bear },
         location: { type: LocationType.BearDivinityStack }
       }))
     )
-    this.material(MaterialType.EagleDivinityCard).createItems(
+    this.material(MaterialType.DivinityCard).createItems(
       shuffle(eagleDivinityCards).map((it) => ({
-        id: it,
+        id: { front: it, back: DivinityType.Eagle },
         location: { type: LocationType.EagleDivinityStack }
       }))
     )

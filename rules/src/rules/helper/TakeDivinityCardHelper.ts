@@ -27,20 +27,23 @@ export class TakeDivinityCardHelper extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.BearDivinityCard)(move) || isMoveItemType(MaterialType.EagleDivinityCard)(move)) {
+    if (
+      isMoveItemType(MaterialType.DivinityCard)(move) &&
+      (move.location.type === LocationType.PlayerBearCards || move.location.type === LocationType.PlayerEagleCards)
+    ) {
       moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
     }
     return moves
   }
 
   get bearCards() {
-    return this.material(MaterialType.BearDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.BearDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }
 
   get eagleCards() {
-    return this.material(MaterialType.EagleDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.EagleDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }

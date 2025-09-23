@@ -28,10 +28,8 @@ export class SpellBookHelper extends MaterialRulesPart {
     return this.getNbFieldsWithPlayerApprentice(cauldronIndexes)
   }
 
-  getDivinityCards(): number {
-    const playerEagleDivinityCards = this.material(MaterialType.EagleDivinityCard).location(LocationType.PlayerEagleCards).player(this.player)
-    const playerBearDivinityCards = this.material(MaterialType.BearDivinityCard).location(LocationType.PlayerBearCards).player(this.player)
-    return playerBearDivinityCards.length + playerEagleDivinityCards.length
+  get divinityCount(): number {
+    return this.material(MaterialType.DivinityCard).player(this.player).length
   }
 
   get salamanderCount(): number {

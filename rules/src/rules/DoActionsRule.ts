@@ -32,7 +32,7 @@ export class DoActionsRule extends PlayerTurnRule {
     moves.push(...this.placeApprenticeHelper.beforeItemMove(move, context))
     moves.push(...this.buildFieldTileHelper.beforeItemMove(move, context))
     moves.push(...this.activateApprenticeHelper.beforeItemMove(move, context))
-    moves.push(...this.activateSalamanderTempleHelper.beforeItemMove(move, context))
+    moves.push(...this.activateSalamanderTempleHelper.beforeItemMove(move))
     return moves
   }
 

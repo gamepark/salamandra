@@ -54,9 +54,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
   }
 
   twoPointsByDivinityCard(): MaterialMove[] {
-    const playerEagleDivinityCards = this.material(MaterialType.EagleDivinityCard).location(LocationType.PlayerEagleCards).player(this.player)
-    const playerBearDivinityCards = this.material(MaterialType.BearDivinityCard).location(LocationType.PlayerBearCards).player(this.player)
-    const total = playerBearDivinityCards.length + playerEagleDivinityCards.length
+    const total = this.material(MaterialType.DivinityCard).player(this.player).length
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 2 })]
   }
 

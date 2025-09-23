@@ -33,9 +33,11 @@ export const SpellBookCardHelp: FC<MaterialHelpProps> = (props) => {
         return 'help.spellbook.points.spellbooks'
       case SpellBookCard.SpellBook10:
       default:
-        return ''
+        return undefined
     }
   }
+
+  const pointDescription = getPointsDescription()
 
   return (
     <div css={descriptionCss}>
@@ -48,7 +50,7 @@ export const SpellBookCardHelp: FC<MaterialHelpProps> = (props) => {
       </p>
       <p>
         <Trans defaults="help.spellbook.points" components={components} values={{ first: points[0], last: points[1] }} />
-        <Trans defaults={getPointsDescription()} components={components} />
+        {!!pointDescription && <Trans defaults={pointDescription} components={components} />}
       </p>
       <hr />
     </div>

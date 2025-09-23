@@ -150,13 +150,13 @@ export class GroveTileHelper extends MaterialRulesPart {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.EagleDivinityCard)
+    return this.material(MaterialType.DruidTile)
       .location(LocationType.EagleDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }
 
   get bearCards() {
-    return this.material(MaterialType.BearDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.BearDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }

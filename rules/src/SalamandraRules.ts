@@ -70,11 +70,9 @@ export class SalamandraRules
       [LocationType.GroveStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerGroveTiles]: new PositiveSequenceStrategy()
     },
-    [MaterialType.BearDivinityCard]: {
+    [MaterialType.DivinityCard]: {
       [LocationType.BearDivinityStack]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerBearCards]: new PositiveSequenceStrategy('y')
-    },
-    [MaterialType.EagleDivinityCard]: {
+      [LocationType.PlayerBearCards]: new PositiveSequenceStrategy('y'),
       [LocationType.EagleDivinityStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerEagleCards]: new PositiveSequenceStrategy('y')
     },

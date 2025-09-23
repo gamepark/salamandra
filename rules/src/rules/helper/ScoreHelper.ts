@@ -1,130 +1,95 @@
-import { MaterialRulesPart } from '@gamepark/rules-api'
-import { BearDivinityCard, bearDivinityCardPoints } from '../../material/BearDivinityCard'
-import { EagleDivinityCard, eagleDivinityCardPoints } from '../../material/EagleDivinityCard'
+import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { groupBy, orderBy, values } from 'lodash'
+import { DivinityType } from '../../material/Bonus'
+import { DivinityCard, divinityCardPoints } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { SalamanderCard, salamanderCardPoints } from '../../material/SalamanderCard'
 import { SpellBookCard, spellBookData } from '../../material/SpellBookCard'
 import { PlayerColor } from '../../PlayerColor'
-import { MemoryType } from '../MemoryType'
 
 const eagleMajorityPoints = [6, 3]
 const bearMajorityPoints = [8, 4]
 const salamanderMajorityPoints = [12, 6]
 
 export class ScoreHelper extends MaterialRulesPart {
-  setTotalScore() {
-    this.setScoreForEagleMajority()
-    this.setScoreForBearMajority()
-    this.setScoreForSalamanderMajority()
-    this.setScoreForScrollTokens()
-    this.setScoreForSpellBooks()
+  constructor(
+    game: MaterialGame,
+    readonly player: PlayerColor
+  ) {
+    super(game)
   }
 
-  setScoreForEagleMajority() {
-    const playersEagleScores = this.game.players
-      .map((player) => {
-        return { player, eagleScore: this.getPlayerEagleScore(player) }
-      })
-      .filter((player) => player.eagleScore > 0)
-      .sort((a, b) => b.eagleScore - a.eagleScore)
+  getPlayersDivinityVictoryPoints(getScore: (p: PlayerColor) => number): { player: PlayerColor; score: number }[][] {
+    const scores = this.game.players.map((p) => ({
+      player: p,
+      score: getScore(p)
+    }))
 
-    if (playersEagleScores.length > 0) {
-      const highestScore = playersEagleScores[0].eagleScore
-      const playersWithHighestScore = playersEagleScores.filter((p) => p.eagleScore === highestScore).map((p) => p.player)
-      if (playersWithHighestScore.length > 1) {
-        playersWithHighestScore.forEach((player) => {
-          const score = Math.floor((eagleMajorityPoints[0] + eagleMajorityPoints[1]) / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
-      } else {
-        this.getMemory(playersWithHighestScore[0]).memorize<number>(MemoryType.Score, (previousScore) => previousScore + eagleMajorityPoints[0])
-        if (playersEagleScores.length > 1) {
-          const secondScore = playersEagleScores[1].eagleScore
-          const playersWithSecondScore = playersEagleScores.filter((p) => p.eagleScore === secondScore).map((p) => p.player)
-          playersWithSecondScore.forEach((player) => {
-            const score = Math.floor(eagleMajorityPoints[1] / playersWithHighestScore.length)
-            this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-          })
-        }
+    const orderedScores = orderBy(scores, (s) => s.score, 'desc')
+    const groupedByScore = groupBy(orderedScores, (s) => s.score)
+    return values(groupedByScore)
+  }
+
+  getMyScore(allScore: { player: PlayerColor; score: number }[][], majorities: number[]) {
+    const firstPlace = allScore[0]
+    if (firstPlace.some((s) => s.player === this.player)) {
+      if (firstPlace.length > 1) {
+        return Math.floor((majorities[0] + majorities[1]) / firstPlace.length)
+      }
+
+      return majorities[0]
+    } else {
+      const secondPlace = allScore[1] ?? []
+      if (secondPlace.length && secondPlace.some((s) => s.player === this.player)) {
+        return Math.floor(majorities[1] / secondPlace.length)
       }
     }
+
+    return 0
   }
 
-  getPlayerEagleScore(player: PlayerColor) {
-    return this.material(MaterialType.EagleDivinityCard)
-      .location(LocationType.PlayerEagleCards)
+  get eagleScore() {
+    return this.getMyScore(
+      this.getPlayersDivinityVictoryPoints((p) => this.getDivinityVictoryPoints(p, DivinityType.Eagle)),
+      eagleMajorityPoints
+    )
+  }
+
+  get bearScore() {
+    return this.getMyScore(
+      this.getPlayersDivinityVictoryPoints((p) => this.getDivinityVictoryPoints(p, DivinityType.Bear)),
+      bearMajorityPoints
+    )
+  }
+
+  get salamandraScore() {
+    return this.getMyScore(
+      this.getPlayersDivinityVictoryPoints((p) => this.getPlayerSalamanderScore(p)),
+      salamanderMajorityPoints
+    )
+  }
+
+  get endOfGameScore() {
+    return this.eagleScore + this.bearScore + this.salamandraScore + this.scrollTokenScore + this.spellBookScore
+  }
+
+  getDivinityVictoryPoints(player: PlayerColor, type: DivinityType) {
+    return this.material(MaterialType.DivinityCard)
       .player(player)
-      .getItems()
-      .map((it) => eagleDivinityCardPoints[it.id as EagleDivinityCard])
+      .id(({ back }: { back: DivinityType }) => back === type)
+      .getItems<{ front: DivinityCard; back: DivinityType }>()
+      .map((it) => divinityCardPoints[it.id.front])
       .reduce((a, b) => a + b, 0)
-  }
-
-  setScoreForBearMajority() {
-    const playersBearScores = this.game.players
-      .map((player) => {
-        return { player, bearScore: this.getPlayerBearScore(player) }
-      })
-      .filter((player) => player.bearScore > 0)
-      .sort((a, b) => b.bearScore - a.bearScore)
-
-    if (playersBearScores.length > 0) {
-      const highestScore = playersBearScores[0].bearScore
-      const playersWithHighestScore = playersBearScores.filter((p) => p.bearScore === highestScore).map((p) => p.player)
-      if (playersWithHighestScore.length > 1) {
-        playersWithHighestScore.forEach((player) => {
-          const score = Math.floor((bearMajorityPoints[0] + bearMajorityPoints[1]) / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
-      } else {
-        this.getMemory(playersWithHighestScore[0]).memorize<number>(MemoryType.Score, (previousScore) => previousScore + bearMajorityPoints[0])
-        if (playersBearScores.length > 1) {
-          const secondScore = playersBearScores[1].bearScore
-          const playersWithSecondScore = playersBearScores.filter((p) => p.bearScore === secondScore).map((p) => p.player)
-          playersWithSecondScore.forEach((player) => {
-            const score = Math.floor(bearMajorityPoints[1] / playersWithHighestScore.length)
-            this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-          })
-        }
-      }
-    }
   }
 
   getPlayerBearScore(player: PlayerColor) {
-    return this.material(MaterialType.BearDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.PlayerBearCards)
       .player(player)
       .getItems()
-      .map((it) => bearDivinityCardPoints[it.id as BearDivinityCard])
+      .map((it) => divinityCardPoints[it.id as DivinityCard])
       .reduce((a, b) => a + b, 0)
-  }
-
-  setScoreForSalamanderMajority() {
-    const playersSalamanderScores = this.game.players
-      .map((player) => {
-        return { player, salamanderScore: this.getPlayerSalamanderScore(player) }
-      })
-      .filter((player) => player.salamanderScore > 0)
-      .sort((a, b) => b.salamanderScore - a.salamanderScore)
-
-    if (playersSalamanderScores.length > 0) {
-      const highestScore = playersSalamanderScores[0].salamanderScore
-      const playersWithHighestScore = playersSalamanderScores.filter((p) => p.salamanderScore === highestScore).map((p) => p.player)
-      if (playersWithHighestScore.length > 1) {
-        playersWithHighestScore.forEach((player) => {
-          const score = Math.floor((salamanderMajorityPoints[0] + salamanderMajorityPoints[1]) / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
-      } else {
-        this.getMemory(playersWithHighestScore[0]).memorize<number>(MemoryType.Score, (previousScore) => previousScore + salamanderMajorityPoints[0])
-        const secondScore = playersSalamanderScores[1].salamanderScore
-        const playersWithSecondScore = playersSalamanderScores.filter((p) => p.salamanderScore === secondScore).map((p) => p.player)
-        playersWithSecondScore.forEach((player) => {
-          const score = Math.floor(salamanderMajorityPoints[1] / playersWithHighestScore.length)
-          this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + score)
-        })
-      }
-    }
   }
 
   getPlayerSalamanderScore(player: PlayerColor) {
@@ -136,35 +101,30 @@ export class ScoreHelper extends MaterialRulesPart {
       .reduce((a, b) => a + b, 0)
   }
 
-  setScoreForScrollTokens() {
-    this.game.players.forEach((player) => {
-      const scrollTokens = this.material(MaterialType.ScrollToken).location(LocationType.PlayerScrollTokenStock).player(player).getItems().length
-      this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + scrollTokens)
-    })
+  get scrollTokenScore() {
+    return this.material(MaterialType.ScrollToken).location(LocationType.PlayerScrollTokenStock).player(this.player).getItems().length
   }
 
-  setScoreForSpellBooks() {
-    this.game.players.forEach((player) => {
-      const spellBooksWithPlayerApprenticeTokens = this.material(MaterialType.ApprenticeToken)
-        .location(LocationType.SpellBookApprenticeSpace)
-        .id(player)
-        .getItems()
-        .map((item) => item.location)
+  get spellBookScore() {
+    const spellBooksWithPlayerApprenticeTokens = this.material(MaterialType.ApprenticeToken)
+      .location(LocationType.SpellBookApprenticeSpace)
+      .id(this.player)
+      .getItems()
+      .map((item) => item.location)
 
-      let totalScore = 0
+    let totalScore = 0
 
-      spellBooksWithPlayerApprenticeTokens.forEach((apprenticeLocation) => {
-        if (apprenticeLocation.parent !== undefined) {
-          const id = this.material(MaterialType.SpellBookCard).index(apprenticeLocation.parent).getItem()?.id as SpellBookCard
+    spellBooksWithPlayerApprenticeTokens.forEach((apprenticeLocation) => {
+      if (apprenticeLocation.parent !== undefined) {
+        const id = this.material(MaterialType.SpellBookCard).index(apprenticeLocation.parent).getItem()?.id as SpellBookCard
 
-          const x = apprenticeLocation.x ?? 0
-          const data = spellBookData[id]
+        const x = apprenticeLocation.x ?? 0
+        const data = spellBookData[id]
 
-          totalScore += data.points[x] * data.getMultiple(this.game, player)
-        }
-      })
-
-      this.getMemory(player).memorize<number>(MemoryType.Score, (previousScore) => previousScore + totalScore)
+        totalScore += data.points[x] * data.getMultiple(this.game, this.player)
+      }
     })
+
+    return totalScore
   }
 }

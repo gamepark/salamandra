@@ -1,10 +1,9 @@
 import { MaterialDescription } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { apprenticeTokenDescription } from './ApprenticeTokenDescription'
-import { bearDivinityCardDescription } from './BearDivinityCardDescription'
 import { crystalTokenDescription } from './CrystalTokenDescription'
+import { divinityCardDescription } from './DivinityCardDescription'
 import { druidTileDescription } from './DruidTileDescription'
-import { eagleDivinityCardDescription } from './EagleDivinityCardDescription'
 import { fieldTileDescription } from './FieldTileDescription'
 import { groveTileDescription } from './GroveTileDescription'
 import { playerMatDescription } from './PlayerMatDescription'
@@ -25,8 +24,7 @@ export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.FieldTile]: fieldTileDescription,
   [MaterialType.GroveTile]: groveTileDescription,
   [MaterialType.SpellBookCard]: spellBookCardDescription,
-  [MaterialType.BearDivinityCard]: bearDivinityCardDescription,
-  [MaterialType.EagleDivinityCard]: eagleDivinityCardDescription,
+  [MaterialType.DivinityCard]: divinityCardDescription,
   [MaterialType.SalamanderCard]: salamanderCardDescription,
   //[MaterialType.WhiteSalamanderCard]: whiteSalamanderCardDescription,
   [MaterialType.ApprenticeToken]: apprenticeTokenDescription

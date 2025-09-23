@@ -2,7 +2,7 @@
 import { css } from '@emotion/react'
 import { linkButtonCss, PlayMoveButton, RulesDialog, useGame, useLegalMoves } from '@gamepark/react-game'
 import { CustomMove, MaterialGame, MaterialMove, MaterialMoveBuilder } from '@gamepark/rules-api'
-import { EagleDivinityCard } from '@gamepark/salamandra/material/EagleDivinityCard'
+import { DivinityCard } from '@gamepark/salamandra/material/DivinityCard'
 import { EagleDivinityCardHelper } from '@gamepark/salamandra/material/helper/EagleDivinityCardHelper'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
@@ -27,7 +27,7 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
   const open = !!resource
   const canBuy = open ? (moves.find((move) => isWinThisResource(move, player, resource)) as CustomMove | undefined) : undefined
   const eagleDivinityHelper = new EagleDivinityCardHelper(game, player)
-  const hasDivinityThatDecreaseAmount = eagleDivinityHelper.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity9)
+  const hasDivinityThatDecreaseAmount = eagleDivinityHelper.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity9)
 
   if (!resource) return null
   return (
@@ -40,7 +40,7 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
       {hasDivinityThatDecreaseAmount && (
         <p css={boldCss}>
           Grâve à votre{' '}
-          <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.EagleDivinityCard, { id: EagleDivinityCard.EagleDivinity9 })} local>
+          <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.DivinityCard, { id: DivinityCard.EagleDivinity9 })} local>
             carte divinité
           </PlayMoveButton>{' '}
           cet échange ne coute que 3 cristaux.

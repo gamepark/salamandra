@@ -2,7 +2,7 @@ import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, Mat
 import { CustomMoveType } from '../../rules/CustomMove'
 import { RuleId } from '../../rules/RuleId'
 import { crystalTokens } from '../CrystalToken'
-import { EagleDivinityCard } from '../EagleDivinityCard'
+import { DivinityCard } from '../DivinityCard'
 import { fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -40,7 +40,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard1Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity1)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity1)) return []
     if (this.isTakeDivinityCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 2 })]
     }
@@ -48,7 +48,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard2Effect(): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity2)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
       return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.Leaf })]
@@ -57,7 +57,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard3Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity3)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity3)) return []
     if (this.isTakeDivinityCardMove(move)) {
       return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
@@ -65,7 +65,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard4Effect(): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity4)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
       return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.FlowerOrFruit })]
@@ -74,7 +74,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard5Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity5)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity5)) return []
     if (isMoveItemType(MaterialType.GroveTile)(move) && move.location.type === LocationType.PlayerGroveTiles && move.location.player === this.player) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -82,7 +82,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard6Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity6)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity6)) return []
     if (this.isTakeDivinityCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -90,7 +90,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard7Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity7)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity7)) return []
     if (this.isTakeSalamanderCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 2 })]
     }
@@ -98,7 +98,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard8Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity8)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity8)) return []
     if (this.isTakeSalamanderCardMove(move)) {
       return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
@@ -106,7 +106,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard9Effect(): MaterialMove[] {
-    const amount = this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity9) ? 3 : 4
+    const amount = this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity9) ? 3 : 4
     const moves: MaterialMove[] = []
     if (this.game.rule?.id === RuleId.ChooseApprenticeToActivate || this.game.rule?.id === RuleId.ReactivateApprentice) return moves
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
@@ -119,7 +119,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard10Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity10)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity10)) return []
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.type === LocationType.SpellBookApprenticeSpace) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 2 })]
     }
@@ -127,7 +127,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard11Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity11)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity11)) return []
     if (this.isTakeSalamanderCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -135,21 +135,21 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   getEagleCard12Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity12)) return []
+    if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity12)) return []
     if (this.isPlaceApprenticeInCauldronField(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
     return []
   }
 
-  checkPlayerHasEagleDivinityCard(cardId: EagleDivinityCard): boolean {
-    return this.material(MaterialType.EagleDivinityCard).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
+  checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
+    return this.material(MaterialType.DivinityCard).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
   }
 
   isTakeDivinityCardMove(move: ItemMove): boolean {
     return (
-      (isMoveItemType(MaterialType.EagleDivinityCard)(move) && move.location.type === LocationType.PlayerEagleCards && move.location.player === this.player) ||
-      (isMoveItemType(MaterialType.BearDivinityCard)(move) && move.location.type === LocationType.PlayerBearCards && move.location.player === this.player)
+      (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerEagleCards && move.location.player === this.player) ||
+      (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerBearCards && move.location.player === this.player)
     )
   }
 

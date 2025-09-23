@@ -25,7 +25,7 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (
       isMoveItemType(MaterialType.SalamanderCard)(move) &&
@@ -73,13 +73,13 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.EagleDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.EagleDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }
 
   get bearCards() {
-    return this.material(MaterialType.BearDivinityCard)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.BearDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }

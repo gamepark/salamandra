@@ -12,8 +12,7 @@ export enum MaterialType {
   PlayerMat,
   DruidTile,
   ScrollToken,
-  BearDivinityCard,
-  EagleDivinityCard,
+  DivinityCard,
   SalamanderCard
   //WhiteSalamanderCard
 }

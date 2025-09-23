@@ -1,8 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
-import { BearDivinityCard } from '../BearDivinityCard'
 import { crystalTokens } from '../CrystalToken'
-import { EagleDivinityCard } from '../EagleDivinityCard'
+import { DivinityCard } from '../DivinityCard'
 import { FieldColor, fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -45,7 +44,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard1Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity1)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity1)) return []
     if (isMoveItemType(MaterialType.GroveTile)(move) && move.location.type === LocationType.PlayerGroveTiles && move.location.player === this.player) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -53,7 +52,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard2Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity2)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity2)) return []
     if (this.isPlaceApprenticeInCauldronField(move)) {
       return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
@@ -61,7 +60,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard3Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity3)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity3)) return []
     if (isMoveItemType(MaterialType.FieldTile)(move) && move.location.type === LocationType.GameLayout) {
       return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
@@ -69,7 +68,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard4Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity4)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity4)) return []
     if (isMoveItemType(MaterialType.ScrollToken)(move) && move.location.type === LocationType.PlayerScrollTokenStock && move.location.player === this.player) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -77,7 +76,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard5Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity5)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity5)) return []
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.type === LocationType.SpellBookApprenticeSpace) {
       return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
     }
@@ -85,8 +84,8 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard6Effect(): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity6)) return []
-    if (this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity4)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity6)) return []
+    if (this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
       return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.FlowerOrFruit })]
@@ -95,7 +94,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard7Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity7)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity7)) return []
     if (isMoveItemType(MaterialType.FieldTile)(move) && move.location.type === LocationType.GameLayout) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 2 })]
     }
@@ -103,8 +102,8 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard8Effect(): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity8)) return []
-    if (this.checkPlayerHasEagleDivinityCard(EagleDivinityCard.EagleDivinity2)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity8)) return []
+    if (this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
       return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.Leaf })]
@@ -113,7 +112,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard9Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity9)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity9)) return []
     if (!this.isPlaceApprenticeInSpecificColorField(move, FieldColor.Purple)) return []
     const item = this.material(move.itemType).getItem(move.itemIndex)
     if (item.location.rotation !== move.location.rotation) return []
@@ -121,7 +120,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard10Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity10)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity10)) return []
     if (this.isPlaceApprenticeInSpecificColorField(move, FieldColor.White)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -129,7 +128,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard11Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity11)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity11)) return []
     if (this.isPlaceApprenticeInSpecificColorField(move, FieldColor.Orange)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -137,19 +136,19 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   getBearCard12Effect(move: ItemMove): MaterialMove[] {
-    if (!this.checkPlayerHasBearDivinityCard(BearDivinityCard.BearDivinity12)) return []
+    if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity12)) return []
     if (this.isPlaceApprenticeInSpecificColorField(move, FieldColor.Green)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
     return []
   }
 
-  checkPlayerHasBearDivinityCard(cardId: BearDivinityCard): boolean {
-    return this.material(MaterialType.BearDivinityCard).location(LocationType.PlayerBearCards).player(this.player).id(cardId).length > 0
+  checkPlayerHasBearDivinityCard(cardId: DivinityCard): boolean {
+    return this.material(MaterialType.DivinityCard).location(LocationType.PlayerBearCards).player(this.player).id(cardId).length > 0
   }
 
-  checkPlayerHasEagleDivinityCard(cardId: EagleDivinityCard): boolean {
-    return this.material(MaterialType.EagleDivinityCard).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
+  checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
+    return this.material(MaterialType.DruidTile).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {
