@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { groupBy, orderBy } from 'es-toolkit'
+import { groupBy, orderBy } from 'es-toolkit/compat'
 import { DivinityType } from '../../material/Bonus'
 import { DivinityCard, divinityCardPoints } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
@@ -12,6 +12,8 @@ const eagleMajorityPoints = [6, 3]
 const bearMajorityPoints = [8, 4]
 const salamanderMajorityPoints = [12, 6]
 
+type ScoreType = { player: PlayerColor; score: number }
+
 export class ScoreHelper extends MaterialRulesPart {
   constructor(
     game: MaterialGame,
@@ -20,13 +22,13 @@ export class ScoreHelper extends MaterialRulesPart {
     super(game)
   }
 
-  getPlayersDivinityVictoryPoints(getScore: (p: PlayerColor) => number): { player: PlayerColor; score: number }[][] {
-    const scores = this.game.players.map((p) => ({
+  getPlayersDivinityVictoryPoints(getScore: (p: PlayerColor) => number): ScoreType[][] {
+    const scores: ScoreType[] = this.game.players.map((p) => ({
       player: p,
       score: getScore(p)
     }))
 
-    const orderedScores = orderBy(scores, (s) => s.score, 'desc')
+    const orderedScores = orderBy(scores, (s: ScoreType) => s.score, 'desc')
     const groupedByScore = groupBy(orderedScores, (s) => s.score)
     return Object.values(groupedByScore)
   }
