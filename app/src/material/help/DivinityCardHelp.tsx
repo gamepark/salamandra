@@ -10,7 +10,7 @@ export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
   if (!item.id) return null
   const id: { front: DivinityCard; back: DivinityType } = item.id
   const type: DivinityType = id.back
-  const points = divinityCardPoints[item.id as DivinityCard]
+  const points = divinityCardPoints[id.front]
 
   return (
     <div css={descriptionCss}>

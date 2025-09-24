@@ -64,7 +64,7 @@ export const divinityCardPoints: Record<DivinityCard, number> = {
   [DivinityCard.EagleDivinity6]: 2,
   [DivinityCard.EagleDivinity7]: 2,
   [DivinityCard.EagleDivinity8]: 2,
-  [DivinityCard.EagleDivinity9]: 4,
+  [DivinityCard.EagleDivinity9]: 3,
   [DivinityCard.EagleDivinity10]: 4,
   [DivinityCard.EagleDivinity11]: 4,
   [DivinityCard.EagleDivinity12]: 4

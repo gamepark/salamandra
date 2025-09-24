@@ -72,7 +72,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
   private getNbFieldsWithPlayerApprentice(fieldsIndexes: number[]) {
     let total = 0
     fieldsIndexes.forEach((index) => {
-      const apprentices = this.material(MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace).parent(index)
+      const apprentices = this.material(MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace).id(this.player).parent(index)
       if (apprentices.length > 0) {
         total += 1
       }

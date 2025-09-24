@@ -39,7 +39,7 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
       {hasDivinityThatDecreaseAmount && (
         <p css={boldCss}>
           Grâve à votre{' '}
-          <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.DivinityCard, { id: DivinityCard.EagleDivinity9 })} local>
+          <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.DivinityCard, { id: { front: DivinityCard.EagleDivinity9 } })} local>
             carte divinité
           </PlayMoveButton>{' '}
           cet échange ne coute que 3 cristaux.
