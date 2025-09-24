@@ -5,6 +5,11 @@ export enum DivinityType {
   Eagle
 }
 
+export type DivinityCardId = {
+  front: DivinityCard
+  back: DivinityType
+}
+
 export enum DivinityCard {
   BearDivinity1 = 1,
   BearDivinity2,

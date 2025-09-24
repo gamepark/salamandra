@@ -2,7 +2,7 @@ import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, Mat
 import { CustomMoveType } from '../../rules/CustomMove'
 import { RuleId } from '../../rules/RuleId'
 import { crystalTokens } from '../CrystalToken'
-import { DivinityCard } from '../DivinityCard'
+import { DivinityCard, DivinityCardId } from '../DivinityCard'
 import { fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -83,6 +83,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
 
   getEagleCard6Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity6)) return []
+    console.log('Eagle card 6 move : ', move)
     if (this.isTakeDivinityCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -143,10 +144,16 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
-    return this.material(MaterialType.DivinityCard).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
+    return (
+      this.material(MaterialType.DivinityCard)
+        .location(LocationType.PlayerEagleCards)
+        .player(this.player)
+        .id(({ front }: DivinityCardId) => front === cardId).length > 0
+    )
   }
 
   isTakeDivinityCardMove(move: ItemMove): boolean {
+    console.log('Is take divinity card : ', move)
     return (
       (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerEagleCards && move.location.player === this.player) ||
       (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerBearCards && move.location.player === this.player)

@@ -1,5 +1,6 @@
 import { css, Interpolation, Theme } from '@emotion/react'
 import { CardDescription } from '@gamepark/react-game'
+import { MaterialItem } from '@gamepark/rules-api'
 import { GroveTile } from '@gamepark/salamandra/material/GroveTile'
 import GroveTile01 from '../images/tiles/grove/GroveTile01.png'
 import GroveTile02 from '../images/tiles/grove/GroveTile02.png'
@@ -76,7 +77,13 @@ class GroveTileDescription extends CardDescription {
     [GroveTile.Grove30]: GroveTile30
   }
 
-  getHelpDisplayExtraCss(): Interpolation<Theme> {
+  getHelpDisplayExtraCss(item: Partial<MaterialItem>): Interpolation<Theme> {
+    if (item.id === undefined) {
+      return css`
+        transform: rotateY(180deg) rotateZ(-45deg) scale(0.8);
+      `
+    }
+
     return css`
       transform: rotateZ(-45deg) scale(0.8);
     `

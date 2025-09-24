@@ -8,6 +8,7 @@ import {
   MaterialMove,
   PositiveSequenceStrategy,
   SecretMaterialRules,
+  StackingStrategy,
   TimeLimit
 } from '@gamepark/rules-api'
 import { crystalTokens } from './material/CrystalToken'
@@ -89,7 +90,7 @@ export class SalamandraRules
     },
     [MaterialType.ScoreMarker]: {
       [LocationType.Score100MarkerIdlePlace]: new FillGapStrategy(),
-      [LocationType.ScorePiste]: new PositiveSequenceStrategy()
+      [LocationType.ScorePiste]: new StackingStrategy()
     }
   }
 
@@ -175,7 +176,7 @@ export class SalamandraRules
     return this.material(MaterialType.ScoreMarker)
       .location(LocationType.ScorePiste)
       .id(player)
-      .moveItem((item) => ({ ...item.location, id: newScore % 100, x: undefined }))
+      .moveItem((item) => ({ ...item.location, x: newScore }))
   }
 
   payCristalsToGainResource(move: CustomMove): MaterialMove[] {

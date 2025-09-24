@@ -33,17 +33,16 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   }
 
   getMovesAfterPlayersDone(): MaterialMove[] {
-    return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.getNextPlayer())]
+    return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
   }
 
-  getNextPlayer(): PlayerColor {
-    const smallestId =
-      this.material(MaterialType.ScoreMarker)
-        .location(LocationType.ScorePiste)
-        .minBy((item) => item.location.id as number)
-        .getItem()?.location.id ?? 0
-    const markersInSmallestScore = this.material(MaterialType.ScoreMarker).location((loc) => loc.type === LocationType.ScorePiste && loc.id === smallestId)
-    return markersInSmallestScore.maxBy((item) => item.location.x ?? 0).getItem()?.id as PlayerColor
+  get nextPlayer(): PlayerColor {
+    const smallestScore = this.material(MaterialType.ScoreMarker)
+      .location(LocationType.ScorePiste)
+      .minBy((item) => item.location.x!)
+      .getItem()!.location.x!
+    const markersInSmallestScore = this.material(MaterialType.ScoreMarker).location((loc) => loc.type === LocationType.ScorePiste && loc.x === smallestScore)
+    return markersInSmallestScore.maxBy((item) => item.location.z ?? 0).getItem<PlayerColor>()!.id
   }
 
   placeGroveOrGetPlayersNextRoundMoves() {

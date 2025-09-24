@@ -139,10 +139,10 @@ export class GroveTileHelper extends MaterialRulesPart {
       }
       if (b.type === BonusType.DivinityCard) {
         if (b.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
-          moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, x: undefined, player: this.player }))
+          moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, player: this.player }))
         }
         if (b.divinity === DivinityType.Bear && this.bearCards.length > 0) {
-          moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, x: undefined, player: this.player }))
+          moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, player: this.player }))
         }
       }
     })
@@ -150,7 +150,7 @@ export class GroveTileHelper extends MaterialRulesPart {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.DruidTile)
+    return this.material(MaterialType.DivinityCard)
       .location(LocationType.EagleDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }

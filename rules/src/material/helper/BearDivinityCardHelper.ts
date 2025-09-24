@@ -1,7 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { crystalTokens } from '../CrystalToken'
-import { DivinityCard } from '../DivinityCard'
+import { DivinityCard, DivinityCardId } from '../DivinityCard'
 import { FieldColor, fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -144,11 +144,21 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   checkPlayerHasBearDivinityCard(cardId: DivinityCard): boolean {
-    return this.material(MaterialType.DivinityCard).location(LocationType.PlayerBearCards).player(this.player).id(cardId).length > 0
+    return (
+      this.material(MaterialType.DivinityCard)
+        .location(LocationType.PlayerBearCards)
+        .player(this.player)
+        .id(({ front }: DivinityCardId) => front === cardId).length > 0
+    )
   }
 
   checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
-    return this.material(MaterialType.DruidTile).location(LocationType.PlayerEagleCards).player(this.player).id(cardId).length > 0
+    return (
+      this.material(MaterialType.DruidTile)
+        .location(LocationType.PlayerEagleCards)
+        .player(this.player)
+        .id(({ front }: DivinityCardId) => front === cardId).length > 0
+    )
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {

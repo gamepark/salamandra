@@ -34,7 +34,7 @@ export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
       </p>
       <p>
         <Trans defaults="help.divinity.effects" components={components} />
-        <Trans defaults={`'help.divinity.effects.${id.front}`} components={components} />
+        <Trans defaults={`help.divinity.effects.${id.front}`} components={components} />
       </p>
       <hr />
     </div>
