@@ -4,12 +4,12 @@ import { GroveTileHelper } from '../material/helper/GroveTileHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { PlayerColor } from '../PlayerColor'
-import { GrovesHelper } from './helper/GrovesHelper'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class PrepareNextRoundRule extends SimultaneousRule {
   groveTileHelper = new GroveTileHelper(this.game)
+
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.PlayersWhoPassed, [])
     const actualRound = this.remind<number>(MemoryType.ActualRound)
