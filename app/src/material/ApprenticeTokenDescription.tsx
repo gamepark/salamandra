@@ -48,7 +48,11 @@ class ApprenticeTokenDescription extends CardDescription {
 
     const activateField = legalMoves.filter((move) => isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move) && move.data === context.index)
     const flipActions = legalMoves.filter(
-      (move) => isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.rotation !== item.location.rotation && move.itemIndex === context.index
+      (move) =>
+        isMoveItemType(MaterialType.ApprenticeToken)(move) &&
+        move.location.rotation !== item.location.rotation &&
+        move.itemIndex === context.index &&
+        move.location.type !== LocationType.SpellBookApprenticeSpace
     )
     const deactivateToGainCrystal = legalMoves.filter((move) => {
       if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForGainCrystal)(move)) return false
