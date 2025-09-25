@@ -7,7 +7,7 @@ import { playerEagleCardsLocator } from './PlayerEagleCardsLocator'
 class PlayerWhiteSalamanderCardsLocator extends ListLocator {
   parentItemType = MaterialType.PlayerMat
   positionOnParent = { x: playerEagleCardsLocator.positionOnParent.x, y: playerEagleCardsLocator.positionOnParent.y + 22 }
-  gap = { y: 3.5 }
+  gap = { x: -0.06, y: -0.06 }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {
     return context.rules.material(this.parentItemType).player(location.player).getItem()
