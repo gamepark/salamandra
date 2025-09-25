@@ -4,6 +4,7 @@ import { GroveTileHelper } from '../material/helper/GroveTileHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { PlayerColor } from '../PlayerColor'
+import { GrovesHelper } from './helper/GrovesHelper'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
@@ -46,8 +47,9 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   }
 
   placeGroveOrGetPlayersNextRoundMoves() {
-    if (this.placeGroveOnEmptySpace().length > 0) {
-      return this.placeGroveOnEmptySpace().splice(0, 1)
+    const placeGroveOnEmptySpace = this.placeGroveOnEmptySpace()
+    if (placeGroveOnEmptySpace.length > 0) {
+      return placeGroveOnEmptySpace.splice(0, 1)
     } else {
       return this.getPlayersNextRoundMoves()
     }
@@ -68,23 +70,6 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   }
 
   placeGroveOnEmptySpace() {
-    const grovesInStack = this.grovesInStack
-    if (grovesInStack.length) {
-      for (const field of this.fieldsInGame) {
-        const emptyGroveLocations = this.groveTileHelper.getEmptyGroveLocations(field.location)
-        if (emptyGroveLocations.length) {
-          return [grovesInStack.moveItem(emptyGroveLocations[0])]
-        }
-      }
-    }
-    return []
-  }
-
-  get fieldsInGame() {
-    return this.material(MaterialType.FieldTile).location(LocationType.GameLayout).getItems()
-  }
-
-  get grovesInStack() {
-    return this.material(MaterialType.GroveTile).location(LocationType.GroveStack).deck()
+    return this.groveTileHelper.placeOneGroveOnEmptySpace()
   }
 }

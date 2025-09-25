@@ -70,7 +70,7 @@ export class BuildFieldTileHelper extends MaterialRulesPart {
       moves.push(...this.fieldTileHelper.getFieldBonus(move.itemIndex))
     }
     if (this.grovesInStack.length) {
-      moves.push(...this.groveTileHelper.getEmptyGroveLocations(move.location).map((loc) => this.grovesInStack.moveItem(loc)))
+      moves.push(...this.groveTileHelper.placeGrovesAroundNewField(move.location))
     }
     if (this.fieldTilesInStack.length > 0) {
       const oldLocation = this.material(MaterialType.FieldTile).getItem(move.itemIndex).location

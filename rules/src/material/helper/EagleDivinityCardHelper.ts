@@ -88,7 +88,6 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
 
   getEagleCard6Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity6)) return []
-    console.log('Eagle card 6 move : ', move)
     if (this.isTakeDivinityCardMove(move)) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
@@ -166,7 +165,6 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   isTakeDivinityCardMove(move: ItemMove): boolean {
-    console.log('Is take divinity card : ', move)
     return (
       (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerEagleCards && move.location.player === this.player) ||
       (isMoveItemType(MaterialType.DivinityCard)(move) && move.location.type === LocationType.PlayerBearCards && move.location.player === this.player)

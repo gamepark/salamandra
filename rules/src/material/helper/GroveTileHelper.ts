@@ -160,4 +160,40 @@ export class GroveTileHelper extends MaterialRulesPart {
       .location(LocationType.BearDivinityStack)
       .maxBy((item) => item.location.x ?? 0)
   }
+
+  placeGrovesAroundNewField(location: Partial<Location>) {
+    const moves: MaterialMove[] = []
+    const grovesInStack = this.grovesInStack
+    const emptyGroveLocations = this.getEmptyGroveLocations(location)
+    for (const location of emptyGroveLocations) {
+      if (!grovesInStack.length) return moves
+      moves.push(grovesInStack.dealOne(location))
+    }
+    return moves
+  }
+
+  placeGrovesOnEmptySpaces() {
+    const moves: MaterialMove[] = []
+    const grovesInStack = this.grovesInStack
+    if (grovesInStack.length) {
+      for (const field of this.fieldsInGame) {
+        moves.push(...this.placeGrovesAroundNewField(field.location))
+      }
+    }
+    return moves
+  }
+
+  placeOneGroveOnEmptySpace() {
+    const moves = this.placeGrovesOnEmptySpaces()
+    if (!moves.length) return []
+    return moves.slice(0, 1)
+  }
+
+  get fieldsInGame() {
+    return this.material(MaterialType.FieldTile).location(LocationType.GameLayout).getItems()
+  }
+
+  get grovesInStack() {
+    return this.material(MaterialType.GroveTile).location(LocationType.GroveStack).deck()
+  }
 }
