@@ -1,23 +1,18 @@
-import { MaterialContext, Locator } from '@gamepark/react-game'
+import { FlexLocator, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
+import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
 
-class PlayerScrollTokenStockLocator extends Locator {
+class PlayerScrollTokenStockLocator extends FlexLocator {
   parentItemType = MaterialType.PlayerMat
+  lineSize = 4
+
+  gap = { x: scrollTokenDescription.width + 1.3 }
+  lineGap = { y: scrollTokenDescription.height + 0.5 }
 
   getPositionOnParent(location: Location): XYCoordinates {
     if (location.x === undefined) return { x: 50, y: 1.2 }
-    switch (location.x) {
-      case 0:
-        return { x: 41, y: 96.5 }
-      case 1:
-        return { x: 51.7, y: 96.5 }
-      case 2:
-        return { x: 62.4, y: 96.5 }
-      case 3:
-      default:
-        return { x: 73.1, y: 96.5 }
-    }
+    return { x: 41, y: 96.5 }
   }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {
