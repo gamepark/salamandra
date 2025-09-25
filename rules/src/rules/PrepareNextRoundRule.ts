@@ -68,13 +68,16 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   }
 
   placeGroveOnEmptySpace() {
-    const moves: MaterialMove[] = []
-    if (this.grovesInStack.length) {
-      this.fieldsInGame.forEach((field) => {
-        moves.push(...this.groveTileHelper.getEmptyGroveLocations(field.location).map((loc) => this.grovesInStack.moveItem(loc)))
-      })
+    const grovesInStack = this.grovesInStack
+    if (grovesInStack.length) {
+      for (const field of this.fieldsInGame) {
+        const emptyGroveLocations = this.groveTileHelper.getEmptyGroveLocations(field.location)
+        if (emptyGroveLocations.length) {
+          return [grovesInStack.moveItem(emptyGroveLocations[0])]
+        }
+      }
     }
-    return moves
+    return []
   }
 
   get fieldsInGame() {
@@ -82,8 +85,6 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   }
 
   get grovesInStack() {
-    return this.material(MaterialType.GroveTile)
-      .location(LocationType.GroveStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.GroveTile).location(LocationType.GroveStack).deck()
   }
 }
