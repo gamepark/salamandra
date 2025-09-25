@@ -130,6 +130,7 @@ export class SalamandraRules
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = super.beforeItemMove(move)
+    moves.push(...new EagleDivinityCardHelper(this.game).beforeItemMove(move))
     moves.push(...new BearDivinityCardHelper(this.game).beforeItemMove(move))
     return moves
   }

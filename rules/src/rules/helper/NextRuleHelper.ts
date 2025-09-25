@@ -19,6 +19,7 @@ export class NextRuleHelper extends MaterialRulesPart {
       this.forget(MemoryType.NextRules)
       return [this.startRule(nextRules[0])]
     }
+
     return [this.startRule(RuleId.CheckAndUseScrollTokens)]
   }
 }

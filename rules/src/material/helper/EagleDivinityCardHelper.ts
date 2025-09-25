@@ -25,12 +25,17 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  beforeItemMove(move: ItemMove) {
     const moves: MaterialMove[] = []
     moves.push(...this.getEagleCard1Effect(move))
     moves.push(...this.getEagleCard3Effect(move))
-    moves.push(...this.getEagleCard5Effect(move))
     moves.push(...this.getEagleCard6Effect(move))
+    return moves
+  }
+
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    moves.push(...this.getEagleCard5Effect(move))
     moves.push(...this.getEagleCard7Effect(move))
     moves.push(...this.getEagleCard8Effect(move))
     moves.push(...this.getEagleCard10Effect(move))

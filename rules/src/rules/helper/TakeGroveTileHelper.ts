@@ -44,6 +44,7 @@ export class TakeGroveTileHelper extends MaterialRulesPart {
       moves.push(...this.groveTileHelper.getGroveBonus(move.itemIndex))
       moves.push(...this.addPointsForSpecificPlayerGrovePosition())
     }
+
     return moves
   }
 
