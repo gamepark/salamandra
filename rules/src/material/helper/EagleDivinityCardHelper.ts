@@ -114,7 +114,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   getEagleCard9Effect(): MaterialMove[] {
     const amount = this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity9) ? 3 : 4
     const moves: MaterialMove[] = []
-    if (this.game.rule?.id === RuleId.ChooseApprenticeToActivate || this.game.rule?.id === RuleId.ReactivateApprentice) return moves
+    if (!this.canPayCrystalForResource) return moves
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= amount) {
       primaryResources.forEach((resource) => {
@@ -122,6 +122,14 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
       })
     }
     return moves
+  }
+
+  get canPayCrystalForResource(): boolean {
+    return (
+      this.game.rule?.id !== RuleId.ChooseApprenticeToActivate &&
+      this.game.rule?.id !== RuleId.ReactivateApprentice &&
+      this.game.rule?.id !== RuleId.CheckAndUseScrollTokens
+    )
   }
 
   getEagleCard10Effect(move: ItemMove): MaterialMove[] {
