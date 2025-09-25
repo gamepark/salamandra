@@ -38,14 +38,14 @@ export const blackSalamanderCost: Cost[] = [{ type: CostType.Potion, potion: Pot
 export const whiteSalamanderCost: Cost[] = [{ type: CostType.Potion, potion: Potion.Leaf }, cost(2)]
 
 export const salamanderBonus: Record<SalamanderCard, Bonus[]> = {
-  [SalamanderCard.BlackSalamander1]: [scrollBonus(), scrollBonus(), crystalBonus(3)],
-  [SalamanderCard.BlackSalamander2]: [scrollBonus(), scrollBonus(), pointsBonus(4)],
+  [SalamanderCard.BlackSalamander1]: [scrollBonus(2), crystalBonus(3)],
+  [SalamanderCard.BlackSalamander2]: [scrollBonus(2), pointsBonus(4)],
   [SalamanderCard.BlackSalamander3]: [scrollBonus(), crystalBonus(5)],
-  [SalamanderCard.BlackSalamander4]: [scrollBonus(), scrollBonus(), pointsBonus(2)],
+  [SalamanderCard.BlackSalamander4]: [scrollBonus(2), pointsBonus(2)],
   [SalamanderCard.BlackSalamander5]: [scrollBonus(), specialBonus((game) => new FieldEffectHelper(game).gainPointsForSpecificField(2, FieldColor.White))],
   [SalamanderCard.BlackSalamander6]: [scrollBonus(), specialBonus((game) => new FieldEffectHelper(game).gainPointsForSpecificField(2, FieldColor.Purple))],
   [SalamanderCard.BlackSalamander7]: [scrollBonus(), specialBonus((game) => new FieldEffectHelper(game).twoPointsByDivinityCard())],
-  [SalamanderCard.BlackSalamander8]: [scrollBonus(), scrollBonus()],
+  [SalamanderCard.BlackSalamander8]: [scrollBonus(2)],
 
   [SalamanderCard.WhiteSalamander1]: [pointsBonus(13)],
   [SalamanderCard.WhiteSalamander2]: [

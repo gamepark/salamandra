@@ -122,9 +122,10 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     if (bonus.type === BonusType.Scroll) {
       moves.push(
-        this.material(MaterialType.ScrollToken)
+        ...this.material(MaterialType.ScrollToken)
           .location(LocationType.ScrollTokenStock)
-          .moveItem({ type: LocationType.PlayerScrollTokenStock, player: this.player })
+          .limit(bonus.count)
+          .moveItems({ type: LocationType.PlayerScrollTokenStock, player: this.player })
       )
     }
     if (bonus.type === BonusType.Points) {
@@ -132,10 +133,10 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     }
     if (bonus.type === BonusType.DivinityCard) {
       if (bonus.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
-        moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, x: undefined, player: this.player }))
+        moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, player: this.player }))
       }
       if (bonus.divinity === DivinityType.Bear && this.bearCards.length > 0) {
-        moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, x: undefined, player: this.player }))
+        moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, player: this.player }))
       }
     }
     if (bonus.type === BonusType.Special) {

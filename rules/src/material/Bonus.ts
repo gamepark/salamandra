@@ -15,6 +15,7 @@ export enum DivinityType {
 
 export type ScrollBonus = {
   type: BonusType.Scroll
+  count: number
 }
 
 export type PointsBonus = {
@@ -39,8 +40,8 @@ export type CrystalBonus = {
 
 export type Bonus = ScrollBonus | PointsBonus | DivinityCardBonus | SpecialBonus | CrystalBonus
 
-export function scrollBonus(): ScrollBonus {
-  return { type: BonusType.Scroll }
+export function scrollBonus(count: number = 1): ScrollBonus {
+  return { type: BonusType.Scroll, count }
 }
 
 export function pointsBonus(amount: number): PointsBonus {
