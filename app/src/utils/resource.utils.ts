@@ -22,7 +22,7 @@ export const isPlayerWinThisResource = (move: MaterialMove, player: PlayerColor,
 }
 
 export const isPlayerWinThisPotion = (move: MaterialMove, player: PlayerColor, potion: Potion) => {
-  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)) return false
+  if (!isCustomMoveType(CustomMoveType.PayCrystalsToGainPotion)(move)) return false
   const data = move.data as { potion: Potion; player: PlayerColor }
   return data.potion === potion && data.player === player
 }

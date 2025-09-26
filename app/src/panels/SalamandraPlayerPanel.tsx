@@ -12,7 +12,8 @@ import { FC, HTMLAttributes, useState } from 'react'
 import Crystal from '../images/icons/crystal.jpg'
 import FlowerSelected from '../images/icons/flower-selected.png'
 import FruitSelected from '../images/icons/fruit-selected.png'
-import LeafPotion from '../images/icons/leaf-potion.jpg'
+import LeafPotionSelected from '../images/icons/leaf-potion-selected.png'
+import FlowerFruitPotionSelected from '../images/icons/flower-fruit-potion-selected.png'
 import LeafSelected from '../images/icons/leaf-selected.png'
 import ScoreMarkerBlue from '../images/tiles/scoreMarker/ScoreMarkerBlue.jpg'
 import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
@@ -58,7 +59,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
             setDialogResource(PrimaryResource.Leaf)
           ),
           getPotionCounter(moves, player.id, Potion.FlowerOrFruit, potions[Potion.FlowerOrFruit], () => setDialogPotion(Potion.FlowerOrFruit)),
-          { image: LeafPotion, imageCss, value: potions[Potion.Leaf] },
+          getPotionCounter(moves, player.id, Potion.Leaf, potions[Potion.Leaf], () => setDialogPotion(Potion.Leaf)),
           {
             image: Crystal,
             imageCss,
@@ -75,6 +76,11 @@ const primaryResourceImagesSelected = {
   [PrimaryResource.Flower]: FlowerSelected,
   [PrimaryResource.Fruit]: FruitSelected,
   [PrimaryResource.Leaf]: LeafSelected
+}
+
+const potionSelected = {
+  [Potion.Leaf]: LeafPotionSelected,
+  [Potion.FlowerOrFruit]: FlowerFruitPotionSelected
 }
 
 const getPrimaryResourceCounter = (
@@ -120,7 +126,7 @@ const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potio
   }
 
   return {
-    image: potionImages[potion],
+    image: potionSelected[potion],
     extraCss: shineEffect,
     imageCss: css`
       ${imageCss};
