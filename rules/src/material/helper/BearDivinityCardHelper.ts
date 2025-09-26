@@ -89,7 +89,14 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     if (this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
-      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.FlowerOrFruit })]
+      return [
+        this.customMove(CustomMoveType.PayCrystalsToGainPotion, {
+          player: this.player,
+          amount: 6,
+          potion: Potion.FlowerOrFruit,
+          divinityIndex: this.getEagleDivinityCard(DivinityCard.EagleDivinity4).getIndexes()
+        })
+      ]
     }
     return []
   }
@@ -107,7 +114,14 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
     if (this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 6) {
-      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 6, potion: Potion.Leaf })]
+      return [
+        this.customMove(CustomMoveType.PayCrystalsToGainPotion, {
+          player: this.player,
+          amount: 6,
+          potion: Potion.Leaf,
+          divinityIndex: this.getEagleDivinityCard(DivinityCard.EagleDivinity2).getIndexes()
+        })
+      ]
     }
     return []
   }
@@ -154,12 +168,14 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   }
 
   checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
-    return (
-      this.material(MaterialType.DruidTile)
-        .location(LocationType.PlayerEagleCards)
-        .player(this.player)
-        .id(({ front }: DivinityCardId) => front === cardId).length > 0
-    )
+    return this.getEagleDivinityCard(cardId).length > 0
+  }
+
+  getEagleDivinityCard(cardId: DivinityCard) {
+    return this.material(MaterialType.DruidTile)
+      .location(LocationType.PlayerEagleCards)
+      .player(this.player)
+      .id(({ front }: DivinityCardId) => front === cardId)
   }
 
   isPlaceApprenticeInCauldronField(move: ItemMove): boolean {

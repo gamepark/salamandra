@@ -125,12 +125,16 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     if (bonus.type === BonusType.Points) {
       moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: bonus.amount }))
     }
+    const bearCards = this.bearCards
     if (bonus.type === BonusType.DivinityCard) {
-      if (bonus.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
-        moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, player: this.player }))
+      const eagleCards = this.eagleCards
+      if (bonus.divinity === DivinityType.Eagle && eagleCards.length > 0) {
+        moves.push(eagleCards.dealOne({ type: LocationType.PlayerEagleCards, player: this.player }))
+        moves.push(eagleCards.rotateItem(true))
       }
-      if (bonus.divinity === DivinityType.Bear && this.bearCards.length > 0) {
-        moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, player: this.player }))
+      if (bonus.divinity === DivinityType.Bear && bearCards.length > 0) {
+        moves.push(bearCards.dealOne({ type: LocationType.PlayerBearCards, player: this.player }))
+        moves.push(bearCards.rotateItem(true))
       }
     }
     if (bonus.type === BonusType.Special) {

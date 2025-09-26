@@ -139,12 +139,16 @@ export class GroveTileHelper extends MaterialRulesPart {
       if (b.type === BonusType.Points) {
         moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: b.amount }))
       }
+      const eagleCards = this.eagleCards
+      const bearCards = this.bearCards
       if (b.type === BonusType.DivinityCard) {
-        if (b.divinity === DivinityType.Eagle && this.eagleCards.length > 0) {
-          moves.push(this.eagleCards.moveItem({ type: LocationType.PlayerEagleCards, player: this.player }))
+        if (b.divinity === DivinityType.Eagle && eagleCards.length > 0) {
+          moves.push(eagleCards.dealOne({ type: LocationType.PlayerEagleCards, player: this.player }))
+          moves.push(eagleCards.rotateItem(true))
         }
-        if (b.divinity === DivinityType.Bear && this.bearCards.length > 0) {
-          moves.push(this.bearCards.moveItem({ type: LocationType.PlayerBearCards, player: this.player }))
+        if (b.divinity === DivinityType.Bear && bearCards.length > 0) {
+          moves.push(bearCards.dealOne({ type: LocationType.PlayerBearCards, player: this.player }))
+          moves.push(bearCards.rotateItem(true))
         }
       }
     })
@@ -152,15 +156,11 @@ export class GroveTileHelper extends MaterialRulesPart {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.EagleDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck()
   }
 
   get bearCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.BearDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck()
   }
 
   placeGrovesAroundNewField(location: Partial<Location>) {

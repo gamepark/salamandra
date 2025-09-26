@@ -1,7 +1,6 @@
 import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { RuleId } from '../../rules/RuleId'
-import { crystalTokens } from '../CrystalToken'
 import { DivinityCard, DivinityCardId } from '../DivinityCard'
 import { fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
@@ -56,7 +55,14 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity2)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
-      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.Leaf })]
+      return [
+        this.customMove(CustomMoveType.PayCrystalsToGainPotion, {
+          player: this.player,
+          amount: 5,
+          potion: Potion.Leaf,
+          divinityIndex: this.getEagleDivinityCard(DivinityCard.EagleDivinity2).getIndex()
+        })
+      ]
     }
     return []
   }
@@ -73,7 +79,14 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity4)) return []
     const crystals = this.material(MaterialType.CrystalToken).player(this.player)
     if (crystals.getQuantity() >= 5) {
-      return [this.customMove(CustomMoveType.PayCrystalsToGainPotion, { player: this.player, amount: 5, potion: Potion.FlowerOrFruit })]
+      return [
+        this.customMove(CustomMoveType.PayCrystalsToGainPotion, {
+          player: this.player,
+          amount: 5,
+          potion: Potion.FlowerOrFruit,
+          divinityIndex: this.getEagleDivinityCard(DivinityCard.EagleDivinity4).getIndex()
+        })
+      ]
     }
     return []
   }
@@ -156,12 +169,14 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   }
 
   checkPlayerHasEagleDivinityCard(cardId: DivinityCard): boolean {
-    return (
-      this.material(MaterialType.DivinityCard)
-        .location(LocationType.PlayerEagleCards)
-        .player(this.player)
-        .id(({ front }: DivinityCardId) => front === cardId).length > 0
-    )
+    return this.getEagleDivinityCard(cardId).length > 0
+  }
+
+  getEagleDivinityCard(cardId: DivinityCard) {
+    return this.material(MaterialType.DivinityCard)
+      .location(LocationType.PlayerEagleCards)
+      .player(this.player)
+      .id(({ front }: DivinityCardId) => front === cardId)
   }
 
   isTakeDivinityCardMove(move: ItemMove): boolean {

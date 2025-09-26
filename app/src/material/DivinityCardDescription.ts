@@ -1,4 +1,5 @@
 import { CardDescription } from '@gamepark/react-game'
+import { DivinityType } from '@gamepark/salamandra/material/Bonus.ts'
 import { DivinityCard } from '@gamepark/salamandra/material/DivinityCard'
 import BearDivinityCard01 from '../images/cards/bear/BearCard01.jpg'
 import BearDivinityCard02 from '../images/cards/bear/BearCard02.jpg'
@@ -13,6 +14,7 @@ import BearDivinityCard10 from '../images/cards/bear/BearCard10.jpg'
 import BearDivinityCard11 from '../images/cards/bear/BearCard11.jpg'
 import BearDivinityCard12 from '../images/cards/bear/BearCard12.jpg'
 import BearDivinityCardBack from '../images/cards/bear/BearCardBack.jpg'
+import EagleDivinityCardBack from '../images/cards/eagle/EagleCardBack.jpg'
 import EagleDivinityCard01 from '../images/cards/eagle/EagleCard01.jpg'
 import EagleDivinityCard02 from '../images/cards/eagle/EagleCard02.jpg'
 import EagleDivinityCard03 from '../images/cards/eagle/EagleCard03.jpg'
@@ -32,7 +34,10 @@ class BearDivinityCardDescription extends CardDescription {
   height = 6.3
   borderRadius = 0.2
 
-  backImage = BearDivinityCardBack
+  backImages = {
+    [DivinityType.Bear]: BearDivinityCardBack,
+    [DivinityType.Eagle]: EagleDivinityCardBack
+  }
 
   images = {
     [DivinityCard.BearDivinity1]: BearDivinityCard01,
