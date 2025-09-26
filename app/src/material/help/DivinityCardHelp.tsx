@@ -18,9 +18,9 @@ import { components, descriptionCss } from './utils'
 export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
   const { item } = props
   if (!item.id) return null
-  const id: { front: DivinityCard; back: DivinityType } = item.id
+  const id: { front?: DivinityCard; back: DivinityType } = item.id
   const type: DivinityType = id.back
-  const points = divinityCardPoints[id.front]
+  const isHidden = id.front === undefined
 
   return (
     <div css={descriptionCss}>
@@ -39,14 +39,18 @@ export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
       <p>
         <Trans defaults="help.divinity.equality.second" components={components} />
       </p>
-      <p>
-        <Trans defaults="help.divinity.points" components={components} values={{ type: type, points }} />
-      </p>
-      <p>
-        <Trans defaults="help.divinity.effects" components={components} />
-        <Trans defaults={`help.divinity.effects.${id.front}`} components={components} />
-      </p>
-      <hr />
+      {!isHidden && (
+        <>
+          <p>
+            <Trans defaults="help.divinity.points" components={components} values={{ type: type, points: divinityCardPoints[id.front!] }} />
+          </p>
+          <p>
+            <Trans defaults="help.divinity.effects" components={components} />
+            <Trans defaults={`help.divinity.effects.${id.front}`} components={components} />
+          </p>
+          <hr />
+        </>
+      )}
       <HelpButtons {...props} />
     </div>
   )

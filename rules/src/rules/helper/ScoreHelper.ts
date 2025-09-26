@@ -104,7 +104,7 @@ export class ScoreHelper extends MaterialRulesPart {
   }
 
   get scrollTokenScore() {
-    return this.material(MaterialType.ScrollToken).location(LocationType.PlayerScrollTokenStock).player(this.player).getItems().length
+    return this.material(MaterialType.ScrollToken).location(LocationType.PlayerScrollTokenStock).player(this.player).getQuantity()
   }
 
   get spellBookScore() {

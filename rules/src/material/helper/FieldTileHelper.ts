@@ -3,7 +3,6 @@ import { CustomMoveType } from '../../rules/CustomMove'
 import { MemoryType } from '../../rules/MemoryType'
 import { BonusType } from '../Bonus'
 import { CostType } from '../Cost'
-import { crystalTokens } from '../CrystalToken'
 import { EffectType, Ingredient, IngredientType } from '../Effect'
 import { FieldColor, fieldData, FieldTile } from '../FieldTile'
 import { LocationType } from '../LocationType'
@@ -47,11 +46,7 @@ export class FieldTileHelper extends MaterialRulesPart {
       const costs = fieldData[fieldTileId].cost
       costs.forEach((cost) => {
         if (cost.type === CostType.Crystal) {
-          moves.push(
-            ...this.material(MaterialType.CrystalToken)
-              .money(crystalTokens)
-              .removeMoney(cost.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-          )
+          moves.push(this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player).deleteItem(cost.amount))
         }
         if (cost.type === CostType.Resource) {
           const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, this.player)
@@ -69,18 +64,17 @@ export class FieldTileHelper extends MaterialRulesPart {
       const effect = fieldData[fieldTileId].activationEffect
       if (effect.type === EffectType.Crystal) {
         moves.push(
-          ...this.material(MaterialType.CrystalToken)
-            .money(crystalTokens)
-            .addMoney(effect.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+          this.material(MaterialType.CrystalToken).createItem({
+            location: { type: LocationType.PlayerCrystalTokenStock, player: this.player },
+            quantity: effect.amount
+          })
         )
       }
       if (effect.type === EffectType.PrimaryResource) {
         const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, this.player)
         playerResources[effect.resource] += effect.amount
         if (effect.hasCrystal) {
-          moves.push(
-            ...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-          )
+          moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player } }))
         }
       }
       if (effect.type === EffectType.Potion) {
@@ -183,11 +177,7 @@ export class FieldTileHelper extends MaterialRulesPart {
     const moves: MaterialMove[] = []
     ingredients.forEach((ingredient) => {
       if (ingredient.ingredientType === IngredientType.Crystal) {
-        moves.push(
-          ...this.material(MaterialType.CrystalToken)
-            .money(crystalTokens)
-            .removeMoney(ingredient.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-        )
+        moves.push(this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player).deleteItem(ingredient.amount))
       }
       if (ingredient.ingredientType === IngredientType.PrimaryResource) {
         const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, this.player)

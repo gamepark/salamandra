@@ -5,13 +5,13 @@ import {
   hideItemId,
   ItemMove,
   MaterialGame,
+  MaterialItem,
   MaterialMove,
   PositiveSequenceStrategy,
   SecretMaterialRules,
   StackingStrategy,
   TimeLimit
 } from '@gamepark/rules-api'
-import { crystalTokens } from './material/CrystalToken'
 import { BearDivinityCardHelper } from './material/helper/BearDivinityCardHelper'
 import { EagleDivinityCardHelper } from './material/helper/EagleDivinityCardHelper'
 import { LocationType } from './material/LocationType'
@@ -97,6 +97,14 @@ export class SalamandraRules
     },
     [MaterialType.FieldTile]: {
       [LocationType.FieldStack]: hideItemId
+    },
+    [MaterialType.SalamanderCard]: {
+      [LocationType.BlackSalamanderStack]: hideItemIdIfNotRotated,
+      [LocationType.WhiteSalamanderStack]: hideItemIdIfNotRotated
+    },
+    [MaterialType.DivinityCard]: {
+      [LocationType.EagleDivinityStack]: hideItemIdIfNotRotated,
+      [LocationType.BearDivinityStack]: hideItemIdIfNotRotated
     }
   }
 
@@ -157,9 +165,9 @@ export class SalamandraRules
     if (itemIndex !== undefined) {
       const apprenticeToken = this.material(MaterialType.ApprenticeToken).index(itemIndex)
       moves.push(...apprenticeToken.rotateItems((item) => !item.location.rotation))
-      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player } }))
     } else {
-      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player }))
+      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player } }))
       this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
       moves.push(...new NextRuleHelper(this.game).moveToNextRule())
     }
@@ -181,14 +189,14 @@ export class SalamandraRules
     const { player, resource, amount } = move.data as { player: PlayerColor; resource: PrimaryResource; amount: number }
     const playerResources = this.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player)
     playerResources[resource] += 1
-    return this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(amount, { type: LocationType.PlayerCrystalTokenStock, player })
+    return this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(player).deleteItems(amount)
   }
 
   payCristalsToGainPotion(move: CustomMove): MaterialMove[] {
     const { player, potion, amount } = move.data as { player: PlayerColor; potion: Potion; amount: number }
     const playerPtions = this.remind<Record<Potion, number>>(MemoryType.PlayerPotions, player)
     playerPtions[potion] += 1
-    return this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(amount, { type: LocationType.PlayerCrystalTokenStock, player })
+    return this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(player).deleteItems(amount)
   }
 
   getPlayerApprenticeTokenInField(player: PlayerColor) {
@@ -207,3 +215,5 @@ export class SalamandraRules
     return this.getMemory(playerId).remind(MemoryType.Score)
   }
 }
+
+const hideItemIdIfNotRotated = (item: MaterialItem) => (!item.location.rotation ? ['id.front'] : [])

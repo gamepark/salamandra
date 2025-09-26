@@ -1,5 +1,4 @@
 import { CustomMove, isCustomMoveType, isMoveItem, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { crystalTokens } from '../../material/CrystalToken'
 import { EffectType } from '../../material/Effect'
 import { fieldData, FieldTile, FieldType } from '../../material/FieldTile'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
@@ -73,9 +72,10 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     if (field) {
       const effect = fieldData[field].activationEffect
       moves.push(
-        ...this.material(MaterialType.CrystalToken)
-          .money(crystalTokens)
-          .addMoney(effect.type === EffectType.Crystal ? effect.amount : 1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+        this.material(MaterialType.CrystalToken)
+          .location(LocationType.PlayerCrystalTokenStock)
+          .player(this.player)
+          .deleteItem(effect.type === EffectType.Crystal ? effect.amount : 1)
       )
     }
     return moves

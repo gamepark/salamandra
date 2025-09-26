@@ -34,4 +34,10 @@ export class ActionsAfterBuildingFieldRule extends PlayerTurnRule {
     moves.push(...this.takeDivinityCardHelper.beforeItemMove(move, context))
     return moves
   }
+
+  afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    moves.push(...this.takeDivinityCardHelper.afterItemMove(move, context))
+    return moves
+  }
 }

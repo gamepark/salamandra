@@ -9,7 +9,6 @@ import {
   PlayMoveContext,
   XYCoordinates
 } from '@gamepark/rules-api'
-import { crystalTokens } from '../../material/CrystalToken'
 import { GroveTileHelper } from '../../material/helper/GroveTileHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -37,9 +36,7 @@ export class TakeGroveTileHelper extends MaterialRulesPart {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.GroveTile)(move) && move.location.type === LocationType.PlayerGroveTiles) {
       if (!this.isBonus) {
-        moves.push(
-          ...this.material(MaterialType.CrystalToken).money(crystalTokens).removeMoney(3, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-        )
+        moves.push(...this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player).deleteItems(3))
       }
       moves.push(...this.groveTileHelper.getGroveBonus(move.itemIndex))
       moves.push(...this.addPointsForSpecificPlayerGrovePosition())

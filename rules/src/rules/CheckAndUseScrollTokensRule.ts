@@ -9,7 +9,7 @@ import { RuleId } from './RuleId'
 
 export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    if (this.playerScrollTokens.length < 4) {
+    if (this.playerScrollTokens.getQuantity() < 4) {
       return this.goToNextPlayer()
     }
     return [this.playerScrollTokens.moveItem({ type: LocationType.ScrollTokenStock }, 4)]

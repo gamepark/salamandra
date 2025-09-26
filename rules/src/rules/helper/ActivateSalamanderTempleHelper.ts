@@ -1,7 +1,6 @@
-import { isMoveItemType, ItemMove, MaterialItem, MaterialMove, MoveItem, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialItem, MaterialMove, MoveItem, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
 import { Bonus, BonusType, DivinityType } from '../../material/Bonus'
 import { Cost, CostType } from '../../material/Cost'
-import { crystalTokens } from '../../material/CrystalToken'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Potion } from '../../material/Potion'
@@ -36,6 +35,14 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     return moves
   }
 
+  afterItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
+    if (!isMoveItemType(MaterialType.SalamanderCard)(move)) return []
+    if (move.location.type !== LocationType.PlayerWhiteSalamanderCards && move.location.type !== LocationType.PlayerBlackSalamanderCards) return []
+    const item = this.material(MaterialType.SalamanderCard).index(move.itemIndex).getItem(move.itemIndex)
+    const deck = item.location.type === LocationType.PlayerWhiteSalamanderCards ? this.whiteSalamanderCards : this.blackSalamanderCards
+    return [deck.rotateItem(true)]
+  }
+
   onBuySalamanderCard(move: MoveItem) {
     const moves: MaterialMove[] = []
     this.memorize<RuleId[]>(MemoryType.NextRules, (old: RuleId[] = []) => old.concat(RuleId.ChooseApprenticeToActivate))
@@ -53,15 +60,11 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
   }
 
   get whiteSalamanderCards() {
-    return this.material(MaterialType.SalamanderCard)
-      .location(LocationType.WhiteSalamanderStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.SalamanderCard).location(LocationType.WhiteSalamanderStack).deck()
   }
 
   get blackSalamanderCards() {
-    return this.material(MaterialType.SalamanderCard)
-      .location(LocationType.BlackSalamanderStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.SalamanderCard).location(LocationType.BlackSalamanderStack).deck()
   }
 
   get playerApprenticeTokenInField() {
@@ -73,15 +76,11 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
   }
 
   get eagleCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.EagleDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck()
   }
 
   get bearCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.BearDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck()
   }
 
   private pay(item: MaterialItem<PlayerColor, LocationType, { front: SalamanderCard; back: SalamanderCardColor }>): MaterialMove[] {
@@ -93,11 +92,7 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
         playerPotions[c.potion] -= 1
       }
       if (c.type === CostType.Crystal) {
-        moves.push(
-          ...this.material(MaterialType.CrystalToken)
-            .money(crystalTokens)
-            .removeMoney(c.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
-        )
+        moves.push(this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player).deleteItem(c.amount))
       }
     }
     return moves
@@ -143,9 +138,10 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     }
     if (bonus.type === BonusType.Crystal) {
       moves.push(
-        ...this.material(MaterialType.CrystalToken)
-          .money(crystalTokens)
-          .addMoney(bonus.amount, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+        this.material(MaterialType.CrystalToken).createItem({
+          location: { type: LocationType.PlayerCrystalTokenStock, player: this.player },
+          quantity: bonus.amount
+        })
       )
     }
     return moves

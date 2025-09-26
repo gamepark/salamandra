@@ -64,7 +64,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   getEagleCard3Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity3)) return []
     if (this.isTakeDivinityCardMove(move)) {
-      return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player } })]
     }
     return []
   }
@@ -105,7 +105,7 @@ export class EagleDivinityCardHelper extends MaterialRulesPart {
   getEagleCard8Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity8)) return []
     if (this.isTakeSalamanderCardMove(move)) {
-      return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player } })]
     }
     return []
   }

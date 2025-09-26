@@ -1,7 +1,6 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
 import { sampleSize, shuffle } from 'es-toolkit'
 import { DivinityType } from './material/Bonus'
-import { crystalTokens } from './material/CrystalToken'
 import { bearDivinityCards, eagleDivinityCards } from './material/DivinityCard'
 import { fieldTiles, startFieldTiles } from './material/FieldTile'
 import { groveTiles } from './material/GroveTile'
@@ -45,6 +44,9 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     this.material(MaterialType.SalamanderCard).createItems(
       shuffle(blackSalamanderCards).map((it) => ({ id: { front: it, back: SalamanderCardColor.Black }, location: { type: LocationType.BlackSalamanderStack } }))
     )
+
+    this.material(MaterialType.SalamanderCard).location(LocationType.BlackSalamanderStack).deck().rotateItem(true)
+    this.material(MaterialType.SalamanderCard).location(LocationType.WhiteSalamanderStack).deck().rotateItem(true)
   }
 
   private setupDivinitiesCardsStacks() {
@@ -60,6 +62,9 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
         location: { type: LocationType.EagleDivinityStack }
       }))
     )
+
+    this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck().rotateItem(true)
+    this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck().rotateItem(true)
   }
 
   private setUpFields() {
@@ -122,7 +127,8 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     this.material(MaterialType.ApprenticeToken)
       .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === 0)
       .moveItems((item) => ({ type: LocationType.PlayerActualRoundApprenticesSpace, player, rotation: item.location.rotation }))
-    this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player })
+
+    this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: player }, quantity: 2 })
   }
 
   private createApprenticeTokens(quantity: number, player: PlayerColor, rotation: boolean, locationId: number) {

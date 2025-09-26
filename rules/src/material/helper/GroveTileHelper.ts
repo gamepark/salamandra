@@ -1,7 +1,6 @@
 import { Location, MaterialGame, MaterialMove, MaterialRulesPart, XYCoordinates } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { BonusType, DivinityType } from '../Bonus'
-import { crystalTokens } from '../CrystalToken'
 import { groveData, GroveTile } from '../GroveTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -42,9 +41,12 @@ export class GroveTileHelper extends MaterialRulesPart {
       nbCrystals += bottomLeftCrystal
     }
     if (nbCrystals) {
-      return this.material(MaterialType.CrystalToken)
-        .money(crystalTokens)
-        .addMoney(nbCrystals, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [
+        this.material(MaterialType.CrystalToken).createItem({
+          location: { type: LocationType.PlayerCrystalTokenStock, player: this.player },
+          quantity: nbCrystals
+        })
+      ]
     }
     return []
   }

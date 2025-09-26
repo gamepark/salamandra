@@ -1,5 +1,4 @@
 import { isMoveItemType, ItemMove, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
-import { crystalTokens } from '../material/CrystalToken'
 import { GroveTileHelper } from '../material/helper/GroveTileHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -58,7 +57,7 @@ export class PrepareNextRoundRule extends SimultaneousRule {
   getPlayersNextRoundMoves() {
     const moves: MaterialMove[] = []
     this.activePlayers.forEach((player) => {
-      moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player }))
+      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player }, quantity: 2 }))
       const apprentices = this.material(MaterialType.ApprenticeToken)
         .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.player === player)
         .getItem()!

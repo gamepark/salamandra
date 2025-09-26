@@ -36,6 +36,12 @@ export class DoActionsRule extends PlayerTurnRule {
     return moves
   }
 
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    moves.push(...this.activateSalamanderTempleHelper.afterItemMove(move))
+    return moves
+  }
+
   onCustomMove(move: CustomMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.activateApprenticeHelper.onCustomMove(move))

@@ -36,15 +36,19 @@ export class TakeDivinityCardHelper extends PlayerTurnRule {
     return moves
   }
 
+  afterItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
+    if (!isMoveItemType(MaterialType.DivinityCard)(move)) return []
+    if (move.location.type !== LocationType.PlayerBearCards && move.location.type !== LocationType.PlayerEagleCards) return []
+    const item = this.material(MaterialType.DivinityCard).index(move.itemIndex).getItem(move.itemIndex)
+    const deck = item.location.type === LocationType.PlayerBearCards ? this.bearCards : this.eagleCards
+    return [deck.rotateItem(true)]
+  }
+
   get bearCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.BearDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck()
   }
 
   get eagleCards() {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.EagleDivinityStack)
-      .maxBy((item) => item.location.x ?? 0)
+    return this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck()
   }
 }

@@ -1,8 +1,6 @@
 import { MoneyDescription } from '@gamepark/react-game'
-import { CrystalToken } from '@gamepark/salamandra/material/CrystalToken'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import CristalToken1 from '../images/tokens/CristalToken1.png'
-import CristalToken5 from '../images/tokens/CristalToken5.png'
 import { CrystalTokenHelp } from './help/CrystalTokenHelp'
 
 class CrystalTokenDescription extends MoneyDescription {
@@ -11,17 +9,10 @@ class CrystalTokenDescription extends MoneyDescription {
 
   transparency = true
 
-  images = {
-    [CrystalToken.Crystal1]: CristalToken1,
-    [CrystalToken.Crystal5]: CristalToken5
-  }
+  image = CristalToken1
 
   stockLocation = { type: LocationType.CristalTokenStock }
-
-  staticItems = [
-    { id: CrystalToken.Crystal1, quantity: 30, location: this.stockLocation },
-    { id: CrystalToken.Crystal5, quantity: 12, location: this.stockLocation }
-  ]
+  staticItem = { quantity: 30, location: this.stockLocation }
 
   help = CrystalTokenHelp
 }

@@ -51,8 +51,8 @@ export class CheckPassAndEmptyPlacesRule extends PlayerTurnRule {
       let canBuildThisTile = true
       cost.forEach((c) => {
         if (c.type === CostType.Crystal) {
-          const playerCrystals = this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player)
-          if (playerCrystals.getQuantity() < c.amount) {
+          const playerCrystals = this.material(MaterialType.CrystalToken).location(LocationType.PlayerCrystalTokenStock).player(this.player).getQuantity()
+          if (playerCrystals < c.amount) {
             canBuildThisTile = false
           }
         }

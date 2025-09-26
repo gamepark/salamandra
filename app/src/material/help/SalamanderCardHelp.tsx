@@ -6,8 +6,7 @@ import { components, descriptionCss } from './utils'
 
 export const SalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
   const { item } = props
-  if (!item.id) return null
-  const points = salamanderCardPoints[item.id as SalamanderCard]
+  const isHidden = item.id.front === undefined
 
   return (
     <div css={descriptionCss}>
@@ -26,14 +25,22 @@ export const SalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
       <p>
         <Trans defaults="help.divinity.equality.second" components={components} />
       </p>
-      <p>
-        <Trans defaults="help.divinity.points" components={components} values={{ type: undefined, points }} />
-      </p>
-      <p>
-        <Trans defaults="help.salamander.bonus" components={components} />
-        <Trans defaults={`help.salamander.bonus.${item.id.front}`} components={components} />
-      </p>
-      <hr />
+      {!isHidden && (
+        <>
+          <p>
+            <Trans
+              defaults="help.divinity.points"
+              components={components}
+              values={{ type: undefined, points: salamanderCardPoints[item.id.front as SalamanderCard] }}
+            />
+          </p>
+          <p>
+            <Trans defaults="help.salamander.bonus" components={components} />
+            <Trans defaults={`help.salamander.bonus.${item.id.front}`} components={components} />
+          </p>
+          <hr />
+        </>
+      )}
     </div>
   )
 }

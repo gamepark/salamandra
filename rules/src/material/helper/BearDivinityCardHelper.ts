@@ -1,6 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
-import { crystalTokens } from '../CrystalToken'
 import { DivinityCard, DivinityCardId } from '../DivinityCard'
 import { FieldColor, fieldData, FieldTile, FieldType } from '../FieldTile'
 import { LocationType } from '../LocationType'
@@ -54,7 +53,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   getBearCard2Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity2)) return []
     if (this.isPlaceApprenticeInCauldronField(move)) {
-      return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player } })]
     }
     return []
   }
@@ -62,7 +61,7 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   getBearCard3Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity3)) return []
     if (isMoveItemType(MaterialType.FieldTile)(move) && move.location.type === LocationType.GameLayout) {
-      return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(1, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player } })]
     }
     return []
   }
@@ -78,7 +77,9 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
   getBearCard5Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity5)) return []
     if (isMoveItemType(MaterialType.ApprenticeToken)(move) && move.location.type === LocationType.SpellBookApprenticeSpace) {
-      return this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: this.player })
+      return [
+        this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player: this.player }, quantity: 2 })
+      ]
     }
     return []
   }
