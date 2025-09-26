@@ -3,15 +3,26 @@ import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { Potion } from '../material/Potion'
 import { PrimaryResource } from '../material/PrimaryResource'
+import { PlayerColor } from '../PlayerColor'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     if (this.playerScrollTokens.length < 4) {
-      return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
+      return this.goToNextPlayer()
     }
-    return [this.playerScrollTokens.limit(4).moveItemsAtOnce({ type: LocationType.ScrollTokenStock })]
+    return [this.playerScrollTokens.moveItem({ type: LocationType.ScrollTokenStock }, 4)]
+  }
+
+  goToNextPlayer() {
+    const playersWhoPassed = this.remind<PlayerColor[]>(MemoryType.PlayersWhoPassed)
+    if (playersWhoPassed.length === this.game.players.length - 1 && !playersWhoPassed.includes(this.player)) {
+      console.log('??')
+      return [this.startRule(RuleId.CheckPassAndEmptyPlaces)]
+    }
+
+    return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
   }
 
   getPlayerMoves() {
@@ -40,7 +51,7 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.ApprenticeToken)(move)) {
-      return [this.startPlayerTurn(RuleId.CheckPassAndEmptyPlaces, this.nextPlayer)]
+      return this.goToNextPlayer()
     }
     return []
   }

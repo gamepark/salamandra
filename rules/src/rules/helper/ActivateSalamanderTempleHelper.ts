@@ -124,8 +124,7 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
       moves.push(
         ...this.material(MaterialType.ScrollToken)
           .location(LocationType.ScrollTokenStock)
-          .limit(bonus.count)
-          .moveItems({ type: LocationType.PlayerScrollTokenStock, player: this.player })
+          .moveItems({ type: LocationType.PlayerScrollTokenStock, player: this.player }, bonus.count)
       )
     }
     if (bonus.type === BonusType.Points) {

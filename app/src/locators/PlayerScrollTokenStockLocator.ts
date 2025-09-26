@@ -9,11 +9,7 @@ class PlayerScrollTokenStockLocator extends FlexLocator {
 
   gap = { x: scrollTokenDescription.width + 1.3 }
   lineGap = { y: scrollTokenDescription.height + 0.5 }
-
-  getPositionOnParent(location: Location): XYCoordinates {
-    if (location.x === undefined) return { x: 50, y: 1.2 }
-    return { x: 41, y: 96.5 }
-  }
+  positionOnParent = { x: 41, y: 96.5 }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {
     return context.rules.material(this.parentItemType).player(location.player).getItem()

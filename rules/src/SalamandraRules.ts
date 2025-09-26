@@ -64,9 +64,6 @@ export class SalamandraRules
       [LocationType.BlackSalamanderStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerBlackSalamanderCards]: new PositiveSequenceStrategy('y')
     },
-    [MaterialType.ScrollToken]: {
-      [LocationType.PlayerScrollTokenStock]: new PositiveSequenceStrategy()
-    },
     [MaterialType.GroveTile]: {
       [LocationType.GroveStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerGroveTiles]: new PositiveSequenceStrategy()
@@ -110,7 +107,7 @@ export class SalamandraRules
       legalMoves.push(...new EagleDivinityCardHelper(this.game).getLegalMoves())
       legalMoves.push(...new BearDivinityCardHelper(this.game).getLegalMoves())
 
-      if (this.game.rule?.id !== RuleId.ChooseApprenticeToActivate && this.game.rule?.id !== RuleId.ReactivateApprentice && apprenticeTokenInField.length > 0) {
+      if (this.game.rule?.id === RuleId.DoActions && apprenticeTokenInField.length > 0) {
         if (!apprenticeTokenInField.length) return legalMoves
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
         legalMoves.push(

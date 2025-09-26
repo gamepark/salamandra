@@ -67,9 +67,9 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const { itemIndex, item, closeDialog } = props
   return (
     <div css={buttonGridCss}>
-      <ActivateApprenticeToGainCrystal onPlay={closeDialog} itemIndex={itemIndex} />
       <ActivateTile onPlay={closeDialog} itemIndex={itemIndex} />
       <FlipApprentice onPlay={closeDialog} itemIndex={itemIndex} item={item} />
+      <ActivateApprenticeToGainCrystal onPlay={closeDialog} itemIndex={itemIndex} />
     </div>
   )
 }
