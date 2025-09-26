@@ -59,10 +59,14 @@ export class PrepareNextRoundRule extends SimultaneousRule {
     const moves: MaterialMove[] = []
     this.activePlayers.forEach((player) => {
       moves.push(...this.material(MaterialType.CrystalToken).money(crystalTokens).addMoney(2, { type: LocationType.PlayerCrystalTokenStock, player: player }))
+      const apprentices = this.material(MaterialType.ApprenticeToken)
+        .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.player === player)
+        .getItem()!
+
       moves.push(
-        ...this.material(MaterialType.ApprenticeToken)
+        this.material(MaterialType.ApprenticeToken)
           .location((loc) => loc.type === LocationType.PlayerApprenticesSpace && loc.id === this.remind(MemoryType.ActualRound) && loc.player === player)
-          .moveItems((item) => ({ type: LocationType.PlayerActualRoundApprenticesSpace, player, rotation: item.location.rotation }))
+          .moveItemsAtOnce({ type: LocationType.PlayerActualRoundApprenticesSpace, player, rotation: apprentices.location.rotation })
       )
       moves.push(this.endPlayerTurn(player))
     })
