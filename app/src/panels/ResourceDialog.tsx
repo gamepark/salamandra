@@ -4,31 +4,34 @@ import { CustomMove, MaterialGame, MaterialMove, MaterialMoveBuilder } from '@ga
 import { DivinityCard } from '@gamepark/salamandra/material/DivinityCard'
 import { EagleDivinityCardHelper } from '@gamepark/salamandra/material/helper/EagleDivinityCardHelper'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
+import { Potion } from '@gamepark/salamandra/material/Potion.ts'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
-import { TradeResourceToGainResources } from '../buttons/TradeResourceToGainResources'
+import { TradeCrystalToGainResources } from '../buttons/TradeCrystalToGainResources.tsx'
+import { TradeCrystalToGainPotion } from '../buttons/TradeResourceToGainPotion.tsx'
 import { components } from '../material/help/utils'
-import { isPlayerWinThisResource } from '../utils/resource.utils.ts'
+import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 type ResourceDialogProps = {
   player: PlayerColor
   resource?: PrimaryResource
+  potion?: Potion
   onClose?: () => void
 }
 
 export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
-  const { player, resource, onClose } = props
+  const { player, resource, potion, onClose } = props
   const game = useGame<MaterialGame>()!
   const moves = useLegalMoves<MaterialMove>()
-  const open = !!resource
-  const canBuy = open ? (moves.find((move) => isPlayerWinThisResource(move, player, resource)) as CustomMove | undefined) : undefined
+  const canBuyResource = resource ? (moves.find((move) => isPlayerWinThisResource(move, player, resource)) as CustomMove | undefined) : undefined
+  const canBuyPotion = potion ? (moves.find((move) => isPlayerWinThisPotion(move, player, potion)) as CustomMove | undefined) : undefined
   const eagleDivinityHelper = new EagleDivinityCardHelper(game, player)
   const hasDivinityThatDecreaseAmount = eagleDivinityHelper.checkPlayerHasEagleDivinityCard(DivinityCard.EagleDivinity9)
 
-  if (!resource) return null
+  if (!resource && !potion) return null
   return (
     <RulesDialog open close={onClose} css={dialogCss}>
       <h1>Echange de ressource</h1>
@@ -45,7 +48,8 @@ export const ResourceDialog: FC<ResourceDialogProps> = (props) => {
           cet échange ne coute que 3 cristaux.
         </p>
       )}
-      <p>{canBuy && <TradeResourceToGainResources resource={resource} onPlay={onClose} />}</p>
+      <p>{canBuyResource && resource && <TradeCrystalToGainResources resource={resource} onPlay={onClose} />}</p>
+      <p>{canBuyPotion && potion && <TradeCrystalToGainPotion potion={potion} onPlay={onClose} />}</p>
     </RulesDialog>
   )
 }

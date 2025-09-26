@@ -7,12 +7,12 @@ import { Trans } from 'react-i18next'
 import { components, primaryResourceImages } from '../material/help/utils'
 import { isWinThisResource } from '../utils/resource.utils.ts'
 
-type TradeResourceToGainResourcesProps = {
+type TradeCrystalToGainResourcesProps = {
   resource: PrimaryResource
   onPlay?: () => void
 }
 
-export const TradeResourceToGainResources = (props: TradeResourceToGainResourcesProps) => {
+export const TradeCrystalToGainResources = (props: TradeCrystalToGainResourcesProps) => {
   const { onPlay, resource } = props
   const canBuy = useLegalMove((move: MaterialMove) => isWinThisResource(move, resource)) as CustomMove | undefined
   if (!canBuy) return null

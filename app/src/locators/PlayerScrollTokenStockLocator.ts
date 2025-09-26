@@ -1,5 +1,5 @@
 import { FlexLocator, MaterialContext } from '@gamepark/react-game'
-import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
 

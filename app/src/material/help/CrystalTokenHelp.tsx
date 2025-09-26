@@ -8,7 +8,7 @@ import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
-import { TradeResourceToGainResources } from '../../buttons/TradeResourceToGainResources'
+import { TradeCrystalToGainResources } from '../../buttons/TradeCrystalToGainResources.tsx'
 import { components, descriptionCss } from './utils'
 
 export const CrystalTokenHelp = (props: MaterialHelpProps) => {
@@ -46,7 +46,7 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
       {payCristalsToGainResource.map((move: CustomMove, index) => {
         const data: { resource: PrimaryResource } = move.data
         if (!isPlayerCrystal || activePlayer !== me) return null
-        return <TradeResourceToGainResources key={index} resource={data.resource} onPlay={closeDialog} />
+        return <TradeCrystalToGainResources key={index} resource={data.resource} onPlay={closeDialog} />
       })}
       {payCristalsToGainPotion.map((move: CustomMove, index) => {
         const data: { amount: number; potion: Potion } = move.data

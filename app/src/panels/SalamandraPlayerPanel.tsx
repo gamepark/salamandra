@@ -10,17 +10,16 @@ import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
 import { MemoryType } from '@gamepark/salamandra/rules/MemoryType'
 import { FC, HTMLAttributes, useState } from 'react'
 import Crystal from '../images/icons/crystal.jpg'
-import FlowerFruitPotion from '../images/icons/flower-fruit-potion.jpg'
 import FlowerSelected from '../images/icons/flower-selected.png'
 import FruitSelected from '../images/icons/fruit-selected.png'
 import LeafPotion from '../images/icons/leaf-potion.jpg'
 import LeafSelected from '../images/icons/leaf-selected.png'
-import { primaryResourceImages } from '../material/help/utils'
 import ScoreMarkerBlue from '../images/tiles/scoreMarker/ScoreMarkerBlue.jpg'
-import ScoreMarkerRed from '../images/tiles/scoreMarker/ScoreMarkerRed.jpg'
 import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
+import ScoreMarkerRed from '../images/tiles/scoreMarker/ScoreMarkerRed.jpg'
 import ScoreMarkerYellow from '../images/tiles/scoreMarker/ScoreMarkerYellow.jpg'
-import { isPlayerWinThisResource } from '../utils/resource.utils.ts'
+import { potionImages, primaryResourceImages } from '../material/help/utils'
+import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import { ResourceDialog } from './ResourceDialog'
 
 type SalamandraPlayerPanelProps = { player: Player<PlayerColor> } & HTMLAttributes<HTMLDivElement>
@@ -31,7 +30,14 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
   const potions = rules.remind<Record<Potion, number>>(MemoryType.PlayerPotions, player.id)
   const score = rules.remind(MemoryType.Score, player.id)
   const [dialogResource, setDialogResource] = useState<PrimaryResource>()
+  const [dialogPotion, setDialogPotion] = useState<Potion>()
   const moves = useLegalMoves<MaterialMove>()
+
+  const clearDialog = () => {
+    if (dialogResource) setDialogResource(undefined)
+    if (dialogPotion) setDialogPotion(undefined)
+  }
+
   return (
     <>
       <StyledPlayerPanel
@@ -51,7 +57,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
           getPrimaryResourceCounter(moves, player.id, PrimaryResource.Leaf, primaryResources[PrimaryResource.Leaf], () =>
             setDialogResource(PrimaryResource.Leaf)
           ),
-          { image: FlowerFruitPotion, imageCss, value: potions[Potion.FlowerOrFruit] },
+          getPotionCounter(moves, player.id, Potion.FlowerOrFruit, potions[Potion.FlowerOrFruit], () => setDialogPotion(Potion.FlowerOrFruit)),
           { image: LeafPotion, imageCss, value: potions[Potion.Leaf] },
           {
             image: Crystal,
@@ -60,7 +66,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
           }
         ]}
       />
-      <ResourceDialog player={player.id} resource={dialogResource} onClose={() => setDialogResource(undefined)} />
+      <ResourceDialog player={player.id} resource={dialogResource} potion={dialogPotion} onClose={() => clearDialog()} />
     </>
   )
 }
@@ -91,6 +97,30 @@ const getPrimaryResourceCounter = (
 
   return {
     image: primaryResourceImagesSelected[resource],
+    extraCss: shineEffect,
+    imageCss: css`
+      ${imageCss};
+      ${selectable}
+    `,
+    value,
+    onClick
+  }
+}
+
+const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potion: Potion, value: number, onClick: () => void): CounterProps => {
+  const canBuy = legalMoves.find((move) => isPlayerWinThisPotion(move, player, potion))
+
+  if (!canBuy) {
+    return {
+      image: potionImages[potion],
+      imageCss,
+      value,
+      onClick
+    }
+  }
+
+  return {
+    image: potionImages[potion],
     extraCss: shineEffect,
     imageCss: css`
       ${imageCss};
