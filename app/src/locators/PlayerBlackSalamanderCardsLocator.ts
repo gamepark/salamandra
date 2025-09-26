@@ -13,7 +13,7 @@ class PlayerBlackSalamanderCardsLocator extends ListLocator {
     const index = getRelativePlayerIndex(context, location.player)
     if (context.player === undefined || index > 0) return this.positionOnParent
     const whiteSalamandraCoordinates = playerWhiteSalamanderCardsLocator.getPositionOnParent(location, context)
-    return { x: whiteSalamandraCoordinates.x + 10, y: whiteSalamandraCoordinates.y }
+    return { x: whiteSalamandraCoordinates.x + 20, y: whiteSalamandraCoordinates.y }
   }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {

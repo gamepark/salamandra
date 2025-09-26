@@ -1,12 +1,12 @@
 import { DropAreaDescription, Locator, MaterialContext } from '@gamepark/react-game'
-import { MaterialItem, Location, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 
 class PlayerGroveTilesLocator extends Locator {
   parentItemType = MaterialType.PlayerMat
 
   getItemRotateZ(): number {
-    return -45
+    return 45
   }
 
   getPositionOnParent(location: Location): XYCoordinates {

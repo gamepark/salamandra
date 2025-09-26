@@ -1,7 +1,8 @@
 import { css, Interpolation, Theme } from '@emotion/react'
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, MaterialContext } from '@gamepark/react-game'
 import { MaterialItem } from '@gamepark/rules-api'
 import { GroveTile } from '@gamepark/salamandra/material/GroveTile'
+import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import GroveTile01 from '../images/tiles/grove/GroveTile01.png'
 import GroveTile02 from '../images/tiles/grove/GroveTile02.png'
 import GroveTile03 from '../images/tiles/grove/GroveTile03.png'
@@ -77,10 +78,14 @@ class GroveTileDescription extends CardDescription {
     [GroveTile.Grove30]: GroveTile30
   }
 
+  isFlippedOnTable(item: Partial<MaterialItem>, context: MaterialContext): boolean {
+    return item.location?.type === LocationType.PlayerGroveTiles || super.isFlippedOnTable(item, context)
+  }
+
   getHelpDisplayExtraCss(item: Partial<MaterialItem>): Interpolation<Theme> {
     if (item.id === undefined) {
       return css`
-        transform: rotateY(180deg) rotateZ(-45deg) scale(0.8);
+        transform: rotateY(180deg) rotateZ(45deg) scale(0.8);
       `
     }
 
