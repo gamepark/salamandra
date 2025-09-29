@@ -16,7 +16,7 @@ export const FieldHelp: FC<MaterialHelpProps> = (props) => {
   const isFree = cost.length === 0
   return (
     <div css={descriptionCss}>
-      <h4>Bosquet</h4>
+      <h4>Tuile Champ</h4>
       <div css={costContainerCss}>
         <span> Cost: </span>
         <br />
@@ -49,7 +49,7 @@ const CostDisplay: FC<CostDisplayProps> = (props) => {
 
 const getImages = (cost: Cost) => {
   if (cost.type === CostType.Crystal) {
-    return times(cost.amount, () => crystalTokenDescription.images[CrystalToken.Crystal1])
+    return times(cost.amount, () => crystalTokenDescription.image)
   }
 
   if (cost.type === CostType.Resource) {
