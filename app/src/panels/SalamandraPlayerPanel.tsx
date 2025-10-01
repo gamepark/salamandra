@@ -1,12 +1,13 @@
 import { css } from '@emotion/react'
 import { Player } from '@gamepark/react-client'
-import { CounterProps, shineEffect, StyledPlayerPanel, useLegalMoves, useRules } from '@gamepark/react-game'
-import { MaterialMove, MaterialRules } from '@gamepark/rules-api'
+import { CounterProps, shineEffect, StyledPlayerPanel, useLegalMoves, usePlay, useRules } from '@gamepark/react-game'
+import { LocalMoveType, MaterialMove, MaterialRules, MoveKind } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { Potion } from '@gamepark/salamandra/material/Potion'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
+import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { MemoryType } from '@gamepark/salamandra/rules/MemoryType'
 import { FC, HTMLAttributes, useState } from 'react'
 import Crystal from '../images/icons/crystal.jpg'
@@ -32,6 +33,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
   const score = rules.remind(MemoryType.Score, player.id)
   const [dialogResource, setDialogResource] = useState<PrimaryResource>()
   const [dialogPotion, setDialogPotion] = useState<Potion>()
+  const play = usePlay()
   const moves = useLegalMoves<MaterialMove>()
 
   const clearDialog = () => {
@@ -46,6 +48,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
         activeRing
         countersPerLine={3}
         css={[backgroundColorCss(player.id)]}
+        onClick={() => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })}
         {...rest}
         mainCounter={{ image: markerImages[player.id], imageCss, value: score }}
         counters={[

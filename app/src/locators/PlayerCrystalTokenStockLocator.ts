@@ -4,9 +4,10 @@ import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 
 class PlayerCrystalTokenStockLocator extends PileLocator {
   parentItemType = MaterialType.PlayerMat
-  radius = 2
-  positionOnParent = { x: 12, y: 110 }
+  radius = 1.5
+  positionOnParent = { x: 12, y: 105 }
 
+  minimumDistance = 0.5
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {
     return context.rules.material(this.parentItemType).player(location.player).getItem()
   }

@@ -1,4 +1,5 @@
 import { TokenDescription } from '@gamepark/react-game'
+import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import ScrollToken from '../images/tokens/ScrollToken.png'
 
 class ScrollTokenDescription extends TokenDescription {
@@ -8,6 +9,9 @@ class ScrollTokenDescription extends TokenDescription {
   transparency = true
 
   image = ScrollToken
+
+  stockLocation = { type: LocationType.ScrollTokenStock }
+  staticItem = { quantity: 15, location: this.stockLocation }
 }
 
 export const scrollTokenDescription = new ScrollTokenDescription()

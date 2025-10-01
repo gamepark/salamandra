@@ -26,9 +26,10 @@ export class FieldTileHelper extends MaterialRulesPart {
       bonuses.forEach((bonus) => {
         if (bonus.type === BonusType.Scroll) {
           moves.push(
-            ...this.material(MaterialType.ScrollToken)
-              .location(LocationType.ScrollTokenStock)
-              .moveItems({ type: LocationType.PlayerScrollTokenStock, player: this.player }, bonus.count)
+            this.material(MaterialType.ScrollToken).createItem({
+              location: { type: LocationType.PlayerScrollTokenStock, player: this.player },
+              quantity: bonus.count
+            })
           )
         }
         if (bonus.type === BonusType.Points) {

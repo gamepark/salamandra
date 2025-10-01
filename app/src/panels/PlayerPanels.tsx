@@ -24,29 +24,11 @@ export const PlayerPanels = () => {
 
 const getPanelPosition = (player: PlayerColor, context: MaterialContext) => {
   const index = getRelativePlayerIndex(context, player)
-  if (context.rules.players.length === 2) return [bottomLeftPanelCss, bottomRightPanelCss][index]
-  return [bottomLeftPanelCss, topLeftPanelCss, topRightPanelCss, bottomRightPanelCss][index]
+  return css`
+    left: 1em;
+    top: ${9.5 + index * 17}em;
+  `
 }
-
-const topLeftPanelCss = css`
-  left: 1em;
-  top: 8.5em;
-`
-
-const topRightPanelCss = css`
-  right: 1em;
-  top: 8.5em;
-`
-
-const bottomRightPanelCss = css`
-  right: 1em;
-  bottom: 1em;
-`
-
-const bottomLeftPanelCss = css`
-  left: 1em;
-  bottom: 1em;
-`
 
 const panelPosition = css`
   position: absolute;

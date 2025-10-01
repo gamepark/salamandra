@@ -1,12 +1,18 @@
-import { ListLocator } from '@gamepark/react-game'
+import { ListLocator, MaterialContext } from '@gamepark/react-game'
+import { Coordinates, Location } from '../../../../rules-api/src'
 import { fieldTileDescription } from '../material/FieldTileDescription'
 import { fieldStackLocator } from './FieldStackLocator'
 
 class FieldSpaceLocator extends ListLocator {
-  gap = { x: fieldTileDescription.width + 0.5 }
-  coordinates = { x: fieldStackLocator.coordinates.x + this.gap.x, y: fieldStackLocator.coordinates.y }
+  gap = { y: fieldTileDescription.width + 0.5 }
 
-  getHoverTransform = () => ['translateY(-80%)', 'translateZ(10em)', 'scale(2.3)']
+  getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
+    const coordinates = fieldStackLocator.getCoordinates(_location, context)
+    coordinates.y! += this.gap.y
+    return coordinates
+  }
+
+  getHoverTransform = () => ['translateX(-80%)', 'translateZ(10em)', 'scale(2.3)']
 }
 
 export const fieldSpaceLocator = new FieldSpaceLocator()

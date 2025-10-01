@@ -68,7 +68,7 @@ class ApprenticeTokenDescription extends CardDescription {
           label={<Trans defaults="button.activate" />}
           y={-1}
           move={displayMaterialHelp(MaterialType.ApprenticeToken, item, context.index)}
-          options={{ local: true }}
+          options={{ transient: true }}
         >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
         </ItemMenuButton>

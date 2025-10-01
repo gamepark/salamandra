@@ -22,13 +22,20 @@ class GameLayoutLocator extends Locator {
     return { x: (base.x ?? 0) + locationX * this.gap.x, y: (base.y ?? 0) + locationY * this.gap.y }
   }
 
+  dropPreview = true
+
   getBaseCoordinates(context: MaterialContext): Partial<Coordinates> {
-    const boundaries = new GameBoundaries(context.rules.game).boudaries
-    const coordinates = { x: 0, y: 0 }
-    const deltaX = (boundaries.minX + boundaries.maxX) / 2
-    const deltaY = (boundaries.minY + boundaries.maxY) / 2
-    coordinates.x += fieldTileDescription.width * -deltaX
-    coordinates.y += fieldTileDescription.height * -deltaY
+    const gameBoundaries = new GameBoundaries(context.rules.game)
+    const coordinates = { x: 0, y: -1 }
+    const boundaries = gameBoundaries.boundaries
+    const { overX, overY } = gameBoundaries.overCoordinates
+    const xMove = (boundaries.minX + boundaries.maxX) / 2
+    const yMove = (boundaries.minY + boundaries.maxY) / 2
+    coordinates.x += fieldTileDescription.width * -xMove
+    coordinates.y += fieldTileDescription.height * -yMove
+
+    coordinates.x += overX * (fieldTileDescription.width / 2)
+    coordinates.y += overY * (fieldTileDescription.width / 2)
 
     return coordinates
   }

@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
+import { isCreateItemType, isMoveItemType, ItemMove, MaterialGame, MaterialItem, MaterialMove, MaterialRulesPart, MoveItem } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
 import { DivinityCard, DivinityCardId } from '../DivinityCard'
 import { FieldColor, fieldData, FieldTile, FieldType } from '../FieldTile'
@@ -68,7 +68,11 @@ export class BearDivinityCardHelper extends MaterialRulesPart {
 
   getBearCard4Effect(move: ItemMove): MaterialMove[] {
     if (!this.checkPlayerHasBearDivinityCard(DivinityCard.BearDivinity4)) return []
-    if (isMoveItemType(MaterialType.ScrollToken)(move) && move.location.type === LocationType.PlayerScrollTokenStock && move.location.player === this.player) {
+    if (
+      isCreateItemType(MaterialType.ScrollToken)(move) &&
+      move.item.location.type === LocationType.PlayerScrollTokenStock &&
+      move.item.location.player === this.player
+    ) {
       return [this.customMove(CustomMoveType.Score, { player: this.player, score: 1 })]
     }
     return []

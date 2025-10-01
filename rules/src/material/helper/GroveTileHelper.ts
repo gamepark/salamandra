@@ -130,11 +130,7 @@ export class GroveTileHelper extends MaterialRulesPart {
     const bonus = groveData[groveId as GroveTile].bonus
     bonus.forEach((b) => {
       if (b.type === BonusType.Scroll) {
-        moves.push(
-          this.material(MaterialType.ScrollToken)
-            .location(LocationType.ScrollTokenStock)
-            .moveItem({ type: LocationType.PlayerScrollTokenStock, player: this.player })
-        )
+        moves.push(this.material(MaterialType.ScrollToken).createItem({ location: { type: LocationType.PlayerScrollTokenStock, player: this.player } }))
       }
       if (b.type === BonusType.Points) {
         moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: b.amount }))

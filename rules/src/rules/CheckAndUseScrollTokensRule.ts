@@ -12,7 +12,7 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
     if (this.playerScrollTokens.getQuantity() < 4) {
       return this.goToNextPlayer()
     }
-    return [this.playerScrollTokens.moveItem({ type: LocationType.ScrollTokenStock }, 4)]
+    return [this.playerScrollTokens.deleteItem(4)]
   }
 
   goToNextPlayer() {

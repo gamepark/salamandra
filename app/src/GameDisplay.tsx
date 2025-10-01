@@ -1,20 +1,28 @@
 import { pointerWithin } from '@dnd-kit/core'
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation } from '@gamepark/react-game'
+import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
+import { MaterialRules } from '@gamepark/rules-api'
+import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries.ts'
+import { fieldTileDescription } from './material/FieldTileDescription.ts'
 import { PlayerPanels } from './panels/PlayerPanels'
 
 export function GameDisplay() {
   const margin = { top: 7, left: 0, right: 0, bottom: 0 }
+  const rules = useRules<MaterialRules>()!
+  const { overY, overX } = new GameBoundaries(rules.game).overCoordinates
+  const over = Math.max(overX, overY)
+  const additionalX = over * fieldTileDescription.width
+  const additionalY = over * fieldTileDescription.width
   return (
     <>
       <GameTable
-        xMin={-80}
-        xMax={80}
-        yMin={-40}
-        yMax={40}
+        verticalCenter
+        xMin={-78}
+        xMax={43 + additionalX}
+        yMin={-30}
+        yMax={27 + additionalY}
         margin={margin}
         css={process.env.NODE_ENV === 'development' && tableBorder}
-        collisionAlgorithm={pointerWithin}
       >
         <GameTableNavigation />
         <PlayerPanels />

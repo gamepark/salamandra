@@ -3,7 +3,7 @@ import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 
 export class GameBoundaries extends MaterialRulesPart {
-  get boudaries() {
+  get boundaries() {
     const panorama = this.panorama
     if (!panorama.length) {
       return {
@@ -31,5 +31,16 @@ export class GameBoundaries extends MaterialRulesPart {
 
   get panorama() {
     return this.material(MaterialType.FieldTile).location(LocationType.GameLayout)
+  }
+
+  get overCoordinates() {
+    const boundaries = this.boundaries
+    const overX = Math.max(0, boundaries.deltaX - 6)
+    const overY = Math.max(0, boundaries.deltaY - 5)
+
+    return {
+      overX,
+      overY
+    }
   }
 }

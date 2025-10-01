@@ -1,20 +1,13 @@
 import { DropAreaDescription, getRelativePlayerIndex, ListLocator, MaterialContext } from '@gamepark/react-game'
-import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { divinityCardDescription } from '../material/DivinityCardDescription'
 import { playerBearCardsLocator } from './PlayerBearCardsLocator'
 
 class PlayerEagleCardsLocator extends ListLocator {
   parentItemType = MaterialType.PlayerMat
-  positionOnParent = { x: playerBearCardsLocator.positionOnParent.x, y: playerBearCardsLocator.positionOnParent.y + 22 }
+  positionOnParent = { x: playerBearCardsLocator.positionOnParent.x + 20, y: playerBearCardsLocator.positionOnParent.y }
   gap = { y: divinityCardDescription.height * 0.55 }
-
-  getPositionOnParent(location: Location, context: MaterialContext): XYCoordinates {
-    const index = getRelativePlayerIndex(context, location.player)
-    if (context.player === undefined || index > 0) return this.positionOnParent
-    const bearCoordinates = playerBearCardsLocator.getPositionOnParent(location, context)
-    return { x: bearCoordinates.x + 20, y: bearCoordinates.y }
-  }
 
   getParentItem(location: Location, context: MaterialContext): MaterialItem | undefined {
     return context.rules.material(this.parentItemType).player(location.player).getItem()

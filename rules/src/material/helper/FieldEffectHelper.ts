@@ -35,11 +35,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
 
   takeScrollAndThreePoints(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    moves.push(
-      this.material(MaterialType.ScrollToken)
-        .location(LocationType.ScrollTokenStock)
-        .moveItem({ type: LocationType.PlayerScrollTokenStock, player: this.player })
-    )
+    moves.push(this.material(MaterialType.ScrollToken).createItem({ location: { type: LocationType.PlayerScrollTokenStock, player: this.player } }))
     moves.push(this.customMove(CustomMoveType.Score, { player: this.player, score: 3 }))
     return moves
   }

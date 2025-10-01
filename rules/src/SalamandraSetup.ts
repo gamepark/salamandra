@@ -23,7 +23,7 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   Rules = SalamandraRules
 
   setupMaterial(_options: SalamandraOptions) {
-    this.material(MaterialType.ScrollToken).createItem({ quantity: 13, location: { type: LocationType.ScrollTokenStock } })
+    //this.material(MaterialType.ScrollToken).createItem({ quantity: 13, location: { type: LocationType.ScrollTokenStock } })
     this.setupSalamandraCardsStacks()
     this.setupDivinitiesCardsStacks()
     this.setUpFields()

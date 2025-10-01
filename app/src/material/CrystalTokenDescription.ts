@@ -12,7 +12,7 @@ class CrystalTokenDescription extends MoneyDescription {
   image = CristalToken1
 
   stockLocation = { type: LocationType.CristalTokenStock }
-  staticItem = { quantity: 30, location: this.stockLocation }
+  staticItem = { quantity: 15, location: this.stockLocation }
 
   help = CrystalTokenHelp
 }

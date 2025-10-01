@@ -1,8 +1,8 @@
 import { PileLocator } from '@gamepark/react-game'
 
 class ScrollTokenStockLocator extends PileLocator {
-  radius = 2
-  coordinates = { x: 33, y: -35 }
+  radius = 1
+  coordinates = { x: -58, y: 22 }
 }
 
 export const scrollTokenStockLocator = new ScrollTokenStockLocator()
