@@ -4,7 +4,7 @@ import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 export class PanelLocator extends Locator {
   getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const index = getRelativePlayerIndex(context, location.player)
-    return { x: -65, y: -24 + index * 11 }
+    return { x: -75, y: -24 + index * 10 }
   }
 
   placeItem(item: MaterialItem, context: ItemContext): string[] {

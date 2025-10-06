@@ -26,7 +26,7 @@ class GameLayoutLocator extends Locator {
 
   getBaseCoordinates(context: MaterialContext): Partial<Coordinates> {
     const gameBoundaries = new GameBoundaries(context.rules.game)
-    const coordinates = { x: 0, y: -1 }
+    const coordinates = { x: 5, y: -1 }
     const boundaries = gameBoundaries.boundaries
     const { overX, overY } = gameBoundaries.overCoordinates
     const xMove = (boundaries.minX + boundaries.maxX) / 2

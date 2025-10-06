@@ -18,7 +18,6 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   goToNextPlayer() {
     const playersWhoPassed = this.remind<PlayerColor[]>(MemoryType.PlayersWhoPassed)
     if (playersWhoPassed.length === this.game.players.length - 1 && !playersWhoPassed.includes(this.player)) {
-      console.log('??')
       return [this.startRule(RuleId.CheckPassAndEmptyPlaces)]
     }
 
