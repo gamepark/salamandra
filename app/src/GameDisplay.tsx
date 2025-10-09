@@ -1,3 +1,4 @@
+import { pointerWithin } from '@dnd-kit/core'
 import { css } from '@emotion/react'
 import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
 import { MaterialRules } from '@gamepark/rules-api'
@@ -15,6 +16,7 @@ export function GameDisplay() {
   return (
     <>
       <GameTable
+        collisionAlgorithm={pointerWithin}
         verticalCenter
         xMin={-78}
         xMax={43 + additionalX}

@@ -6,8 +6,8 @@ import { fieldStackLocator } from './FieldStackLocator'
 class FieldSpaceLocator extends ListLocator {
   gap = { y: fieldTileDescription.width + 0.5 }
 
-  getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
-    const coordinates = fieldStackLocator.getCoordinates(_location, context)
+  getCoordinates(_location: Location, _context: MaterialContext): Partial<Coordinates> {
+    const coordinates = { ...fieldStackLocator.coordinates }
     coordinates.y! += this.gap.y
     return coordinates
   }
