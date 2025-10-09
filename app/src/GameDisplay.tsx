@@ -1,4 +1,3 @@
-import { pointerWithin } from '@dnd-kit/core'
 import { css } from '@emotion/react'
 import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
 import { MaterialRules } from '@gamepark/rules-api'

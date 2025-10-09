@@ -1,4 +1,4 @@
-import { ListLocator, MaterialContext } from '@gamepark/react-game'
+import { ListLocator, MaterialContext, OriginType } from '@gamepark/react-game'
 import { Coordinates, Location } from '../../../../rules-api/src'
 import { fieldTileDescription } from '../material/FieldTileDescription'
 import { fieldStackLocator } from './FieldStackLocator'
@@ -13,6 +13,8 @@ class FieldSpaceLocator extends ListLocator {
   }
 
   getHoverTransform = () => ['translateX(-80%)', 'translateZ(10em)', 'scale(2.3)']
+
+  locationOrigin = { x: OriginType.Max, y: OriginType.Min }
 }
 
 export const fieldSpaceLocator = new FieldSpaceLocator()

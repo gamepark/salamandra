@@ -1,5 +1,5 @@
 import { Locator, MaterialContext } from '@gamepark/react-game'
-import { MaterialItem, Location, XYCoordinates } from '@gamepark/rules-api'
+import { Location, MaterialItem, XYCoordinates } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 
 class PlayerActualRoundApprenticesSpaceLocator extends Locator {
@@ -10,14 +10,11 @@ class PlayerActualRoundApprenticesSpaceLocator extends Locator {
   }
 
   getPositionOnParent(location: Location): XYCoordinates {
-    return positions[location.x ?? 0]
+    return {
+      x: 22,
+      y: (!location.rotation ? 38 : 46) + 16 * location.x!
+    }
   }
 }
-
-const positions = [
-  { x: 22, y: 38 },
-  { x: 22, y: 54 },
-  { x: 22, y: 70 }
-]
 
 export const playerActualRoundApprenticesSpaceLocator = new PlayerActualRoundApprenticesSpaceLocator()

@@ -1,4 +1,4 @@
-import { DeckLocator, MaterialContext } from '@gamepark/react-game'
+import { DeckLocator, MaterialContext, OriginType } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
@@ -13,11 +13,13 @@ class FieldStackLocator extends DeckLocator {
   getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
     const gameBoundaries = new GameBoundaries(context.rules.game)
     const { overX, overY } = gameBoundaries.overCoordinates
-    const coordinates = { x: 39, y: -20, z: 2 }
+    const coordinates = { x: -5, y: 10, z: 2 }
     coordinates.x += Math.max(overX, overY) * fieldTileDescription.width
 
     return coordinates
   }
+
+  locationOrigin = { x: OriginType.Max, y: OriginType.Min }
 
   getAreaCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const { rules } = context

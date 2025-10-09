@@ -10,7 +10,6 @@ class PlayerMatLayoutLocator extends Locator {
     const playerView = rules.game.view
     const index = getRelativePlayerIndex(context, item.location.player)
     if (playerView === item.id || (playerView === undefined && index === 0)) return super.placeItem(item, context)
-    if (playerView !== item.id) return new PanelLocator().placeItem(item, context)
     return new PanelLocator().placeItem(item, context)
   }
 }

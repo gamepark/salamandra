@@ -10,29 +10,12 @@ class PlayerApprenticesSpaceLocator extends Locator {
   }
 
   getPositionOnParent(location: Location): XYCoordinates {
-    return positions[location.id as number][location.x ?? 0]
+    const id = location.id as number
+    return {
+      x: 47.4 + 14 * id,
+      y: (id % 2 === 0 ? 38 : 46) + 16 * location.x!
+    }
   }
 }
-
-const positions = [
-  [
-    { x: 47.4, y: 38 },
-    { x: 47.4, y: 54 },
-    { x: 47.4, y: 70 }
-  ],
-  [
-    { x: 61.4, y: 46 },
-    { x: 61.4, y: 62 }
-  ],
-  [
-    { x: 75.4, y: 38 },
-    { x: 75.4, y: 54 },
-    { x: 75.4, y: 70 }
-  ],
-  [
-    { x: 89.4, y: 46 },
-    { x: 89.4, y: 62 }
-  ]
-]
 
 export const playerApprenticesSpaceLocator = new PlayerApprenticesSpaceLocator()
