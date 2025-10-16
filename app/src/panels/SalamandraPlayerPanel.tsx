@@ -7,14 +7,13 @@ import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { Potion } from '@gamepark/salamandra/material/Potion'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
-import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { MemoryType } from '@gamepark/salamandra/rules/MemoryType'
 import { FC, HTMLAttributes, useState } from 'react'
 import Crystal from '../images/icons/crystal.jpg'
+import FlowerFruitPotionSelected from '../images/icons/flower-fruit-potion-selected.png'
 import FlowerSelected from '../images/icons/flower-selected.png'
 import FruitSelected from '../images/icons/fruit-selected.png'
 import LeafPotionSelected from '../images/icons/leaf-potion-selected.png'
-import FlowerFruitPotionSelected from '../images/icons/flower-fruit-potion-selected.png'
 import LeafSelected from '../images/icons/leaf-selected.png'
 import ScoreMarkerBlue from '../images/tiles/scoreMarker/ScoreMarkerBlue.jpg'
 import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
@@ -24,9 +23,9 @@ import { potionImages, primaryResourceImages } from '../material/help/utils'
 import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import { ResourceDialog } from './ResourceDialog'
 
-type SalamandraPlayerPanelProps = { player: Player<PlayerColor> } & HTMLAttributes<HTMLDivElement>
+type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & HTMLAttributes<HTMLDivElement>
 
-export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, ...rest }) => {
+export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, defaultView, ...rest }) => {
   const rules = useRules<MaterialRules>()!
   const primaryResources = rules.remind<Record<PrimaryResource, number>>(MemoryType.PlayerPrimaryResources, player.id)
   const potions = rules.remind<Record<Potion, number>>(MemoryType.PlayerPotions, player.id)
@@ -41,13 +40,15 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
     if (dialogPotion) setDialogPotion(undefined)
   }
 
+  const isViewActive = (!rules.game.view && player.id === defaultView) || rules.game.view === player.id
+
   return (
     <>
       <StyledPlayerPanel
         player={player}
         activeRing
         countersPerLine={3}
-        css={[backgroundColorCss(player.id)]}
+        css={[backgroundColorCss(player.id, isViewActive)]}
         onClick={() => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })}
         {...rest}
         mainCounter={{ image: markerImages[player.id], imageCss, value: score }}
@@ -147,8 +148,9 @@ const markerImages = {
   [PlayerColor.Yellow]: ScoreMarkerYellow
 }
 
-const backgroundColorCss = (player: PlayerColor) => css`
+const backgroundColorCss = (player: PlayerColor, active: boolean) => css`
   background-color: ${playerColors(player)};
+  box-shadow: ${active ? '0 0 0.2em 0.4em white' : 'none'};
 `
 
 const playerColors = (player: PlayerColor) => {

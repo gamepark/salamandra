@@ -1,7 +1,7 @@
-import { pointerWithin } from '@dnd-kit/core'
+import { pointerWithin, useDndMonitor } from '@dnd-kit/core'
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
-import { MaterialRules } from '@gamepark/rules-api'
+import { GameTable, GameTableNavigation, usePlay, useRules } from '@gamepark/react-game'
+import { LocalMoveType, MaterialRules, MoveKind } from '@gamepark/rules-api'
 import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries.ts'
 import { fieldTileDescription } from './material/FieldTileDescription.ts'
 import { PlayerPanels } from './panels/PlayerPanels'
@@ -13,6 +13,7 @@ export function GameDisplay() {
   const over = Math.max(overX, overY)
   const additionalX = over * fieldTileDescription.width
   const additionalY = over * fieldTileDescription.width
+
   return (
     <>
       <GameTable
