@@ -1,7 +1,7 @@
-import { pointerWithin, useDndMonitor } from '@dnd-kit/core'
+import { pointerWithin } from '@dnd-kit/core'
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation, usePlay, useRules } from '@gamepark/react-game'
-import { LocalMoveType, MaterialRules, MoveKind } from '@gamepark/rules-api'
+import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
+import { MaterialRules } from '@gamepark/rules-api'
 import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries.ts'
 import { fieldTileDescription } from './material/FieldTileDescription.ts'
 import { PlayerPanels } from './panels/PlayerPanels'
@@ -26,12 +26,20 @@ export function GameDisplay() {
         margin={margin}
         css={process.env.NODE_ENV === 'development' && tableBorder}
       >
-        <GameTableNavigation />
+        <GameTableNavigation css={naviationCss} />
         <PlayerPanels />
       </GameTable>
     </>
   )
 }
+
+const naviationCss = css`
+  position: absolute;
+  bottom: 2em;
+  left: 42em;
+  top: unset;
+  height: auto;
+`
 
 const tableBorder = css`
   border: 1px solid white;

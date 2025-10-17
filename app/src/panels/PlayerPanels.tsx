@@ -1,4 +1,4 @@
-import { pointerWithin, useDndMonitor } from '@dnd-kit/core'
+import { useDndMonitor } from '@dnd-kit/core'
 import { css } from '@emotion/react'
 import { getRelativePlayerIndex, MaterialContext, useMaterialContext, usePlay, usePlayers } from '@gamepark/react-game'
 import { LocalMoveType, MoveKind } from '@gamepark/rules-api'

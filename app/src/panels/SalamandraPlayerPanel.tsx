@@ -151,6 +151,7 @@ const markerImages = {
 const backgroundColorCss = (player: PlayerColor, active: boolean) => css`
   background-color: ${playerColors(player)};
   box-shadow: ${active ? '0 0 0.2em 0.4em white' : 'none'};
+  cursor: pointer;
 `
 
 const playerColors = (player: PlayerColor) => {
