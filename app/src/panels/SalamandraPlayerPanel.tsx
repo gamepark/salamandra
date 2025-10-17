@@ -53,17 +53,17 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
         {...rest}
         mainCounter={{ image: markerImages[player.id], imageCss, value: score }}
         counters={[
+          getPrimaryResourceCounter(moves, player.id, PrimaryResource.Leaf, primaryResources[PrimaryResource.Leaf], () =>
+            setDialogResource(PrimaryResource.Leaf)
+          ),
           getPrimaryResourceCounter(moves, player.id, PrimaryResource.Flower, primaryResources[PrimaryResource.Flower], () =>
             setDialogResource(PrimaryResource.Flower)
           ),
           getPrimaryResourceCounter(moves, player.id, PrimaryResource.Fruit, primaryResources[PrimaryResource.Fruit], () =>
             setDialogResource(PrimaryResource.Fruit)
           ),
-          getPrimaryResourceCounter(moves, player.id, PrimaryResource.Leaf, primaryResources[PrimaryResource.Leaf], () =>
-            setDialogResource(PrimaryResource.Leaf)
-          ),
-          getPotionCounter(moves, player.id, Potion.FlowerOrFruit, potions[Potion.FlowerOrFruit], () => setDialogPotion(Potion.FlowerOrFruit)),
           getPotionCounter(moves, player.id, Potion.Leaf, potions[Potion.Leaf], () => setDialogPotion(Potion.Leaf)),
+          getPotionCounter(moves, player.id, Potion.FlowerOrFruit, potions[Potion.FlowerOrFruit], () => setDialogPotion(Potion.FlowerOrFruit)),
           {
             image: Crystal,
             imageCss,

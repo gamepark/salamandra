@@ -15,7 +15,13 @@ export function App() {
   return (
     <>
       {!!game && <GameDisplay />}
-      <LoadingScreen display={loading} author="Someone" artist="Somebody" publisher="Nobody" developer="You" />
+      <LoadingScreen
+        display={loading}
+        author={['Pierre Giroux', 'Johannes Goupy']}
+        artist="Camille Chaussy"
+        publisher="GRRRE GAMES"
+        developer={['David Sylvestre', 'Game Park']}
+      />
       <MaterialHeader rulesStepsHeaders={Headers} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />
