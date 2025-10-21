@@ -178,6 +178,26 @@ export class Tutorial extends MaterialTutorial {
         ],
         scale: 0.2
       })
+    },
+    {
+      move: {
+        player: opponent,
+        filter: (move) => isMoveItemType(MaterialType.ApprenticeToken)(move)
+          && move.location.parent === 2 && move.location.x === 0
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.opponent.1" components={BaseComponents}/>,
+        position: { x: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3),
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace).id(PlayerColor.Red)
+        ],
+        margin: { left: 40, right: 10, top: 10, bottom: 10 }
+      })
     }
   ]
 }

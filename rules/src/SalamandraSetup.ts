@@ -96,10 +96,10 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   // Do not change order, it matters for the tutorial setup!
   protected startGrovesLocations = [
-    { type: LocationType.GameLayout, x: 0.5, y: -1.5 },
+    { type: LocationType.GameLayout, x: 1.5, y: -0.5 },
     { type: LocationType.GameLayout, x: -0.5, y: 0.5 },
     { type: LocationType.GameLayout, x: 0.5, y: -0.5 },
-    { type: LocationType.GameLayout, x: 1.5, y: -0.5 },
+    { type: LocationType.GameLayout, x: 0.5, y: -1.5 },
     { type: LocationType.GameLayout, x: -0.5, y: -0.5 },
     { type: LocationType.GameLayout, x: 1.5, y: 0.5 },
     { type: LocationType.GameLayout, x: 0.5, y: 0.5 },
