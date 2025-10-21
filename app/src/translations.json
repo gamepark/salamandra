@@ -242,6 +242,8 @@
       "help.salamander.bonus.55": "Récupérez une tuile bosquet et gagnez 8 points de victoire",
       "help.salamander.bonus.56": "Récupérez une tuile bosquet et gagnez 5 points de victoire",
       "help.salamander.bonus.57": "Récupérez 1 carte divinité aigle et gagnez 6 points de victoire",
+      "tuto.welcome": "Bienvenue dans le tutoriel de <bold>Salamandra</bold> !",
+      "tuto.druid": "Dans Salamandra, vous incarnez un <bold>érudit</bold>. Votre objectif est d'envoyer vos <bold>apprentis</bold> cueillir des feuilles, fleurs et fruits magiques et de les utiliser pour redonner vie au <bold>Temple de la Salamandre</bold>.\nL'érudit ou d'érudite ayant le plus de <bold>points de Vénération</bold> à la fin de la partie gagne et devient <bold>Grand Druide</bold> !",
       "Menu": "Menu",
       "OK": "OK",
       "Validate": "Valider",
