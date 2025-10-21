@@ -69,3 +69,8 @@ export const divinityCardPoints: Record<DivinityCard, number> = {
   [DivinityCard.EagleDivinity11]: 4,
   [DivinityCard.EagleDivinity12]: 4
 }
+
+export type DivinityId = {
+  front: DivinityCard
+  back: DivinityType
+}

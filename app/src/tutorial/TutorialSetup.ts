@@ -1,3 +1,4 @@
+import { DivinityCard, DivinityId } from '@gamepark/salamandra/material/DivinityCard.ts'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
 import { groveTiles } from '@gamepark/salamandra/material/GroveTile.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
@@ -20,5 +21,11 @@ export class TutorialSetup extends SalamandraSetup {
       this.material(MaterialType.GroveTile).location(LocationType.GroveStack).moveItem(location)
     }
     this.material(MaterialType.GroveTile).location(LocationType.GroveStack).shuffle()
+  }
+
+  createDivinitiesCardsStack() {
+    super.createDivinitiesCardsStack()
+    this.material(MaterialType.DivinityCard).id<DivinityId>((id) => id.front === DivinityCard.BearDivinity9).moveItem({ type: LocationType.BearDivinityStack })
+    this.material(MaterialType.DivinityCard).id<DivinityId>((id) => id.front === DivinityCard.EagleDivinity9).moveItem({ type: LocationType.EagleDivinityStack })
   }
 }

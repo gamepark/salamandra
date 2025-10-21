@@ -50,6 +50,12 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setupDivinitiesCardsStacks() {
+    this.createDivinitiesCardsStack()
+    this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck().rotateItem(true)
+    this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck().rotateItem(true)
+  }
+
+  protected createDivinitiesCardsStack() {
     this.material(MaterialType.DivinityCard).createItems(
       shuffle(bearDivinityCards).map((it) => ({
         id: { front: it, back: DivinityType.Bear },
@@ -62,9 +68,6 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
         location: { type: LocationType.EagleDivinityStack }
       }))
     )
-
-    this.material(MaterialType.DivinityCard).location(LocationType.BearDivinityStack).deck().rotateItem(true)
-    this.material(MaterialType.DivinityCard).location(LocationType.EagleDivinityStack).deck().rotateItem(true)
   }
 
   private setUpFields() {
