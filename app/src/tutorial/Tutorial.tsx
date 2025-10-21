@@ -3,6 +3,8 @@ import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColor
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
+import { isMoveItemType } from '@gamepark/rules-api'
+import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType.ts'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor.ts'
 import { Trans } from 'react-i18next'
@@ -80,6 +82,54 @@ export class Tutorial extends MaterialTutorial {
         ],
         margin: { right: 10, top: 10, bottom: 5 }
       })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.turns" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place" components={BaseComponents}/>,
+        position: { x: -5 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.PlayerActualRoundApprenticesSpace),
+          this.material(game, MaterialType.FieldTile).location(LocationType.GameLayout)
+        ],
+        margin: { right: 10, top: 10, bottom: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.field" components={BaseComponents}/>,
+        position: { x: -5 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.PlayerActualRoundApprenticesSpace),
+          this.material(game, MaterialType.FieldTile).location(LocationType.GameLayout)
+        ],
+        margin: { right: 10, top: 10, bottom: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place-leaf" components={BaseComponents}/>,
+        position: { x: -5 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.PlayerActualRoundApprenticesSpace)
+        ],
+        locations: [{ type: LocationType.FieldApprenticeSpace, parent: 1, x: 0 }],
+        margin: { right: 10, top: 10, bottom: 5 }
+      }),
+      move: {
+        filter: (move) => isMoveItemType(MaterialType.ApprenticeToken)(move)
+          && move.location.type === LocationType.FieldApprenticeSpace && move.location.parent === 1 && move.location.x === 0
+      }
     }
   ]
 }

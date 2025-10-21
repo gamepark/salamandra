@@ -1,6 +1,7 @@
-import { Locator } from '@gamepark/react-game'
+import { DropAreaDescription, Locator } from '@gamepark/react-game'
 import { Location, XYCoordinates } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
+import { apprenticeTokenDescription } from '../material/ApprenticeTokenDescription.tsx'
 
 class FieldApprenticeSpaceLocator extends Locator {
   parentItemType = MaterialType.FieldTile
@@ -8,6 +9,8 @@ class FieldApprenticeSpaceLocator extends Locator {
   getPositionOnParent(location: Location): XYCoordinates {
     return positions[location.x ?? 0]
   }
+
+  locationDescription = new DropAreaDescription(apprenticeTokenDescription)
 }
 
 const positions = [
