@@ -28,4 +28,10 @@ export class TutorialSetup extends SalamandraSetup {
     this.material(MaterialType.DivinityCard).id<DivinityId>((id) => id.front === DivinityCard.BearDivinity9).moveItem({ type: LocationType.BearDivinityStack })
     this.material(MaterialType.DivinityCard).id<DivinityId>((id) => id.front === DivinityCard.EagleDivinity9).moveItem({ type: LocationType.EagleDivinityStack })
   }
+
+  setupFieldsStack() {
+    super.setupFieldsStack()
+    this.material(MaterialType.FieldTile).id(FieldTile.Field11).moveItem({ type: LocationType.FieldStack })
+    this.material(MaterialType.FieldTile).id(FieldTile.Field13).moveItem({ type: LocationType.FieldStack })
+  }
 }

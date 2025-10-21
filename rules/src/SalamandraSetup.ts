@@ -72,9 +72,8 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
 
   private setUpFields() {
     this.setupStartFields()
-    this.material(MaterialType.FieldTile).createItems(shuffle(fieldTiles).map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
-
-    this.material(MaterialType.FieldTile).location(LocationType.FieldStack).limit(4).moveItems({ type: LocationType.FieldSpace })
+    this.setupFieldsStack()
+    this.material(MaterialType.FieldTile).location(LocationType.FieldStack).deck().deal({ type: LocationType.FieldSpace }, 4)
   }
 
   protected setupStartFields() {
@@ -86,6 +85,10 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     ]
 
     this.material(MaterialType.FieldTile).createItems(shuffle(startFieldTiles).map((tile, index) => ({ id: tile, location: startFieldLocations[index] })))
+  }
+
+  protected setupFieldsStack() {
+    this.material(MaterialType.FieldTile).createItems(shuffle(fieldTiles).map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
   }
 
   // Do not change order, it matters for the tutorial setup!
