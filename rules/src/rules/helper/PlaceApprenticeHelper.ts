@@ -29,11 +29,10 @@ export class PlaceApprenticeHelper extends PlayerTurnRule {
   beforeItemMove(move: ItemMove, _context?: PlayMoveContext): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (!isMoveItemType(MaterialType.ApprenticeToken)(move) || !this.isPlaceApprenticeMove(move)) return moves
-    moves.push(...this.groveTileHelper.getGroveCrystals(move.location))
-
     if (move.location.x === 0) {
       moves.push(...this.fieldTileHelper.getFieldBonus(move.location.parent!))
     }
+    moves.push(...this.groveTileHelper.getGroveCrystals(move.location))
     moves.push(this.startRule(RuleId.CheckAndUseScrollTokens))
     return moves
   }

@@ -1,13 +1,18 @@
+import { css } from '@emotion/react'
 import { ClotheType, EyebrowType, EyeType, FacialHairType, MouthType, TopType } from '@gamepark/avataaars'
 import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColorName'
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
-import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
-import { isMoveItemType } from '@gamepark/rules-api'
+import { MaterialTutorial, Picture, TutorialStep } from '@gamepark/react-game'
+import { isCreateItemType, isCustomMoveType, isMoveItemType } from '@gamepark/rules-api'
+import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
+import { GroveTile } from '@gamepark/salamandra/material/GroveTile.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType.ts'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor.ts'
+import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { Trans } from 'react-i18next'
+import crystal from '../images/tokens/CristalToken1.png'
 import { TutorialSetup } from './TutorialSetup'
 
 const me = PlayerColor.Blue
@@ -128,8 +133,51 @@ export class Tutorial extends MaterialTutorial {
       }),
       move: {
         filter: (move) => isMoveItemType(MaterialType.ApprenticeToken)(move)
-          && move.location.type === LocationType.FieldApprenticeSpace && move.location.parent === 1 && move.location.x === 0
+          && move.location.type === LocationType.FieldApprenticeSpace && move.location.parent === 1 && move.location.x === 0,
+        interrupt: isCustomMoveType(CustomMoveType.Score)
       }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place-vp" components={BaseComponents}/>,
+        position: { x: -10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField2),
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace)
+        ],
+        margin: { left: 40, top: 20, bottom: 10 }
+      }),
+      move: {
+        interrupt: isCreateItemType(MaterialType.CrystalToken)
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grove" components={{ ...BaseComponents, crystal: <Picture src={crystal} css={pictureCss}/> }}/>
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.GroveTile).id(GroveTile.Grove2),
+          this.material(game, MaterialType.GroveTile).id(GroveTile.Grove7),
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace),
+          this.material(game, MaterialType.CrystalToken).player(PlayerColor.Blue)
+        ],
+        margin: { left: 15, right: 5 }
+      }),
+      move: {}
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.cristal" components={{ ...BaseComponents, crystal: <Picture src={crystal} css={pictureCss}/> }}/>
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.CrystalToken).player(PlayerColor.Blue)
+        ],
+        scale: 0.2
+      })
     }
   ]
 }
@@ -138,3 +186,9 @@ const BaseComponents = {
   bold: <strong/>,
   italic: <em/>
 }
+
+const pictureCss = css`
+  display: inline-block;
+  vertical-align: sub;
+  height: 1.5em;
+`
