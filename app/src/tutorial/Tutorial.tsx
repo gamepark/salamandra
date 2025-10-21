@@ -56,6 +56,30 @@ export class Tutorial extends MaterialTutorial {
         ],
         margin: { right: 35 }
       })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.apprentice" components={BaseComponents}/>,
+        position: { y: -15 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken)
+        ],
+        margin: { right: 10, top: 10, bottom: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.rounds" components={BaseComponents}/>,
+        position: { y: -15 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken)
+        ],
+        margin: { right: 10, top: 10, bottom: 5 }
+      })
     }
   ]
 }
