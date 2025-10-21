@@ -117,14 +117,14 @@ export class Tutorial extends MaterialTutorial {
     {
       popup: {
         text: () => <Trans i18nKey="tuto.place-leaf" components={BaseComponents}/>,
-        position: { x: -5 }
+        position: { x: 10 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.ApprenticeToken).location(LocationType.PlayerActualRoundApprenticesSpace)
         ],
         locations: [{ type: LocationType.FieldApprenticeSpace, parent: 1, x: 0 }],
-        margin: { right: 10, top: 10, bottom: 5 }
+        margin: { right: 10, top: 10, bottom: 10 }
       }),
       move: {
         filter: (move) => isMoveItemType(MaterialType.ApprenticeToken)(move)
