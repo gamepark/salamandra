@@ -68,6 +68,13 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setUpFields() {
+    this.setupStartFields()
+    this.material(MaterialType.FieldTile).createItems(shuffle(fieldTiles).map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
+
+    this.material(MaterialType.FieldTile).location(LocationType.FieldStack).limit(4).moveItems({ type: LocationType.FieldSpace })
+  }
+
+  protected setupStartFields() {
     const startFieldLocations = [
       { type: LocationType.GameLayout, x: 0, y: -1 },
       { type: LocationType.GameLayout, x: 1, y: -1 },
@@ -76,9 +83,6 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
     ]
 
     this.material(MaterialType.FieldTile).createItems(shuffle(startFieldTiles).map((tile, index) => ({ id: tile, location: startFieldLocations[index] })))
-    this.material(MaterialType.FieldTile).createItems(shuffle(fieldTiles).map((tile) => ({ id: tile, location: { type: LocationType.FieldStack } })))
-
-    this.material(MaterialType.FieldTile).location(LocationType.FieldStack).limit(4).moveItems({ type: LocationType.FieldSpace })
   }
 
   private setUpGroves() {
