@@ -12,6 +12,10 @@ import { MaterialType } from '@gamepark/salamandra/material/MaterialType.ts'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor.ts'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { Trans } from 'react-i18next'
+import flower from '../images/icons/flower.jpg'
+import fruit from '../images/icons/fruit.jpg'
+import leaf from '../images/icons/leaf.jpg'
+import sickle from '../images/icons/sickle.png'
 import crystal from '../images/tokens/CristalToken1.png'
 import { TutorialSetup } from './TutorialSetup'
 
@@ -198,6 +202,71 @@ export class Tutorial extends MaterialTutorial {
         ],
         margin: { left: 40, right: 10, top: 10, bottom: 10 }
       })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.build" components={BaseComponents}/>,
+        position: { x: 10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).location(LocationType.FieldSpace)
+        ],
+        margin: { left: 25, right: 1, top: 1, bottom: 1 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.cost" components={{
+          ...BaseComponents,
+          crystal: <Picture src={crystal} css={pictureCss}/>,
+          leaf: <Picture src={leaf} css={pictureCss}/>
+        }}/>
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13)
+        ],
+        margin: { left: 25, right: 1, top: 1, bottom: 1 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.resource" components={{
+          ...BaseComponents,
+          leaf: <Picture src={leaf} css={pictureCss}/>,
+          flower: <Picture src={flower} css={pictureCss}/>,
+          fruit: <Picture src={fruit} css={pictureCss}/>,
+          sickle: <Picture src={sickle} css={pictureCss}/>
+        }}/>,
+        position: { x: 25 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField2),
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace).id(me)
+        ],
+        margin: { right: 40, top: 10, bottom: 10 }
+      }),
+      move: { filter: isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect) }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.inactive" components={BaseComponents}/>,
+        position: { x: 25 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField2),
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace).id(me)
+        ],
+        margin: { right: 40, top: 10, bottom: 10 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.resource.cost" components={BaseComponents}/>
+      }
     }
   ]
 }
@@ -211,4 +280,5 @@ const pictureCss = css`
   display: inline-block;
   vertical-align: sub;
   height: 1.5em;
+  border-radius: 1em;
 `
