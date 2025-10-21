@@ -38,15 +38,18 @@ export class SalamandraSetup extends MaterialGameSetup<PlayerColor, MaterialType
   }
 
   private setupSalamandraCardsStacks() {
+    this.createSalamandraCardsStacks()
+    this.material(MaterialType.SalamanderCard).location(LocationType.BlackSalamanderStack).deck().rotateItem(true)
+    this.material(MaterialType.SalamanderCard).location(LocationType.WhiteSalamanderStack).deck().rotateItem(true)
+  }
+
+  protected createSalamandraCardsStacks() {
     this.material(MaterialType.SalamanderCard).createItems(
       shuffle(whiteSalamanderCards).map((it) => ({ id: { front: it, back: SalamanderCardColor.White }, location: { type: LocationType.WhiteSalamanderStack } }))
     )
     this.material(MaterialType.SalamanderCard).createItems(
       shuffle(blackSalamanderCards).map((it) => ({ id: { front: it, back: SalamanderCardColor.Black }, location: { type: LocationType.BlackSalamanderStack } }))
     )
-
-    this.material(MaterialType.SalamanderCard).location(LocationType.BlackSalamanderStack).deck().rotateItem(true)
-    this.material(MaterialType.SalamanderCard).location(LocationType.WhiteSalamanderStack).deck().rotateItem(true)
   }
 
   private setupDivinitiesCardsStacks() {

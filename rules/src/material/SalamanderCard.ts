@@ -82,3 +82,8 @@ export const salamanderCardPoints: Record<SalamanderCard, number> = {
   [SalamanderCard.WhiteSalamander7]: 3,
   [SalamanderCard.WhiteSalamander8]: 2
 }
+
+export type SalamanderId = {
+  front?: SalamanderCard
+  back: SalamanderCardColor
+}

@@ -3,6 +3,7 @@ import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
 import { groveTiles } from '@gamepark/salamandra/material/GroveTile.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType.ts'
+import { SalamanderCard, SalamanderId } from '@gamepark/salamandra/material/SalamanderCard.ts'
 import { SalamandraSetup } from '@gamepark/salamandra/SalamandraSetup.ts'
 
 export class TutorialSetup extends SalamandraSetup {
@@ -33,5 +34,10 @@ export class TutorialSetup extends SalamandraSetup {
     super.setupFieldsStack()
     this.material(MaterialType.FieldTile).id(FieldTile.Field11).moveItem({ type: LocationType.FieldStack })
     this.material(MaterialType.FieldTile).id(FieldTile.Field13).moveItem({ type: LocationType.FieldStack })
+  }
+
+  createSalamandraCardsStacks() {
+    super.createSalamandraCardsStacks()
+    this.material(MaterialType.SalamanderCard).id<SalamanderId>((id) => id.front === SalamanderCard.BlackSalamander3).moveItem({ type: LocationType.BlackSalamanderStack })
   }
 }

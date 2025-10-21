@@ -71,6 +71,6 @@ export const divinityCardPoints: Record<DivinityCard, number> = {
 }
 
 export type DivinityId = {
-  front: DivinityCard
+  front?: DivinityCard
   back: DivinityType
 }
