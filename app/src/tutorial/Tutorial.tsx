@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { ClotheType, EyebrowType, EyeType, FacialHairType, MouthType, TopType } from '@gamepark/avataaars'
+import { ClotheType, EyebrowType, EyeType, FacialHairType, GraphicType, MouthType, TopType } from '@gamepark/avataaars'
 import ClotheColorName from '@gamepark/avataaars/dist/avatar/clothes/ClotheColorName'
 import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
@@ -10,16 +10,23 @@ import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
 import { GroveTile } from '@gamepark/salamandra/material/GroveTile.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType.ts'
+import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource.ts'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor.ts'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { Trans } from 'react-i18next'
+import bear from '../images/icons/bear.jpg'
 import cauldron from '../images/icons/cauldron.png'
+import eagle from '../images/icons/eagle.jpg'
+import potion2 from '../images/icons/flower-fruit-potion.jpg'
 import flower from '../images/icons/flower.jpg'
 import fruit from '../images/icons/fruit.jpg'
+import potion1 from '../images/icons/leaf-potion.jpg'
 import leaf from '../images/icons/leaf.jpg'
+import crown from '../images/icons/salamander.png'
 import sickle from '../images/icons/sickle.png'
 import crystal from '../images/tokens/CristalToken1.png'
 import ScrollToken from '../images/tokens/ScrollToken.png'
+import { salamanderTempleTileDescription } from '../material/SalamanderTempleTileDescription.ts'
 import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
 import { secondaryDivinitiesBoardDescription } from '../material/SecondaryDivinitiesBoardDescription.ts'
 import { TutorialSetup } from './TutorialSetup'
@@ -40,15 +47,17 @@ export class Tutorial extends MaterialTutorial {
       id: opponent,
       name: 'Cathbad',
       avatar: {
-        topType: TopType.Eyepatch,
-        hairColor: HairColorName.Black,
+        topType: TopType.LongHairStraightStrand,
+        hairColor: HairColorName.Platinum,
         facialHairType: FacialHairType.BeardMajestic,
-        clotheType: ClotheType.ShirtScoopNeck,
-        clotheColor: ClotheColorName.Heather,
+        facialHairColor: HairColorName.Platinum,
+        clotheType: ClotheType.GraphicShirt,
+        clotheColor: ClotheColorName.Red,
+        graphicType: GraphicType.Deer,
         eyeType: EyeType.Surprised,
-        eyebrowType: EyebrowType.AngryNatural,
+        eyebrowType: EyebrowType.DefaultNatural,
         mouthType: MouthType.Default,
-        skinColor: SkinColor.Brown
+        skinColor: SkinColor.DarkBrown
       }
     }
   ]
@@ -438,75 +447,251 @@ export class Tutorial extends MaterialTutorial {
       move: {}
     },
     {
-      popup: {
-        text: () => <Trans i18nKey="tuto.opponent.4" components={BaseComponents}/>
+      move: {
+        player: opponent,
+        filter: isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.place-last" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.opponent.4" components={{
+          ...BaseComponents,
+          crystal: <Picture src={crystal} css={pictureCss}/>,
+          scroll: <Picture src={ScrollToken} css={pictureCss}/>
+        }}/>,
+        position: { x: -15 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken).id(opponent).parent(this.material(game, MaterialType.FieldTile).id(FieldTile.Field11).getIndex()),
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field11)
+        ],
+        margin: { left: 40, right: 5, top: 5, bottom: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place-last" components={BaseComponents}/>,
+        position: { y: -10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.ApprenticeToken).location(LocationType.PlayerActualRoundApprenticesSpace)
+        ],
+        locations: [{
+          type: LocationType.FieldApprenticeSpace,
+          parent: this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3).getIndex(),
+          x: 1
+        }],
+        margin: { right: 10, top: 10, bottom: 10 }
+      }),
+      move: {
+        filter: (move, game) => isMoveItemType(MaterialType.ApprenticeToken)(move)
+          && move.location.type === LocationType.FieldApprenticeSpace
+          && move.location.parent === this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3).getIndex()
+          && move.location.x === 1
+      }
+    },
+    {
+      move: {
+        player: opponent,
+        filter: (move, game) => isMoveItemType(MaterialType.ApprenticeToken)(move)
+          && move.location.type === LocationType.FieldApprenticeSpace
+          && move.location.parent === this.material(game, MaterialType.FieldTile).id(FieldTile.StartField1).getIndex()
+          && move.location.x === 3
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.temple" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.temple" components={BaseComponents}/>,
+        position: { x: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.SalamanderCard)
+        ],
+        staticItems: { [MaterialType.SalamanderTempleTile]: [salamanderTempleTileDescription.staticItem] },
+        margin: { left: 40, right: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.salamandra" components={{
+          ...BaseComponents,
+          potion1: <Picture src={potion1} css={pictureCss}/>,
+          potion2: <Picture src={potion2} css={pictureCss}/>,
+          crystal: <Picture src={crystal} css={pictureCss}/>
+        }}/>,
+        position: { x: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.SalamanderCard)
+        ],
+        staticItems: { [MaterialType.SalamanderTempleTile]: [salamanderTempleTileDescription.staticItem] },
+        margin: { left: 40, right: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.potion" components={{
+          ...BaseComponents,
+          potion2: <Picture src={potion2} css={pictureCss}/>,
+          flower: <Picture src={flower} css={pictureCss}/>
+        }}/>,
+        position: { x: -10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13),
+          this.material(game, MaterialType.ApprenticeToken).id(me).parent(this.material(game, MaterialType.FieldTile).id(FieldTile.Field13).getIndex())
+        ],
+        margin: { left: 40, right: 5 }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.buy-flower" components={{
+          ...BaseComponents,
+          flower: <Picture src={flower} css={pictureCss}/>,
+          crystal: <Picture src={crystal} css={pictureCss}/>
+        }}/>,
+        position: { x: -10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3),
+          this.material(game, MaterialType.ApprenticeToken).id(me).parent(this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3).getIndex())
+        ],
+        margin: { left: 40, right: 5 }
+      }),
+      move: {
+        filter: (move) => isCustomMoveType(CustomMoveType.PayCrystalsToGainResource)(move)
+          && move.data.resource === PrimaryResource.Flower
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.salamandra" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.create-potion" components={{
+          ...BaseComponents,
+          potion2: <Picture src={potion2} css={pictureCss}/>,
+          flower: <Picture src={flower} css={pictureCss}/>
+        }}/>,
+        position: { x: -10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13),
+          this.material(game, MaterialType.ApprenticeToken).id(me).parent(this.material(game, MaterialType.FieldTile).id(FieldTile.Field13).getIndex())
+        ],
+        margin: { left: 40, right: 5 }
+      }),
+      move: {
+        filter: (move, game) => isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move)
+          && move.data === this.material(game, MaterialType.ApprenticeToken).id(me).parent(this.material(game, MaterialType.FieldTile).id(FieldTile.Field13).getIndex()).getIndex()
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.potion" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.salamandra.take" components={BaseComponents}/>,
+        position: { x: -10, y: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.SalamanderCard).location(LocationType.BlackSalamanderStack).rotation(true)
+        ],
+        locations: [{ type: LocationType.PlayerBlackSalamanderCards, player: me }],
+        margin: { left: 15, right: 5 }
+      }),
+      move: {
+        filter: isMoveItemType(MaterialType.SalamanderCard)
+      }
+    },
+    { move: {} },
+    {
+      move: {
+        player: opponent,
+        filter: isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)
       }
     },
     {
-      popup: {
-        text: () => <Trans i18nKey="tuto.buy-flower" components={BaseComponents}/>
+      move: {
+        player: opponent,
+        filter: isCustomMoveType(CustomMoveType.Pass)
       }
     },
     {
-      popup: {
-        text: () => <Trans i18nKey="tuto.create-potion" components={BaseComponents}/>
-      }
-    },
-    {
-      popup: {
-        text: () => <Trans i18nKey="tuto.salamandra.take" components={BaseComponents}/>
+      move: {
+        player: opponent,
+        filter: isCustomMoveType(CustomMoveType.Pass)
       }
     },
     {
       popup: {
         text: () => <Trans i18nKey="tuto.pass" components={BaseComponents}/>
+      },
+      move: {
+        filter: isCustomMoveType(CustomMoveType.Pass)
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.grove.gather" components={BaseComponents}/>
-      }
+        text: () => <Trans i18nKey="tuto.grove.gather" components={BaseComponents}/>,
+        position: { x: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.GroveTile).location(LocationType.GameLayout)
+        ],
+        margin: { left: 50, right: 2, top: 2, bottom: 2 }
+      })
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.grove.cost" components={BaseComponents}/>
-      }
+        text: () => <Trans i18nKey="tuto.grove.cost" components={{ ...BaseComponents, crystal: <Picture src={crystal} css={pictureCss}/> }}/>,
+        position: { x: -20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.GroveTile).index([2, 3, 1, 6])
+        ],
+        margin: { left: 50, right: 10, top: 2, bottom: 10 }
+      })
     },
     {
       popup: {
         text: () => <Trans i18nKey="tuto.grove.bonus" components={BaseComponents}/>
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.GroveTile).index([2, 3, 1, 6])
+        ],
+        locations: [{ type: LocationType.PlayerGroveTiles, player: me }],
+        margin: { left: 10, right: 10, top: 2, bottom: 10 }
+      }),
+      move: {
+        filter: isMoveItemType(MaterialType.GroveTile)
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.grove.vp" components={BaseComponents}/>
-      }
+        text: () => <Trans i18nKey="tuto.grove.vp" components={BaseComponents}/>,
+        position: { y: 20 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.GroveTile).location(LocationType.PlayerGroveTiles)
+        ],
+        locations: [{ type: LocationType.PlayerGroveTiles, player: me }],
+        margin: { left: 20, right: 20, top: 2, bottom: 20 }
+      })
     },
     {
       popup: {
         text: () => <Trans i18nKey="tuto.round.end" components={BaseComponents}/>
       }
     },
+    { move: { auto: true } },
     {
       popup: {
         text: () => <Trans i18nKey="tuto.game.over" components={BaseComponents}/>
@@ -519,12 +704,20 @@ export class Tutorial extends MaterialTutorial {
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.majorities" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.majorities" components={{
+          ...BaseComponents,
+          eagle: <Picture src={eagle} css={pictureCss}/>,
+          bear: <Picture src={bear} css={pictureCss}/>,
+          crown: <Picture src={crown} css={pictureCss}/>
+        }}/>
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.scroll.vp" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.scroll.vp" components={{
+          ...BaseComponents,
+          scroll: <Picture src={ScrollToken} css={pictureCss}/>
+        }}/>
       }
     },
     {

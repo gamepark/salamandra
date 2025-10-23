@@ -285,7 +285,7 @@
       "tuto.round.end": "Une fois que tous les joueurs ont passé, la manche suivante commence.\nLes apprentis restent à leur place, et de nouveaux apprentis deviennent disponibles !",
       "tuto.game.over": "La partie se termine après la fin de la 4e manche.",
       "tuto.grimoire.vp": "À la fin de la partie, les joueurs gagnent les PV des <bold>cartes Grimoire</bold>.",
-      "tuto.majorities": "Pour chaque croyance, les 2 joueurs ayant le plus de symboles (<bear/> <eagle/> ou <crown/>) sur leurs <bold>cartes Divinité</bold> remportent des PV.\nPar exemple, le joueur ayant le plus de <crown/> remporte 13 PV, le second 6 PV.",
+      "tuto.majorities": "Pour chaque croyance, les 2 joueurs ayant le plus de symboles (<bear/> <eagle/> ou <crown/>) sur leurs <bold>cartes Divinité</bold> remportent des PV.\nPar exemple, le joueur ayant le plus de <crown/> remporte 13 PV, le second 6 PV.\n<italic>Cliquez sur le panneau joueur de votre adversaire pour voir ses cartes !</italic>",
       "tuto.scroll.vp": "Chaque <scroll/> non utilisé rapporte également 1PV.\nLe joueur avec le plus de PV remporte la victoire et est nommé <bold>grand Druide</bold> !",
       "tuto.end": "À vous de jouer à présent, que la déesse Salamandra vous accompagne !",
       "Menu": "Menu",
