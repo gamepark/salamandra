@@ -22,6 +22,7 @@ import ScoreMarkerYellow from '../images/tiles/scoreMarker/ScoreMarkerYellow.jpg
 import { potionImages, primaryResourceImages } from '../material/help/utils'
 import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import { ResourceDialog } from './ResourceDialog'
+import Score from '../images/icons/score.png'
 
 type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & HTMLAttributes<HTMLDivElement>
 
@@ -51,7 +52,7 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
         css={[backgroundColorCss(player.id, isViewActive)]}
         onClick={() => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })}
         {...rest}
-        mainCounter={{ image: markerImages[player.id], imageCss, value: score }}
+        mainCounter={{ image: Score, value: score }}
         counters={[
           getPrimaryResourceCounter(moves, player.id, PrimaryResource.Leaf, primaryResources[PrimaryResource.Leaf], () =>
             setDialogResource(PrimaryResource.Leaf)
@@ -139,13 +140,6 @@ const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potio
     value,
     onClick
   }
-}
-
-const markerImages = {
-  [PlayerColor.Blue]: ScoreMarkerBlue,
-  [PlayerColor.Grey]: ScoreMarkerGrey,
-  [PlayerColor.Red]: ScoreMarkerRed,
-  [PlayerColor.Yellow]: ScoreMarkerYellow
 }
 
 const backgroundColorCss = (player: PlayerColor, active: boolean) => css`
