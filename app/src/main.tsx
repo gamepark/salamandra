@@ -26,8 +26,11 @@ createRoot(document.getElementById('root')!).render(
       animations={gameAnimations}
       tutorial={new Tutorial()}
       theme={{
-        background: {
-          image: background
+        root: {
+          background: {
+            image: background,
+            overlay: 'rgba(0, 0, 0, 0.5)'
+          }
         },
         dialog: {
           backgroundColor: '#efeadc'
