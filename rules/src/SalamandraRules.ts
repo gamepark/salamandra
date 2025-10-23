@@ -116,7 +116,7 @@ export class SalamandraRules
       legalMoves.push(...new EagleDivinityCardHelper(this.game).getLegalMoves())
       legalMoves.push(...new BearDivinityCardHelper(this.game).getLegalMoves())
 
-      if (this.game.rule?.id === RuleId.DoActions && apprenticeTokenInField.length > 0) {
+      if ((this.game.rule?.id === RuleId.DoActions || this.game.rule?.id === RuleId.CheckAndUseScrollTokens) && apprenticeTokenInField.length > 0) {
         if (!apprenticeTokenInField.length) return legalMoves
         legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
         legalMoves.push(

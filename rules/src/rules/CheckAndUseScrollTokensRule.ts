@@ -49,10 +49,8 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.ApprenticeToken)(move)) {
-      return this.goToNextPlayer()
-    }
-    return []
+    if (!isMoveItemType(MaterialType.ApprenticeToken)(move) || move.location.type !== LocationType.SpellBookApprenticeSpace) return []
+    return this.goToNextPlayer()
   }
 
   get playerScrollTokens() {

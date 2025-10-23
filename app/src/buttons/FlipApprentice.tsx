@@ -15,7 +15,10 @@ export const FlipApprentice = (props: FlipApprenticeProps) => {
   const { onPlay, itemIndex, item } = props
   const activateApprenticeForSalamandra: MoveItem | undefined = useLegalMove<MoveItem>(
     (move: MaterialMove) =>
-      isMoveItemType(MaterialType.ApprenticeToken)(move) && move.itemIndex === itemIndex && item.location?.type === LocationType.FieldApprenticeSpace
+      isMoveItemType(MaterialType.ApprenticeToken)(move) &&
+      move.itemIndex === itemIndex &&
+      item.location?.type === LocationType.FieldApprenticeSpace &&
+      item.location.rotation !== move.location.rotation
   )
 
   if (!activateApprenticeForSalamandra) return null
