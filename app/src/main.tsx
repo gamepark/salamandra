@@ -6,6 +6,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
+import background from './images/background.jpg'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
 import translations from './translations.json'
@@ -25,12 +26,15 @@ createRoot(document.getElementById('root')!).render(
       animations={gameAnimations}
       tutorial={new Tutorial()}
       theme={{
+        background: {
+          image: background
+        },
         dialog: {
           backgroundColor: '#efeadc'
         }
       }}
     >
-      <App />
+      <App/>
     </GameProvider>
   </StrictMode>
 )
