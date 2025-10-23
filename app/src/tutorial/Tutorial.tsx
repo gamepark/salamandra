@@ -267,6 +267,146 @@ export class Tutorial extends MaterialTutorial {
       popup: {
         text: () => <Trans i18nKey="tuto.resource.cost" components={BaseComponents}/>
       }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.field.place" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.field.bonus" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.field.option" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.cards" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.opponent.2" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.opponent.3" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.cauldron" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place.flower" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.scroll" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grimoire" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.place-last" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.temple" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.salamandra" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.potion" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.buy-flower" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.create-potion" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.salamandra.take" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.pass" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grove.gather" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grove.cost" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grove.bonus" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grove.vp" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.round.end" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.game.over" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.grimoire.vp" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.majorities" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.scroll.vp" components={BaseComponents}/>
+      }
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.end" components={BaseComponents}/>
+      }
     }
   ]
 }
