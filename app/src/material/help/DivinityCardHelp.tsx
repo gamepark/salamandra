@@ -1,8 +1,7 @@
 import { css } from '@emotion/react'
 import { MaterialHelpProps, useLegalMoves } from '@gamepark/react-game'
 import { CustomMove, isCustomMoveType } from '@gamepark/rules-api'
-import { DivinityType } from '@gamepark/salamandra/material/Bonus'
-import { DivinityCard, divinityCardPoints } from '@gamepark/salamandra/material/DivinityCard'
+import { divinityCardPoints, DivinityId, DivinityType } from '@gamepark/salamandra/material/DivinityCard'
 import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove.ts'
 import { FC } from 'react'
 import { Trans } from 'react-i18next'
@@ -13,7 +12,7 @@ import { components, descriptionCss } from './utils'
 export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
   const { item } = props
   if (!item.id) return null
-  const id: { front?: DivinityCard; back: DivinityType } = item.id
+  const id: DivinityId = item.id
   const type: DivinityType = id.back
   const isHidden = id.front === undefined
 

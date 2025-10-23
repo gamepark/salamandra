@@ -1,6 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialItem, MaterialMove, MoveItem, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { Bonus, BonusType, DivinityType } from '../../material/Bonus'
+import { Bonus, BonusType } from '../../material/Bonus'
 import { Cost, CostType } from '../../material/Cost'
+import { DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Potion } from '../../material/Potion'

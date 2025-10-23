@@ -1,8 +1,8 @@
 import { getEnumValues } from '@gamepark/rules-api'
 
 export enum DivinityType {
-  Bear = 1,
-  Eagle
+  Eagle = 1,
+  Bear
 }
 
 export type DivinityCardId = {

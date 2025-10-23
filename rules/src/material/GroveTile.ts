@@ -1,5 +1,6 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { Bonus, divinityCardBonus, DivinityType, pointsBonus, scrollBonus } from './Bonus'
+import { Bonus, divinityCardBonus, pointsBonus, scrollBonus } from './Bonus'
+import { DivinityType } from './DivinityCard'
 
 export enum GroveTile {
   Grove1 = 1,

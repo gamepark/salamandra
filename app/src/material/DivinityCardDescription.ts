@@ -1,6 +1,5 @@
 import { CardDescription } from '@gamepark/react-game'
-import { DivinityType } from '@gamepark/salamandra/material/Bonus.ts'
-import { DivinityCard } from '@gamepark/salamandra/material/DivinityCard'
+import { DivinityCard, DivinityType } from '@gamepark/salamandra/material/DivinityCard'
 import BearDivinityCard01 from '../images/cards/bear/BearCard01.jpg'
 import BearDivinityCard02 from '../images/cards/bear/BearCard02.jpg'
 import BearDivinityCard03 from '../images/cards/bear/BearCard03.jpg'

@@ -15,14 +15,10 @@ import FlowerSelected from '../images/icons/flower-selected.png'
 import FruitSelected from '../images/icons/fruit-selected.png'
 import LeafPotionSelected from '../images/icons/leaf-potion-selected.png'
 import LeafSelected from '../images/icons/leaf-selected.png'
-import ScoreMarkerBlue from '../images/tiles/scoreMarker/ScoreMarkerBlue.jpg'
-import ScoreMarkerGrey from '../images/tiles/scoreMarker/ScoreMarkerGrey.jpg'
-import ScoreMarkerRed from '../images/tiles/scoreMarker/ScoreMarkerRed.jpg'
-import ScoreMarkerYellow from '../images/tiles/scoreMarker/ScoreMarkerYellow.jpg'
+import Score from '../images/icons/score.png'
 import { potionImages, primaryResourceImages } from '../material/help/utils'
 import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
 import { ResourceDialog } from './ResourceDialog'
-import Score from '../images/icons/score.png'
 
 type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & HTMLAttributes<HTMLDivElement>
 

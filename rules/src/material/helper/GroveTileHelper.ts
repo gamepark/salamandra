@@ -1,6 +1,7 @@
 import { Location, MaterialGame, MaterialMove, MaterialRulesPart, XYCoordinates } from '@gamepark/rules-api'
 import { CustomMoveType } from '../../rules/CustomMove'
-import { BonusType, DivinityType } from '../Bonus'
+import { BonusType } from '../Bonus'
+import { DivinityType } from '../DivinityCard'
 import { groveData, GroveTile } from '../GroveTile'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'

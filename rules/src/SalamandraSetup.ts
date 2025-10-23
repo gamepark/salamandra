@@ -1,7 +1,6 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
 import { sampleSize, shuffle } from 'es-toolkit'
-import { DivinityType } from './material/Bonus'
-import { bearDivinityCards, eagleDivinityCards } from './material/DivinityCard'
+import { bearDivinityCards, DivinityType, eagleDivinityCards } from './material/DivinityCard'
 import { fieldTiles, startFieldTiles } from './material/FieldTile'
 import { groveTiles } from './material/GroveTile'
 import { LocationType } from './material/LocationType'

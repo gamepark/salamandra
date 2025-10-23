@@ -5,6 +5,7 @@ import SkinColor from '@gamepark/avataaars/dist/avatar/SkinColor'
 import HairColorName from '@gamepark/avataaars/dist/avatar/top/HairColorName'
 import { MaterialTutorial, Picture, TutorialStep } from '@gamepark/react-game'
 import { isCreateItemType, isCustomMoveType, isMoveItemType } from '@gamepark/rules-api'
+import { DivinityType } from '@gamepark/salamandra/material/DivinityCard.ts'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
 import { GroveTile } from '@gamepark/salamandra/material/GroveTile.ts'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
@@ -17,6 +18,9 @@ import fruit from '../images/icons/fruit.jpg'
 import leaf from '../images/icons/leaf.jpg'
 import sickle from '../images/icons/sickle.png'
 import crystal from '../images/tokens/CristalToken1.png'
+import ScrollToken from '../images/tokens/ScrollToken.png'
+import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
+import { secondaryDivinitiesBoardDescription } from '../material/SecondaryDivinitiesBoardDescription.ts'
 import { TutorialSetup } from './TutorialSetup'
 
 const me = PlayerColor.Blue
@@ -265,18 +269,53 @@ export class Tutorial extends MaterialTutorial {
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.resource.cost" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.resource.cost" components={{
+          ...BaseComponents,
+          leaf: <Picture src={leaf} css={pictureCss}/>,
+          flower: <Picture src={flower} css={pictureCss}/>,
+          fruit: <Picture src={fruit} css={pictureCss}/>,
+          crystal: <Picture src={crystal} css={pictureCss}/>
+        }}/>,
+        position: { x: 10, y: -10 }
+      },
+      focus: () => ({
+        staticItems: {
+          [MaterialType.SecondaryDivinitiesBoard]: [secondaryDivinitiesBoardDescription.staticItem]
+        }
+      })
+    },
+    {
+      popup: {
+        text: () => <Trans i18nKey="tuto.field.place" components={BaseComponents}/>,
+        position: { y: 15 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13)
+        ],
+        locations: [{ type: LocationType.GameLayout, x: -1, y: -1 }],
+        margin: { left: 10, top: 10, bottom: 20 }
+      }),
+      move: {
+        filter: (move, game) => isMoveItemType(MaterialType.FieldTile)(move)
+          && this.material(game, MaterialType.FieldTile).getItem(move.itemIndex).id === FieldTile.Field13
+          && move.location.x === -1 && move.location.y === -1,
+        interrupt: isCreateItemType(MaterialType.ScrollToken)
       }
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.field.place" components={BaseComponents}/>
-      }
-    },
-    {
-      popup: {
-        text: () => <Trans i18nKey="tuto.field.bonus" components={BaseComponents}/>
-      }
+        text: () => <Trans i18nKey="tuto.field.bonus" components={{ ...BaseComponents, scroll: <Picture src={ScrollToken} css={pictureCss}/> }}/>,
+        position: { y: 10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13)
+        ],
+        staticItems: { [MaterialType.ScrollToken]: [scrollTokenDescription.staticItem] },
+        margin: { top: 5, bottom: 5 }
+      }),
+      move: {}
     },
     {
       popup: {
@@ -285,7 +324,20 @@ export class Tutorial extends MaterialTutorial {
     },
     {
       popup: {
-        text: () => <Trans i18nKey="tuto.cards" components={BaseComponents}/>
+        text: () => <Trans i18nKey="tuto.cards" components={BaseComponents}/>,
+        position: { x: -10, y: 10 }
+      },
+      focus: (game) => ({
+        materials: [
+          this.material(game, MaterialType.FieldTile).id(FieldTile.Field13),
+          this.material(game, MaterialType.FieldTile).id(FieldTile.StartField3),
+          this.material(game, MaterialType.DivinityCard).rotation(true)
+        ],
+        margin: { top: 5, bottom: 5 }
+      }),
+      move: {
+        filter: (move, game) => isMoveItemType(MaterialType.DivinityCard)(move)
+          && this.material(game, MaterialType.DivinityCard).getItem(move.itemIndex).id.back === DivinityType.Eagle
       }
     },
     {

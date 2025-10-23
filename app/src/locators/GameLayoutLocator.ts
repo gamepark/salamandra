@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { DropAreaDescription, ItemContext, LocationDescription, Locator, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, ItemContext, Locator, MaterialContext } from '@gamepark/react-game'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
@@ -44,12 +44,7 @@ class GameLayoutLocator extends Locator {
     return ['scale(2)', 'translateZ(1em)']
   }
 
-  getLocationDescription(_location: Location, context: ItemContext): LocationDescription | undefined {
-    if (context.type === MaterialType.FieldTile) {
-      return new fieldDescription()
-    }
-    return undefined
-  }
+  locationDescription = new fieldDescription()
 }
 
 class fieldDescription extends DropAreaDescription {

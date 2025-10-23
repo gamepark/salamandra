@@ -1,4 +1,5 @@
 import { MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { DivinityType } from './DivinityCard'
 
 export enum BonusType {
   Scroll = 1,
@@ -6,11 +7,6 @@ export enum BonusType {
   DivinityCard,
   Special,
   Crystal
-}
-
-export enum DivinityType {
-  Eagle = 1,
-  Bear
 }
 
 export type ScrollBonus = {

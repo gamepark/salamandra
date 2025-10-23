@@ -1,6 +1,7 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { Bonus, crystalBonus, divinityCardBonus, DivinityType, pointsBonus, scrollBonus, specialBonus } from './Bonus'
+import { Bonus, crystalBonus, divinityCardBonus, pointsBonus, scrollBonus, specialBonus } from './Bonus'
 import { cost, Cost, CostType } from './Cost'
+import { DivinityType } from './DivinityCard'
 import { FieldColor } from './FieldTile'
 import { FieldEffectHelper } from './helper/FieldEffectHelper'
 import { Potion } from './Potion'

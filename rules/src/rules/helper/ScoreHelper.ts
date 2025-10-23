@@ -1,7 +1,6 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { groupBy, orderBy } from 'es-toolkit/compat'
-import { DivinityType } from '../../material/Bonus'
-import { DivinityCard, divinityCardPoints } from '../../material/DivinityCard'
+import { DivinityCard, divinityCardPoints, DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { SalamanderCard, salamanderCardPoints } from '../../material/SalamanderCard'
