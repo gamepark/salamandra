@@ -12,10 +12,11 @@ import { salamanderTempleTileDescription } from './SalamanderTempleTileDescripti
 import { scrollTokenDescription } from './ScrollTokenDescription'
 import { secondaryDivinitiesBoardDescription } from './SecondaryDivinitiesBoardDescription'
 import { spellBookCardDescription } from './SpellBookCardDescription'
+import { venerationPointsBoardDescription } from './VenerationPointsBoardDescription.ts'
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
   [MaterialType.SalamanderTempleTile]: salamanderTempleTileDescription,
-  //[MaterialType.VenerationPointsBoard]: venerationPointsBoardDescription,
+  [MaterialType.VenerationPointsBoard]: venerationPointsBoardDescription,
   [MaterialType.SecondaryDivinitiesBoard]: secondaryDivinitiesBoardDescription,
   [MaterialType.PlayerMat]: playerMatDescription,
   [MaterialType.DruidTile]: druidTileDescription,

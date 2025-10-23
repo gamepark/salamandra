@@ -192,6 +192,8 @@
       "help.spellbook.points.groveTiles": "par tuiles bosquet en votre possession",
       "help.spellbook.points.cauldrons": "par tuiles champ de type chaudron avec au moins 1 de vos apprentis dessus",
       "help.spellbook.points.spellbooks": "par cartes grimoire avec 1 de vos apprentis dessus",
+      "help.majorities": "Croyance",
+      "help.majorities.rule": "À la fin de la partie, pour chaque croyance, le joueur ayant le plus de fois le symbole associé remporte le plus de PV (12, 8 ou 6). Le joueur en seconde position remporte également des PV (6, 4 ou 3).\nEn cas d'égalités, les PV auquels les joueurs peuvent prétendre sont divisés équitablement entre les joueurs à égalité.",
       "help.divinity": "Carte divinité {type, select, 1{eagle} other{bear}}",
       "help.divinity.description": "Vous pouvez récupérer une  cartes divinité en bonus lorsque vous récupèrez une tuile bosquet, ou lorsque vous batissez une tuile champ à coté d'une tuile champ ayant la même couleur.\nL’eﬀet de cette carte s’applique désormais pendant tout le reste de la partie.",
       "help.divinity.end": "Lors du décompte final, le joueur ayant le plus de symboles  {type, select, 1{<eagle/>} 2{<bear/>} other{<salamander/>}} gagne {first} points, le second gagne {second} points.",

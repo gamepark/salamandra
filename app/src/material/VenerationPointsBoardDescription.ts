@@ -1,15 +1,15 @@
 import { BoardDescription } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
-import VenerationPointsBoard from '../images/boards/VenerationPointsBoard.png'
+import MajoritiesHelp from '../images/boards/MajoritiesHelp.jpg'
+import { VenerationPointsBoardHelp } from './help/VenerationPointsBoardHelp.tsx'
 
 class VenerationPointsBoardDescription extends BoardDescription {
-  width = 40
-  height = 20
-
-  transparency = true
-
-  image = VenerationPointsBoard
+  width = 6.7 * 2
+  height = 1.2 * 2
+  borderRadius = 0.5
+  image = MajoritiesHelp
   staticItem = { location: { type: LocationType.VenerationPointsLayout } }
+  help = VenerationPointsBoardHelp
 }
 
 export const venerationPointsBoardDescription = new VenerationPointsBoardDescription()

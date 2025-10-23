@@ -29,6 +29,7 @@ import ScrollToken from '../images/tokens/ScrollToken.png'
 import { salamanderTempleTileDescription } from '../material/SalamanderTempleTileDescription.ts'
 import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
 import { secondaryDivinitiesBoardDescription } from '../material/SecondaryDivinitiesBoardDescription.ts'
+import { venerationPointsBoardDescription } from '../material/VenerationPointsBoardDescription.ts'
 import { TutorialSetup } from './TutorialSetup'
 
 const me = PlayerColor.Blue
@@ -709,8 +710,13 @@ export class Tutorial extends MaterialTutorial {
           eagle: <Picture src={eagle} css={pictureCss}/>,
           bear: <Picture src={bear} css={pictureCss}/>,
           crown: <Picture src={crown} css={pictureCss}/>
-        }}/>
-      }
+        }}/>,
+        position: { x: 25 }
+      },
+      focus: () => ({
+        staticItems: { [MaterialType.VenerationPointsBoard]: [venerationPointsBoardDescription.staticItem] },
+        margin: { right: 50, left: 15 }
+      })
     },
     {
       popup: {
