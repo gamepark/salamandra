@@ -470,7 +470,7 @@
       "tuto.temple": "La 4e action possible consiste à activer le <bold>Temple de la Salamandre</bold>.",
       "tuto.salamandra": "Pour prendre une carte Salamandre, il faut activer n'importe quel apprenti, ainsi qu'une potion (<potion1/> ou <potion2/>) et 1 ou 2 <crystal/>.",
       "tuto.potion": "Vous pouvez fabriquer <potion2/> en activant cette tuile, mais il faut d'abord une <flower/>.",
-      "tuto.buy-flower": "Vous pouvez activer cette tuile pour récolter une <flower/>, mais si vous le faites, vous n'aurez plus aucun apprenti actif pour prendre une carte Salamandre !\nÀ la place, achetez la <flower/> avec 3 <crystal/> (grâce à votre carte aigle) en cliquant sur le bouton \"+\", à gauche dans votre panneau joueur.",
+      "tuto.buy-flower": "Vous pouvez activer cette tuile pour récolter une\n<flower/>, mais si vous le faites, vous n'aurez plus aucun apprenti actif pour prendre une carte Salamandre !\nÀ la place, achetez la <flower/> avec 3 <crystal/> (grâce à votre carte aigle) en cliquant sur le bouton \"+\", à gauche dans votre panneau joueur.",
       "tuto.create-potion": "À présent, activez votre apprenti pour transformer <flower/> en <potion2/>.",
       "tuto.salamandra.take": "Maintenant, faites l'acquisition de cette carte Salamandre, en activant votre dernier apprenti.",
       "tuto.pass": "La 5e et dernière action possible consiste à passer. Cliquez sur \"passez\" dans l'en-tête.",
