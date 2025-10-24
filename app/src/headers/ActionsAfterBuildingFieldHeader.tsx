@@ -13,5 +13,5 @@ export const ActionsAfterBuildingFieldHeader = () => {
     return <Trans defaults="header.take.actions.after.building.you" />
   }
 
-  return <Trans defaults="header.take.actions.after.building.player" values={{ player: name }} />
+  return <Trans defaults="header.take.actions.player" values={{ player: name }} />
 }
