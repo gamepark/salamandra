@@ -22,6 +22,8 @@ class FieldStackLocator extends DeckLocator {
       z: 5
     }
   }
+
+  navigationSorts = []
 }
 
 export const fieldStackLocator = new FieldStackLocator()
