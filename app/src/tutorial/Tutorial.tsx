@@ -27,7 +27,6 @@ import sickle from '../images/icons/sickle.png'
 import crystal from '../images/tokens/CristalToken1.png'
 import ScrollToken from '../images/tokens/ScrollToken.png'
 import { salamanderTempleTileDescription } from '../material/SalamanderTempleTileDescription.ts'
-import { scrollTokenDescription } from '../material/ScrollTokenDescription.ts'
 import { secondaryDivinitiesBoardDescription } from '../material/SecondaryDivinitiesBoardDescription.ts'
 import { venerationPointsBoardDescription } from '../material/VenerationPointsBoardDescription.ts'
 import { TutorialSetup } from './TutorialSetup'
@@ -153,7 +152,7 @@ export class Tutorial extends MaterialTutorial {
       move: {
         filter: (move) => isMoveItemType(MaterialType.ApprenticeToken)(move)
           && move.location.type === LocationType.FieldApprenticeSpace && move.location.parent === 1 && move.location.x === 0,
-        interrupt: isCustomMoveType(CustomMoveType.Score)
+        interrupt: isCreateItemType(MaterialType.CrystalToken)
       }
     },
     {
@@ -167,10 +166,7 @@ export class Tutorial extends MaterialTutorial {
           this.material(game, MaterialType.ApprenticeToken).location(LocationType.FieldApprenticeSpace)
         ],
         margin: { left: 40, top: 20, bottom: 10 }
-      }),
-      move: {
-        interrupt: isCreateItemType(MaterialType.CrystalToken)
-      }
+      })
     },
     {
       popup: {
@@ -317,14 +313,13 @@ export class Tutorial extends MaterialTutorial {
     {
       popup: {
         text: () => <Trans i18nKey="tuto.field.bonus" components={{ ...BaseComponents, scroll: <Picture src={ScrollToken} css={pictureCss}/> }}/>,
-        position: { y: 10 }
+        position: { x: -20 }
       },
       focus: (game) => ({
         materials: [
           this.material(game, MaterialType.FieldTile).id(FieldTile.Field13)
         ],
-        staticItems: { [MaterialType.ScrollToken]: [scrollTokenDescription.staticItem] },
-        margin: { top: 5, bottom: 5 }
+        margin: { top: 1, bottom: 1, left: 25, right: 1 }
       }),
       move: {}
     },
