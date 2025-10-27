@@ -9,9 +9,10 @@ import { RuleId } from './RuleId'
 
 export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    if (this.playerScrollTokens.getQuantity() < 4) {
+    if (this.playerScrollTokens.getQuantity() < 4 || this.getPossibleLocations().length === 0) {
       return this.goToNextPlayer()
     }
+
     return [this.playerScrollTokens.deleteItem(4)]
   }
 
@@ -32,20 +33,31 @@ export class CheckAndUseScrollTokensRule extends PlayerTurnRule {
 
   getPossibleLocations(): Location[] {
     const locations: Location[] = []
-    const spellBooksIndexes = this.material(MaterialType.SpellBookCard).location(LocationType.SpellBookSpace).getIndexes()
-    spellBooksIndexes.forEach((index) => {
+    const spellBooksIndexes = this.spellBookWithoutApprentice.getIndexes()
+
+    for (const spellBooIndex of spellBooksIndexes) {
       for (let x = 0; x < 2; x++) {
         const hasApprentice =
           this.material(MaterialType.ApprenticeToken)
             .location((loc) => loc.type === LocationType.SpellBookApprenticeSpace && loc.x === x)
-            .parent(index)
-            .getItems().length > 0
+            .parent(spellBooIndex).length > 0
         if (!hasApprentice) {
-          locations.push({ type: LocationType.SpellBookApprenticeSpace, parent: index, x })
+          locations.push({ type: LocationType.SpellBookApprenticeSpace, parent: spellBooIndex, x })
         }
       }
-    })
+    }
     return locations
+  }
+
+  get spellBookWithoutApprentice() {
+    const apprentices = this.spellBookApprentices
+    return this.material(MaterialType.SpellBookCard)
+      .location(LocationType.SpellBookSpace)
+      .filter((_, index) => !apprentices.some((item) => item.location.parent === index))
+  }
+
+  get spellBookApprentices() {
+    return this.material(MaterialType.ApprenticeToken).location(LocationType.SpellBookApprenticeSpace).id(this.player).getItems()
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
