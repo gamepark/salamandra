@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { sum } from 'es-toolkit'
+import { partition, sum } from 'es-toolkit'
 import { groupBy, orderBy } from 'es-toolkit/compat'
 import { DivinityCard, divinityCardPoints, DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
@@ -23,13 +23,16 @@ export class ScoreHelper extends MaterialRulesPart {
   }
 
   getPlayersDivinityVictoryPoints(getScore: (p: PlayerColor) => number): ScoreType[][] {
-    const scores: ScoreType[] = this.game.players.map((p) => ({
-      player: p,
-      score: getScore(p)
-    }))
+    const scores: ScoreType[] = this.game.players
+      .map((p) => ({
+        player: p,
+        score: getScore(p)
+      }))
+      .filter((s) => s.score > 0)
 
     const orderedScores = orderBy(scores, (s: ScoreType) => s.score, 'desc')
-    const groupedByScore = groupBy(orderedScores, (s) => s.score)
+
+    const groupedByScore = partition(orderedScores, (s: ScoreType) => s.score === orderedScores[0].score)
     return Object.values(groupedByScore)
   }
 

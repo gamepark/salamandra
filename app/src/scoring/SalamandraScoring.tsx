@@ -37,7 +37,7 @@ export class SalamandraScoring implements ScoringDescription {
       keys.push(SalamandraScoringKey.SCORE)
     }
 
-    keys.push(SalamandraScoringKey.EAGLE, SalamandraScoringKey.BEAR, SalamandraScoringKey.SALAMANDRA)
+    keys.push(SalamandraScoringKey.SALAMANDRA, SalamandraScoringKey.BEAR, SalamandraScoringKey.EAGLE)
 
     const spellBook = this.getSpellBooks(rules)
     if (spellBook.length > 0) {
