@@ -18,6 +18,7 @@ import LeafSelected from '../images/icons/leaf-selected.png'
 import Score from '../images/icons/score.png'
 import { potionImages, primaryResourceImages } from '../material/help/utils'
 import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resource.utils.ts'
+import { PotionDialog } from './PotionDialog.tsx'
 import { ResourceDialog } from './ResourceDialog'
 
 type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & HTMLAttributes<HTMLDivElement>
@@ -46,7 +47,11 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
         activeRing
         countersPerLine={3}
         css={[backgroundColorCss(player.id, isViewActive)]}
-        onClick={() => play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })}
+        onClick={(e) => {
+          e?.preventDefault()
+          e?.stopPropagation()
+          play({ kind: MoveKind.LocalMove, type: LocalMoveType.ChangeView, view: player.id }, { transient: true })
+        }}
         {...rest}
         mainCounter={{ image: Score, value: score }}
         counters={[
@@ -68,7 +73,8 @@ export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, 
           }
         ]}
       />
-      <ResourceDialog player={player.id} resource={dialogResource} potion={dialogPotion} onClose={() => clearDialog()} />
+      <ResourceDialog player={player.id} resource={dialogResource} onClose={() => clearDialog()} />
+      <PotionDialog player={player.id} potion={dialogPotion} onClose={() => clearDialog()} />
     </>
   )
 }
@@ -89,16 +95,22 @@ const getPrimaryResourceCounter = (
   player: PlayerColor,
   resource: PrimaryResource,
   value: number,
-  onClick: () => void
+  onClick: (e) => void
 ): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisResource(move, player, resource))
+
+  const innerClick = (e) => {
+    e.stopPropagation()
+    e?.preventDefault?.()
+    onClick(e)
+  }
 
   if (!canBuy) {
     return {
       image: primaryResourceImages[resource],
       imageCss,
       value,
-      onClick
+      onClick: innerClick
     }
   }
 
@@ -110,19 +122,25 @@ const getPrimaryResourceCounter = (
       ${selectable}
     `,
     value,
-    onClick
+    onClick: innerClick
   }
 }
 
 const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potion: Potion, value: number, onClick: () => void): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisPotion(move, player, potion))
 
+  const innerClick = (e) => {
+    e.stopPropagation()
+    e?.preventDefault?.()
+    onClick(e)
+  }
+
   if (!canBuy) {
     return {
       image: potionImages[potion],
       imageCss,
       value,
-      onClick
+      onClick: innerClick
     }
   }
 
@@ -134,7 +152,7 @@ const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potio
       ${selectable}
     `,
     value,
-    onClick
+    onClick: innerClick
   }
 }
 

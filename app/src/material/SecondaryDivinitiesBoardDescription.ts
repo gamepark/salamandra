@@ -1,12 +1,14 @@
 import { BoardDescription } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import SecondaryDivinitiesBoard from '../images/boards/SecondaryDivinitiesBoard.png'
+import { SecondaryDivinitiesBoardHelp } from './help/SecondaryDivinitiesBoardHelp.tsx'
 
 class SecondaryDivinitiesBoardDescription extends BoardDescription {
   width = 16.65
   height = 10.65
 
   transparency = true
+  help = SecondaryDivinitiesBoardHelp
 
   image = SecondaryDivinitiesBoard
   staticItem = { location: { type: LocationType.SecondaryDivinitiesLayout } }
