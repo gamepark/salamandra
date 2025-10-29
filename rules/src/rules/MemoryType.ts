@@ -6,5 +6,6 @@ export enum MemoryType {
   LastFieldBuilded,
   PlayersWhoPassed,
   NextRules,
-  View
+  View,
+  RoundScore
 }

@@ -1,4 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { sum } from 'es-toolkit'
 import { groupBy, orderBy } from 'es-toolkit/compat'
 import { DivinityCard, divinityCardPoints, DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
@@ -76,30 +77,23 @@ export class ScoreHelper extends MaterialRulesPart {
   }
 
   getDivinityVictoryPoints(player: PlayerColor, type: DivinityType) {
-    return this.material(MaterialType.DivinityCard)
-      .player(player)
-      .id(({ back }: { back: DivinityType }) => back === type)
-      .getItems<{ front: DivinityCard; back: DivinityType }>()
-      .map((it) => divinityCardPoints[it.id.front])
-      .reduce((a, b) => a + b, 0)
-  }
-
-  getPlayerBearScore(player: PlayerColor) {
-    return this.material(MaterialType.DivinityCard)
-      .location(LocationType.PlayerBearCards)
-      .player(player)
-      .getItems()
-      .map((it) => divinityCardPoints[it.id as DivinityCard])
-      .reduce((a, b) => a + b, 0)
+    return sum(
+      this.material(MaterialType.DivinityCard)
+        .player(player)
+        .id(({ back }: { back: DivinityType }) => back === type)
+        .getItems<{ front: DivinityCard; back: DivinityType }>()
+        .map((it) => divinityCardPoints[it.id.front])
+    )
   }
 
   getPlayerSalamanderScore(player: PlayerColor) {
-    return this.material(MaterialType.SalamanderCard)
-      .location(LocationType.PlayerBlackSalamanderCards)
-      .player(player)
-      .getItems()
-      .map((it) => salamanderCardPoints[it.id as SalamanderCard])
-      .reduce((a, b) => a + b, 0)
+    return sum(
+      this.material(MaterialType.SalamanderCard)
+        .location(LocationType.PlayerBlackSalamanderCards)
+        .player(player)
+        .getItems()
+        .map((it) => salamanderCardPoints[it.id as SalamanderCard])
+    )
   }
 
   get scrollTokenScore() {
@@ -107,25 +101,32 @@ export class ScoreHelper extends MaterialRulesPart {
   }
 
   get spellBookScore() {
-    const spellBooksWithPlayerApprenticeTokens = this.material(MaterialType.ApprenticeToken)
-      .location(LocationType.SpellBookApprenticeSpace)
-      .id(this.player)
-      .getItems()
-      .map((item) => item.location)
-
     let totalScore = 0
 
-    spellBooksWithPlayerApprenticeTokens.forEach((apprenticeLocation) => {
-      if (apprenticeLocation.parent !== undefined) {
-        const id = this.material(MaterialType.SpellBookCard).index(apprenticeLocation.parent).getItem()?.id as SpellBookCard
-
-        const x = apprenticeLocation.x ?? 0
-        const data = spellBookData[id]
-
-        totalScore += data.points[x] * data.getMultiple(this.game, this.player)
-      }
-    })
+    const spellBooks = this.spellBooks
+    for (const spellBookIndex of spellBooks.getIndexes()) {
+      const spellBookItem = spellBooks.getItem(spellBookIndex)
+      totalScore += this.getSpellBookScore(spellBookItem.id)
+    }
 
     return totalScore
+  }
+
+  get spellBooks() {
+    return this.material(MaterialType.SpellBookCard)
+  }
+
+  getSpellBookScore(spellBook: SpellBookCard) {
+    const spellBooks = this.spellBooks
+    const index = spellBooks.id(+spellBook).getIndex()
+    const apprentice = this.material(MaterialType.ApprenticeToken).location(LocationType.SpellBookApprenticeSpace).id(this.player).parent(index)
+
+    if (!apprentice.length) return 0
+    const item = apprentice.getItem()!
+
+    const x = item.location.x ?? 0
+    const data = spellBookData[spellBook]
+
+    return data.points[x] * data.getMultiple(this.game, this.player)
   }
 }

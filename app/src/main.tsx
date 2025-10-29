@@ -9,6 +9,7 @@ import { App } from './App'
 import background from './images/background.jpg'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
+import { SalamandraScoring } from './scoring/SalamandraScoring.tsx'
 import translations from './translations.json'
 import { Tutorial } from './tutorial/Tutorial.tsx'
 
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
       material={Material}
       locators={Locators}
       animations={gameAnimations}
+      scoring={new SalamandraScoring()}
       tutorial={new Tutorial()}
       theme={{
         root: {
@@ -37,7 +39,7 @@ createRoot(document.getElementById('root')!).render(
         }
       }}
     >
-      <App/>
+      <App />
     </GameProvider>
   </StrictMode>
 )

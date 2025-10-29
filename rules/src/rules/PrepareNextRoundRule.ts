@@ -1,4 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
+import { sum } from 'es-toolkit'
 import { GroveTileHelper } from '../material/helper/GroveTileHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -15,7 +16,6 @@ export class PrepareNextRoundRule extends SimultaneousRule {
     if (actualRound === 3) {
       return [this.startRule(RuleId.CalculScores)]
     }
-    this.memorize(MemoryType.ActualRound, actualRound + 1)
     const moves: MaterialMove[] = []
     moves.push(...this.placeGroveOrGetPlayersNextRoundMoves())
     return moves
@@ -74,5 +74,24 @@ export class PrepareNextRoundRule extends SimultaneousRule {
 
   placeGroveOnEmptySpace() {
     return this.groveTileHelper.placeOneGroveOnEmptySpace()
+  }
+
+  persistPlayerRoundScore(player: PlayerColor) {
+    const score = this.remind(MemoryType.Score, player)
+    const previousScores = sum(this.remind(MemoryType.RoundScore, player) ?? [])
+    this.memorize(MemoryType.RoundScore, (roundScore: number[] = []) => roundScore.concat(score - previousScores), player)
+  }
+
+  onRuleEnd() {
+    const actualRound = this.remind<number>(MemoryType.ActualRound)
+
+    for (const player of this.game.players) {
+      this.persistPlayerRoundScore(player)
+    }
+
+    if (actualRound < 3) {
+      this.memorize(MemoryType.ActualRound, (round: number = 1) => round + 1)
+    }
+    return []
   }
 }
