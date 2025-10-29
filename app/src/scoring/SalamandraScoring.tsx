@@ -53,11 +53,19 @@ export class SalamandraScoring implements ScoringDescription {
 
   getScoringHeader(key: string): ScoringValue {
     if (key.startsWith(SalamandraScoringKey.ROUND)) {
-      return <Trans defaults="score.round" values={{ round: key.split('.')[1] }} components={components} />
+      return (
+        <div css={centeredCss}>
+          <Trans defaults="score.round" values={{ round: key.split('.')[1] }} components={components} />
+        </div>
+      )
     }
 
     if (key === SalamandraScoringKey.SCORE) {
-      return <Trans defaults="score.actions" components={components} />
+      return (
+        <div css={centeredCss}>
+          <Trans defaults="score.actions" components={components} />
+        </div>
+      )
     }
 
     if (key.startsWith(SalamandraScoringKey.SPELLBOOK)) {
