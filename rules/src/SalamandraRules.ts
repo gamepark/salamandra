@@ -143,10 +143,6 @@ export class SalamandraRules
   protected onCustomMove(move: CustomMove) {
     const moves: MaterialMove[] = super.onCustomMove(move)
 
-    if (isCustomMoveType(CustomMoveType.ChangeView)) {
-      this.memorize(MemoryType.View, move.data as PlayerColor)
-    }
-
     switch (move.type) {
       case CustomMoveType.Score:
         moves.push(this.addScore(move))
