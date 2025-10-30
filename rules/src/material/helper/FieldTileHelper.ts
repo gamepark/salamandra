@@ -58,7 +58,7 @@ export class FieldTileHelper extends MaterialRulesPart {
     return moves
   }
 
-  getActivationEffet(location: Partial<Location>): MaterialMove[] {
+  applyActivationEffect(location: Partial<Location>): MaterialMove[] {
     const moves: MaterialMove[] = []
     const fieldTileId = this.material(MaterialType.FieldTile).index(location.parent).getItem<FieldTile>()?.id
     if (fieldTileId) {

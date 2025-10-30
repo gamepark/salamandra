@@ -1,4 +1,14 @@
-import { CustomMove, isCustomMoveType, isMoveItem, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import {
+  CreateItem,
+  CustomMove,
+  isCreateItemType,
+  isCustomMoveType,
+  isMoveItem,
+  ItemMove,
+  MaterialGame,
+  MaterialMove,
+  PlayerTurnRule
+} from '@gamepark/rules-api'
 import { EffectType } from '../../material/Effect'
 import { fieldData, FieldTile, FieldType } from '../../material/FieldTile'
 import { FieldTileHelper } from '../../material/helper/FieldTileHelper'
@@ -21,11 +31,27 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
 
   activateRemainingApprentice(): MaterialMove[] {
     if (!this.ignoreResourcesCheck) return []
+    return this.bestCrystalGainForApprentices
+  }
+
+  get bestCrystalGainForApprentices() {
+    const moves: MaterialMove[] = []
     const playerApprenticeTokenInField = this.playerApprenticeTokenInField
     if (playerApprenticeTokenInField.length === 0) return []
-    return playerApprenticeTokenInField
-      .getIndexes()
-      .map((index) => this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { itemIndex: index, player: this.player }))
+
+    const apprenticeIndexes = playerApprenticeTokenInField.getIndexes()
+    for (const index of apprenticeIndexes) {
+      const apprentice = this.material(MaterialType.ApprenticeToken).getItem(index)
+      const fieldTileId = this.material(MaterialType.FieldTile).index(apprentice.location.parent).getItem<FieldTile>()!.id
+      const effect = fieldData[fieldTileId].activationEffect
+      if (effect.type === EffectType.Crystal) {
+        moves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { itemIndex: index, player: this.player, count: effect.amount ?? 1 }))
+      } else {
+        moves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { itemIndex: index, player: this.player, count: 1 }))
+      }
+    }
+
+    return moves
   }
 
   getPlayerMoves() {
@@ -52,7 +78,7 @@ export class ActivateApprenticeHelper extends PlayerTurnRule {
     if (!isCustomMoveType(CustomMoveType.ActivateApprenticeForFieldEffect)(move)) return []
     const apprentice = this.material(MaterialType.ApprenticeToken).getItem(move.data as number)
     const moves: MaterialMove[] = []
-    moves.push(...this.fieldTileHelper.getActivationEffet(apprentice.location))
+    moves.push(...this.fieldTileHelper.applyActivationEffect(apprentice.location))
     moves.push(...this.fieldTileHelper.payActivation(apprentice.location.parent ?? 0))
     const fieldId = this.material(MaterialType.FieldTile).index(apprentice.location.parent).getItem<FieldTile>()?.id
     if (fieldId) {

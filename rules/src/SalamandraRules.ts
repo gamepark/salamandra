@@ -28,6 +28,7 @@ import { CheckPassAndEmptyPlacesRule } from './rules/CheckPassAndEmptyPlacesRule
 import { ChooseApprenticeToActivateRule } from './rules/ChooseApprenticeToActivateRule'
 import { CustomMoveType } from './rules/CustomMove'
 import { DoActionsRule } from './rules/DoActionsRule'
+import { ActivateApprenticeHelper } from './rules/helper/ActivateApprenticeHelper'
 import { NextRuleHelper } from './rules/helper/NextRuleHelper'
 import { MemoryType } from './rules/MemoryType'
 import { PrepareNextRoundRule } from './rules/PrepareNextRoundRule'
@@ -118,10 +119,8 @@ export class SalamandraRules
 
       if ((this.game.rule?.id === RuleId.DoActions || this.game.rule?.id === RuleId.CheckAndUseScrollTokens) && apprenticeTokenInField.length > 0) {
         if (!apprenticeTokenInField.length) return legalMoves
-        legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player }))
-        legalMoves.push(
-          ...apprenticeTokenInField.getIndexes().map((itemIndex) => this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player, itemIndex }))
-        )
+        legalMoves.push(this.customMove(CustomMoveType.ActivateApprenticeForGainCrystal, { player, count: 1 }))
+        legalMoves.push(...new ActivateApprenticeHelper(this.game).bestCrystalGainForApprentices)
       }
     }
     return legalMoves
@@ -167,13 +166,13 @@ export class SalamandraRules
 
   private activateApprenticeForCrystal(move: CustomMove) {
     const moves: MaterialMove[] = []
-    const { player, itemIndex } = move.data as { player: PlayerColor; itemIndex?: number }
+    const { player, itemIndex, count = 1 } = move.data as { player: PlayerColor; itemIndex?: number; count?: number }
     if (itemIndex !== undefined) {
       const apprenticeToken = this.material(MaterialType.ApprenticeToken).index(itemIndex)
       moves.push(...apprenticeToken.rotateItems((item) => !item.location.rotation))
-      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player } }))
+      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player }, quantity: count }))
     } else {
-      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player } }))
+      moves.push(this.material(MaterialType.CrystalToken).createItem({ location: { type: LocationType.PlayerCrystalTokenStock, player }, quantity: count }))
       this.memorize(MemoryType.NextRules, [RuleId.ChooseApprenticeToActivate, this.game.rule?.id])
       moves.push(...new NextRuleHelper(this.game).moveToNextRule())
     }
