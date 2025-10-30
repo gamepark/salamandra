@@ -1,4 +1,4 @@
-import { DropAreaDescription, getRelativePlayerIndex, ListLocator, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, getRelativePlayerIndex, ListLocator, LocationContext, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { salamanderCardDescription } from '../material/SalamanderCardDescription'
@@ -19,7 +19,13 @@ class PlayerBlackSalamanderCardsLocator extends ListLocator {
     return ['translateZ(10em)', 'scale(2.5)']
   }
 
-  locationDescription = new DropAreaDescription(salamanderCardDescription)
+  placeLocation(location: Location, context: LocationContext) {
+    const transform = super.placeLocation(location, context)
+    transform.push('translateY(4.7em)')
+    return transform
+  }
+
+  locationDescription = new DropAreaDescription({ ...salamanderCardDescription, height: salamanderCardDescription.height * 2.5 })
 }
 
 export const playerBlackSalamanderCardsLocator = new PlayerBlackSalamanderCardsLocator()

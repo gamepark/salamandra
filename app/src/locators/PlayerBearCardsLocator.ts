@@ -1,4 +1,4 @@
-import { DropAreaDescription, getRelativePlayerIndex, ListLocator, MaterialContext } from '@gamepark/react-game'
+import { DropAreaDescription, getRelativePlayerIndex, ListLocator, LocationContext, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
 import { divinityCardDescription } from '../material/DivinityCardDescription'
@@ -19,7 +19,13 @@ class PlayerBearCardsLocator extends ListLocator {
     return ['translateX(50%)', 'translateZ(10em)', 'scale(2.5)']
   }
 
-  locationDescription = new DropAreaDescription(divinityCardDescription)
+  placeLocation(location: Location, context: LocationContext) {
+    const transform = super.placeLocation(location, context)
+    transform.push('translateY(4.7em)')
+    return transform
+  }
+
+  locationDescription = new DropAreaDescription({ ...divinityCardDescription, height: divinityCardDescription.height * 2.5 })
 }
 
 export const playerBearCardsLocator = new PlayerBearCardsLocator()
