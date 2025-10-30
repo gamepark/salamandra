@@ -71,6 +71,12 @@ class FieldTileDescription extends CardDescription {
     `
   }
 
+  getHelpDisplayExtraCss(): Interpolation<Theme> {
+    return css`
+      font-size: 5em;
+    `
+  }
+
   isFlipped(item: Partial<MaterialItem>) {
     return item.location?.type === LocationType.FieldStack
   }

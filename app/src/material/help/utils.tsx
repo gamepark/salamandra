@@ -12,6 +12,7 @@ import Bear from '../../images/icons/bear.jpg'
 import Eagle from '../../images/icons/eagle.jpg'
 import Salamander from '../../images/icons/salamander.png'
 import CristalToken1 from '../../images/tokens/CristalToken1.png'
+import Score from '../../images/icons/score.png'
 
 const pictureCss = css`
   height: 1em;
@@ -47,7 +48,8 @@ export const components = {
   fruit: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Fruit]} />,
   bear: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Bear} />,
   eagle: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Eagle} />,
-  salamander: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Salamander} />
+  salamander: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Salamander} />,
+  score: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} src={Score} />
 }
 
 export const descriptionCss = css`
@@ -60,3 +62,29 @@ export const descriptionCss = css`
     margin-top: 0;
   }
 `
+
+const logPictureCss = css`
+  height: 1.9em;
+  overflow: hidden;
+  > img {
+    height: 1.9em;
+    //border-radius: 1em;
+    position: relative;
+  }
+`
+
+export const LogComponents = {
+  bold: <strong />,
+  underline: <u />,
+  italic: <i />,
+  crystal: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={CristalToken1} />,
+  leafPotion: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={potionImages[Potion.Leaf]} />,
+  flowerFruitPotion: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={potionImages[Potion.FlowerOrFruit]} />,
+  leaf: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Leaf]} />,
+  flower: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Flower]} />,
+  fruit: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={primaryResourceImages[PrimaryResource.Fruit]} />,
+  bear: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={Bear} />,
+  eagle: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={Eagle} />,
+  salamander: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={Salamander} />,
+  score: <Picture picture={{ css: logPictureCss } as HTMLAttributes<HTMLElement>} src={Score} />
+}

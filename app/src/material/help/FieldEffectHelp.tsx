@@ -62,7 +62,7 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
                   i18nKey="help.field.potion"
                   components={{
                     cost: <IngredientDisplay ingredient={effect.ingredient} />,
-                    potion: <Picture src={effect.potion === Potion.Leaf ? leafPotion : flowerFruitPotion} />
+                    potion: <Picture src={effect.potion === Potion.Leaf ? leafPotion : flowerFruitPotion} css={roundedCss} />
                   }}
                 />
               )
@@ -107,12 +107,12 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
                 components={{
                   crystal: <Picture src={crystalTokenDescription.image} />,
                   scroll: <Picture src={scrollTokenDescription.image} />,
-                  leaf: <Picture src={leaf} />,
-                  flower: <Picture src={flower} />,
-                  fruit: <Picture src={fruit} />,
+                  leaf: <Picture src={leaf} css={roundedCss} />,
+                  flower: <Picture src={flower} css={roundedCss} />,
+                  fruit: <Picture src={fruit} css={roundedCss} />,
                   cauldron: <Picture src={cauldron} />,
-                  potion1: <Picture src={leafPotion} />,
-                  potion2: <Picture src={flowerFruitPotion} />
+                  potion1: <Picture src={leafPotion} css={roundedCss} />,
+                  potion2: <Picture src={flowerFruitPotion} css={roundedCss} />
                 }}
               />
             </p>
@@ -127,7 +127,7 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
 const IngredientDisplay = ({ ingredient }: { ingredient: Ingredient }) => {
   switch (ingredient.ingredientType) {
     case IngredientType.PrimaryResource:
-      return <Picture src={ResourceImage[ingredient.ingredient as PrimaryResource]} />
+      return <Picture src={ResourceImage[ingredient.ingredient as PrimaryResource]} css={roundedCss} />
     case IngredientType.Crystal:
       return <BonusDisplay bonus={{ type: BonusType.Crystal, amount: ingredient.amount }} />
     case IngredientType.Potion:
@@ -175,4 +175,8 @@ const ResourceImage = {
   [PrimaryResource.Leaf]: leaf,
   [PrimaryResource.Flower]: flower,
   [PrimaryResource.Fruit]: fruit
+}
+
+const roundedCss = {
+  borderRadius: '1em'
 }

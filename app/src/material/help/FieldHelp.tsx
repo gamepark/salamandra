@@ -39,7 +39,7 @@ const CostDisplay = ({ resources }: CostDisplayProps) => {
   return (
     <>
       {images.map((image, index) => (
-        <Picture key={index} src={image} />
+        <Picture key={index} src={image} css={roundedCss} />
       ))}
     </>
   )
@@ -65,4 +65,8 @@ const BonusesDisplay = ({ bonuses }: { bonuses: Bonus[] }) => {
       ))}
     </>
   )
+}
+
+const roundedCss = {
+  borderRadius: '1em'
 }
