@@ -8,6 +8,7 @@ import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import background from './images/background.jpg'
 import { Locators } from './locators/Locators'
+import { SalamandraLogs } from './logs/SalamandraLogs.tsx'
 import { Material } from './material/Material'
 import { SalamandraScoring } from './scoring/SalamandraScoring.tsx'
 import translations from './translations.json'
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
       GameSetup={SalamandraSetup}
       material={Material}
       locators={Locators}
+      logs={new SalamandraLogs()}
       animations={gameAnimations}
       scoring={new SalamandraScoring()}
       tutorial={new Tutorial()}

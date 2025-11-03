@@ -8,17 +8,16 @@ import { Trans, useTranslation } from 'react-i18next'
 import { LogComponents } from '../../material/help/utils.tsx'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const PlaceApprenticeLog: FC<MaterialLogProps> = ({ move, context }) => {
+export const BuildTileLog: FC<MaterialLogProps> = ({ move, context }) => {
   const rules = new SalamandraRules(context.game)
   const { t } = useTranslation()
   const moveItem: MoveItem = move as MoveItem
-  const item = rules.material(MaterialType.ApprenticeToken).getItem(moveItem.itemIndex)
-  const tile = rules.material(MaterialType.FieldTile).getItem<FieldTile>(moveItem.location.parent!)
+  const tile = rules.material(MaterialType.FieldTile).getItem<FieldTile>(moveItem.itemIndex)
   const colors = fieldData[tile.id].colors
-  const player = usePlayerName(item.id)
+  const player = usePlayerName(rules.getActivePlayer())
   return (
     <Trans
-      defaults={moveItem.location.x === 0 ? 'log.place-apprentice.bonus' : 'log.place-apprentice'}
+      defaults={'log.build'}
       values={{ player, color: colors.map((c) => t(`field.color.${c}`)).join(' / ') }}
       components={{
         ...LogComponents,

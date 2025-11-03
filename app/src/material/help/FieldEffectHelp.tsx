@@ -42,7 +42,7 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
               billhook: <Picture src={billhook} />,
               effect: (
                 <>
-                  <Picture src={ResourceImage[effect.resource]} />
+                  <Picture src={ResourceImage[effect.resource]} css={roundedCss} />
                   {effect.hasCrystal && <BonusDisplay bonus={{ type: BonusType.Crystal, amount: 1 }} />}
                 </>
               )
