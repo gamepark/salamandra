@@ -95,14 +95,14 @@ const getPrimaryResourceCounter = (
   player: PlayerColor,
   resource: PrimaryResource,
   value: number,
-  onClick: (e) => void
+  onClick: () => void
 ): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisResource(move, player, resource))
 
-  const innerClick = (e) => {
-    e.stopPropagation()
-    e?.preventDefault?.()
-    onClick(e)
+  const innerClick = () => {
+    //e.stopPropagation()
+    //e?.preventDefault?.()
+    onClick()
   }
 
   if (!canBuy) {
@@ -129,10 +129,10 @@ const getPrimaryResourceCounter = (
 const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potion: Potion, value: number, onClick: () => void): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisPotion(move, player, potion))
 
-  const innerClick = (e) => {
-    e.stopPropagation()
-    e?.preventDefault?.()
-    onClick(e)
+  const innerClick = () => {
+    //e.stopPropagation()
+    //e?.preventDefault?.()
+    onClick()
   }
 
   if (!canBuy) {

@@ -22,7 +22,7 @@ export const PotionDialog: FC<ResourceDialogProps> = (props) => {
   const { player, potion, onClose } = props
   const moves = useLegalMoves<MaterialMove>()
   const canBuyPotion = potion ? (moves.find((move) => isPlayerWinThisPotion(move, player, potion)) as CustomMove | undefined) : undefined
-  const rules = useRules<MaterialRules>()
+  const rules = useRules<MaterialRules>()!
   if (!potion || !canBuyPotion) return null
   const divinity = lookupDivinity(rules, canBuyPotion)
   return (
