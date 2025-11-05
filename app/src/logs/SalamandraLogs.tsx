@@ -130,8 +130,6 @@ export class SalamandraLogs implements LogDescription<MaterialMove> {
       }
     }
 
-    return {
-      Component: () => <>{JSON.stringify(move)}</>
-    }
+    return
   }
 }
