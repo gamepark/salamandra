@@ -3,7 +3,6 @@ import {
   CustomMove,
   FillGapStrategy,
   hideItemId,
-  isCustomMoveType,
   ItemMove,
   MaterialGame,
   MaterialItem,

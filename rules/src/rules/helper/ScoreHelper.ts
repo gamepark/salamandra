@@ -1,6 +1,6 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { partition, sum } from 'es-toolkit'
-import { groupBy, orderBy } from 'es-toolkit/compat'
+import { orderBy } from 'es-toolkit/compat'
 import { DivinityCard, divinityCardPoints, DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
