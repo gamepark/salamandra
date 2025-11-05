@@ -2,7 +2,6 @@ import { css } from '@emotion/react'
 import { Picture, PlayMoveButton, useLegalMove } from '@gamepark/react-game'
 import { CustomMove, MaterialMove } from '@gamepark/rules-api'
 import { PrimaryResource } from '@gamepark/salamandra/material/PrimaryResource'
-import { HTMLAttributes } from 'react'
 import { Trans } from 'react-i18next'
 import { components, primaryResourceImages } from '../material/help/utils'
 import { isWinThisResource } from '../utils/resource.utils.ts'
@@ -24,7 +23,7 @@ export const TradeCrystalToGainResources = (props: TradeCrystalToGainResourcesPr
         values={{ given: amount, taken: 1 }}
         components={{
           resourceA: components.crystal,
-          resourceB: <Picture picture={{ css: pictureCss } as HTMLAttributes<HTMLElement>} css={resourceCss} src={primaryResourceImages[resource]} />
+          resourceB: <Picture picture={{ css: pictureCss } as never} css={resourceCss} src={primaryResourceImages[resource]} />
         }}
       />
     </PlayMoveButton>

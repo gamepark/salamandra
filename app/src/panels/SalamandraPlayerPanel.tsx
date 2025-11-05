@@ -21,7 +21,7 @@ import { isPlayerWinThisPotion, isPlayerWinThisResource } from '../utils/resourc
 import { PotionDialog } from './PotionDialog.tsx'
 import { ResourceDialog } from './ResourceDialog'
 
-type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & HTMLAttributes<HTMLDivElement>
+type SalamandraPlayerPanelProps = { player: Player<PlayerColor>; defaultView: PlayerColor } & Omit<HTMLAttributes<HTMLDivElement>, 'style'>
 
 export const SalamandraPlayerPanel: FC<SalamandraPlayerPanelProps> = ({ player, defaultView, ...rest }) => {
   const rules = useRules<MaterialRules>()!
@@ -95,14 +95,14 @@ const getPrimaryResourceCounter = (
   player: PlayerColor,
   resource: PrimaryResource,
   value: number,
-  onClick: () => void
+  onClick: (e: MouseEvent) => void
 ): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisResource(move, player, resource))
 
-  const innerClick = () => {
-    //e.stopPropagation()
-    //e?.preventDefault?.()
-    onClick()
+  const innerClick = (e: MouseEvent) => {
+    e.stopPropagation()
+    e?.preventDefault?.()
+    onClick(e)
   }
 
   if (!canBuy) {
@@ -126,13 +126,13 @@ const getPrimaryResourceCounter = (
   }
 }
 
-const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potion: Potion, value: number, onClick: () => void): CounterProps => {
+const getPotionCounter = (legalMoves: MaterialMove[], player: PlayerColor, potion: Potion, value: number, onClick: (e: MouseEvent) => void): CounterProps => {
   const canBuy = legalMoves.find((move) => isPlayerWinThisPotion(move, player, potion))
 
-  const innerClick = () => {
-    //e.stopPropagation()
-    //e?.preventDefault?.()
-    onClick()
+  const innerClick = (e: MouseEvent) => {
+    e.stopPropagation()
+    e?.preventDefault?.()
+    onClick(e)
   }
 
   if (!canBuy) {
