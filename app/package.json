@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/salamandra-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "The user interface of Salamandra adaptation for Game Park",
