@@ -7,7 +7,6 @@ import { PlayerColor } from '@gamepark/salamandra/PlayerColor.ts'
 import { ScoreHelper } from '@gamepark/salamandra/rules/helper/ScoreHelper.ts'
 import { MemoryType } from '@gamepark/salamandra/rules/MemoryType.ts'
 import { times } from 'es-toolkit/compat'
-import { Component } from 'react'
 import { Trans } from 'react-i18next'
 import BearScore from '../images/score/bear.jpg'
 import EagleScore from '../images/score/eagle.jpg'
@@ -51,7 +50,7 @@ export class SalamandraScoring implements ScoringDescription {
     return keys
   }
 
-  getScoringHeader(key: string): ScoringValue {
+  getScoringHeader(key: string) {
     if (key.startsWith(SalamandraScoringKey.ROUND)) {
       return (
         <div css={centeredCss}>
@@ -69,10 +68,10 @@ export class SalamandraScoring implements ScoringDescription {
     }
 
     if (key.startsWith(SalamandraScoringKey.SPELLBOOK)) {
-      const spellBookId = key.split('.')[1]
+      const spellBookId = +key.split('.')[1]
       return (
         <div css={centeredCss}>
-          <Picture css={spellBookCss} src={spellBookCardDescription.images[spellBookId]} />
+          <Picture css={spellBookCss} src={spellBookCardDescription.images[spellBookId as SpellBookCard]} />
         </div>
       )
     }
@@ -96,12 +95,12 @@ export class SalamandraScoring implements ScoringDescription {
           <Picture src={BearScore} />
         </div>
       )
-    if (key === SalamandraScoringKey.EAGLE)
-      return (
-        <div css={centeredCss}>
-          <Picture src={EagleScore} />
-        </div>
-      )
+
+    return (
+      <div css={centeredCss}>
+        <Picture src={EagleScore} />
+      </div>
+    )
   }
 
   getSpellBooks(rules: MaterialRules) {
@@ -112,14 +111,14 @@ export class SalamandraScoring implements ScoringDescription {
     const scoring = new ScoreHelper(rules.game, player)
 
     if (key.startsWith(SalamandraScoringKey.SPELLBOOK)) {
-      const spellBookId = key.split('.')[1]
+      const spellBookId = +key.split('.')[1]
       return <div css={centeredCss}>{scoring.getSpellBookScore(spellBookId)}</div>
     }
 
     const total = rules.remind(MemoryType.Score, player)
 
     if (key.startsWith(SalamandraScoringKey.ROUND)) {
-      const round = key.split('.')[1]
+      const round = +key.split('.')[1]
       return <div css={centeredCss}>{rules.remind(MemoryType.RoundScore, player)[round - 1]}</div>
     }
 
@@ -128,7 +127,7 @@ export class SalamandraScoring implements ScoringDescription {
     if (key === SalamandraScoringKey.SALAMANDRA) return <div css={centeredCss}>{scoring.salamandraScore}</div>
     if (key === SalamandraScoringKey.BEAR) return <div css={centeredCss}>{scoring.bearScore}</div>
     if (key === SalamandraScoringKey.EAGLE) return <div css={centeredCss}>{scoring.eagleScore}</div>
-    if (key === SalamandraScoringKey.TOTAL) return <div css={centeredCss}>{rules.remind(MemoryType.Score, player)}</div>
+    return <div css={centeredCss}>{rules.remind(MemoryType.Score, player)}</div>
   }
 }
 
