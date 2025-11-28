@@ -4,7 +4,7 @@ import { orderBy } from 'es-toolkit/compat'
 import { DivinityCard, divinityCardPoints, DivinityType } from '../../material/DivinityCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { SalamanderCard, salamanderCardPoints } from '../../material/SalamanderCard'
+import { salamanderCardPoints, SalamanderId } from '../../material/SalamanderCard'
 import { SpellBookCard, spellBookData } from '../../material/SpellBookCard'
 import { PlayerColor } from '../../PlayerColor'
 
@@ -92,10 +92,9 @@ export class ScoreHelper extends MaterialRulesPart {
   getPlayerSalamanderScore(player: PlayerColor) {
     return sum(
       this.material(MaterialType.SalamanderCard)
-        .location(LocationType.PlayerBlackSalamanderCards)
         .player(player)
-        .getItems()
-        .map((it) => salamanderCardPoints[it.id as SalamanderCard])
+        .getItems<SalamanderId>()
+        .map((it) => salamanderCardPoints[it.id.front!])
     )
   }
 
