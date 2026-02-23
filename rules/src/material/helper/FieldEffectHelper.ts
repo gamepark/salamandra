@@ -20,6 +20,7 @@ export class FieldEffectHelper extends MaterialRulesPart {
       .filter<FieldTile>((item) => fieldData[item.id].colors.includes(fieldColor))
       .getIndexes()
     const total = this.getNbFieldsWithPlayerApprentice(fieldsIndexes)
+    if (total === 0) return []
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * points })]
   }
 
@@ -46,22 +47,26 @@ export class FieldEffectHelper extends MaterialRulesPart {
       .filter<FieldTile>((item) => fieldData[item.id].type === FieldType.Cauldron)
       .getIndexes()
     const total = this.getNbFieldsWithPlayerApprentice(cauldronIndexes)
+    if (total === 0) return []
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 2 })]
   }
 
   twoPointsByDivinityCard(): MaterialMove[] {
     const total = this.material(MaterialType.DivinityCard).player(this.player).length
+    if (total === 0) return []
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 2 })]
   }
 
   threePointsBySalamanderCard(): MaterialMove[] {
     const total = this.material(MaterialType.SalamanderCard).player(this.player).length
+    if (total === 0) return []
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * 3 })]
   }
 
   pointsByGroveTile(points: number): MaterialMove[] {
     const playerGroveTiles = this.material(MaterialType.GroveTile).location(LocationType.PlayerGroveTiles).player(this.player)
     const total = playerGroveTiles.length
+    if (total === 0) return []
     return [this.customMove(CustomMoveType.Score, { player: this.player, score: total * points })]
   }
 
