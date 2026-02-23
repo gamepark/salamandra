@@ -8,7 +8,17 @@ import { Trans, useTranslation } from 'react-i18next'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { ActivateTile } from '../../buttons/ActivateTile'
 import { FlipApprentice } from '../../buttons/FlipApprentice'
-import { components, descriptionCss } from './utils'
+import {
+  components,
+  helpContainerCss,
+  helpHeaderCss,
+  helpTitleCss,
+  helpOrnamentCss,
+  diamondCss,
+  helpImportantCss,
+  helpSecondaryCss,
+  helpButtonGridCss
+} from './utils'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
@@ -23,15 +33,25 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
   const play = usePlay()
 
   return (
-    <div css={descriptionCss}>
-      <h2>{t('help.apprentice')}</h2>
-      <p>
-        <Trans defaults="help.apprentice.work" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.apprentice.state" components={components} />
-      </p>
-      <div css={druitImageCss}>
+    <div css={helpContainerCss}>
+      <div css={helpHeaderCss}>
+        <h2 css={helpTitleCss}>{t('help.apprentice')}</h2>
+        <div css={helpOrnamentCss}><span css={diamondCss} /></div>
+      </div>
+
+      <div css={helpImportantCss}>
+        <p>
+          <Trans defaults="help.apprentice.work" components={components} />
+        </p>
+      </div>
+
+      <div css={helpImportantCss}>
+        <p>
+          <Trans defaults="help.apprentice.state" components={components} />
+        </p>
+      </div>
+
+      <div css={[helpSecondaryCss, infoRowCss]}>
         <MaterialComponent
           type={MaterialType.DruidTile}
           itemIndex={druitIndex}
@@ -57,7 +77,7 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
           </>
         )}
       </div>
-      <hr />
+
       <HelpButtons {...props} />
     </div>
   )
@@ -66,7 +86,7 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
 const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const { itemIndex, item, closeDialog } = props
   return (
-    <div css={buttonGridCss}>
+    <div css={helpButtonGridCss}>
       <ActivateTile onPlay={closeDialog} itemIndex={itemIndex} />
       <FlipApprentice onPlay={closeDialog} itemIndex={itemIndex} item={item} />
       <ActivateApprenticeToGainCrystal onPlay={closeDialog} itemIndex={itemIndex} />
@@ -74,23 +94,16 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   )
 }
 
-const buttonGridCss = css`
+const infoRowCss = css`
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  margin-top: 1em;
-`
-
-const druitImageCss = css`
-  font-size: 0.8em;
-  display: flex;
-  width: 100%;
   flex-direction: row;
   align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
 
   > span {
-    margin-left: 1em;
     flex: 1;
+    min-width: 6em;
   }
 `
 

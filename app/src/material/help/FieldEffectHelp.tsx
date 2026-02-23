@@ -1,5 +1,3 @@
-import { css } from '@emotion/react'
-import { Picture } from '@gamepark/react-game'
 import { Bonus, BonusType } from '@gamepark/salamandra/material/Bonus.ts'
 import { Effect, EffectType, Ingredient, IngredientType } from '@gamepark/salamandra/material/Effect.ts'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile.ts'
@@ -18,6 +16,7 @@ import cauldron from '../../images/icons/cauldron.png'
 import flowerFruitPotion from '../../images/icons/flower-fruit-potion.jpg'
 import leafPotion from '../../images/icons/leaf-potion.jpg'
 import billhook from '../../images/icons/sickle.png'
+import { HelpIcon, HelpRoundedIcon } from './utils'
 
 export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: FieldTile }) => {
   switch (effect.type) {
@@ -25,9 +24,8 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
       return (
         <p>
           <Trans
-            i18nKey="help.field.harvest"
+            i18nKey="help.field.harvest.effect"
             components={{
-              billhook: <Picture src={billhook} />,
               effect: <BonusDisplay bonus={{ type: BonusType.Crystal, amount: effect.amount }} />
             }}
           />
@@ -37,12 +35,11 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
       return (
         <p>
           <Trans
-            i18nKey="help.field.harvest"
+            i18nKey="help.field.harvest.effect"
             components={{
-              billhook: <Picture src={billhook} />,
               effect: (
                 <>
-                  <Picture src={ResourceImage[effect.resource]} css={roundedCss} />
+                  <HelpRoundedIcon src={ResourceImage[effect.resource]} />
                   {effect.hasCrystal && <BonusDisplay bonus={{ type: BonusType.Crystal, amount: 1 }} />}
                 </>
               )
@@ -54,15 +51,14 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
       return (
         <p>
           <Trans
-            i18nKey="help.field.harvest"
+            i18nKey="help.field.harvest.effect"
             components={{
-              billhook: <Picture src={billhook} />,
               effect: (
                 <Trans
                   i18nKey="help.field.potion"
                   components={{
                     cost: <IngredientDisplay ingredient={effect.ingredient} />,
-                    potion: <Picture src={effect.potion === Potion.Leaf ? leafPotion : flowerFruitPotion} css={roundedCss} />
+                    potion: <HelpRoundedIcon src={effect.potion === Potion.Leaf ? leafPotion : flowerFruitPotion} />
                   }}
                 />
               )
@@ -75,48 +71,30 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
         return (
           <p>
             <Trans
-              i18nKey="help.field.harvest"
+              i18nKey="help.field.harvest.effect"
               components={{
-                billhook: <Picture src={billhook} />,
-                effect: <Trans i18nKey="help.field.9" components={{ crystal: <Picture src={crystalTokenDescription.image} /> }} />
+                effect: <Trans i18nKey="help.field.9" components={{ crystal: <HelpIcon src={crystalTokenDescription.image} /> }} />
               }}
             />
           </p>
         )
       } else {
         return (
-          <>
-            <h3>
-              <Trans
-                i18nKey="help.field.cauldron"
-                components={{
-                  cauldron: (
-                    <Picture
-                      src={cauldron}
-                      css={css`
-                        height: 1em;
-                      `}
-                    />
-                  )
-                }}
-              />
-            </h3>
-            <p>
-              <Trans
-                i18nKey={`help.field.${field}`}
-                components={{
-                  crystal: <Picture src={crystalTokenDescription.image} />,
-                  scroll: <Picture src={scrollTokenDescription.image} />,
-                  leaf: <Picture src={leaf} css={roundedCss} />,
-                  flower: <Picture src={flower} css={roundedCss} />,
-                  fruit: <Picture src={fruit} css={roundedCss} />,
-                  cauldron: <Picture src={cauldron} />,
-                  potion1: <Picture src={leafPotion} css={roundedCss} />,
-                  potion2: <Picture src={flowerFruitPotion} css={roundedCss} />
-                }}
-              />
-            </p>
-          </>
+          <p>
+            <Trans
+              i18nKey={`help.field.${field}`}
+              components={{
+                crystal: <HelpIcon src={crystalTokenDescription.image} />,
+                scroll: <HelpIcon src={scrollTokenDescription.image} />,
+                leaf: <HelpRoundedIcon src={leaf} />,
+                flower: <HelpRoundedIcon src={flower} />,
+                fruit: <HelpRoundedIcon src={fruit} />,
+                cauldron: <HelpIcon src={cauldron} />,
+                potion1: <HelpRoundedIcon src={leafPotion} />,
+                potion2: <HelpRoundedIcon src={flowerFruitPotion} />
+              }}
+            />
+          </p>
         )
       }
     default:
@@ -127,7 +105,7 @@ export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: Fiel
 const IngredientDisplay = ({ ingredient }: { ingredient: Ingredient }) => {
   switch (ingredient.ingredientType) {
     case IngredientType.PrimaryResource:
-      return <Picture src={ResourceImage[ingredient.ingredient as PrimaryResource]} css={roundedCss} />
+      return <HelpRoundedIcon src={ResourceImage[ingredient.ingredient as PrimaryResource]} />
     case IngredientType.Crystal:
       return <BonusDisplay bonus={{ type: BonusType.Crystal, amount: ingredient.amount }} />
     case IngredientType.Potion:
@@ -141,28 +119,24 @@ export const BonusDisplay = ({ bonus }: { bonus: Bonus }) => {
       return (
         <>
           {range(bonus.amount).map((key) => (
-            <Picture key={key} src={crystalTokenDescription.image} />
+            <HelpIcon key={key} src={crystalTokenDescription.image} />
           ))}
         </>
       )
     case BonusType.DivinityCard:
-      return (
-        <>
-          <Picture src={divinityCardDescription.backImages[bonus.divinity]} />
-        </>
-      )
+      return <HelpIcon src={divinityCardDescription.backImages[bonus.divinity]} />
     case BonusType.Points:
       return (
         <>
           {bonus.amount}
-          <Picture src={score} />
+          <HelpIcon src={score} />
         </>
       )
     case BonusType.Scroll:
       return (
         <>
           {range(bonus.count).map((key) => (
-            <Picture key={key} src={scrollTokenDescription.image} />
+            <HelpIcon key={key} src={scrollTokenDescription.image} />
           ))}{' '}
         </>
       )
@@ -175,8 +149,4 @@ const ResourceImage = {
   [PrimaryResource.Leaf]: leaf,
   [PrimaryResource.Flower]: flower,
   [PrimaryResource.Fruit]: fruit
-}
-
-const roundedCss = {
-  borderRadius: '1em'
 }

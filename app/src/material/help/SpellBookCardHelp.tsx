@@ -2,7 +2,17 @@ import { MaterialHelpProps } from '@gamepark/react-game'
 import { SpellBookCard, spellBookData } from '@gamepark/salamandra/material/SpellBookCard'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { components, descriptionCss } from './utils'
+import {
+  components,
+  helpContainerCss,
+  helpHeaderCss,
+  helpTitleCss,
+  helpOrnamentCss,
+  diamondCss,
+  helpImportantCss,
+  helpScoringLabeledCss,
+  pointsBadgeCss
+} from './utils'
 
 export const SpellBookCardHelp: FC<MaterialHelpProps> = (props) => {
   const { item } = props
@@ -39,19 +49,31 @@ export const SpellBookCardHelp: FC<MaterialHelpProps> = (props) => {
   const pointDescription = getPointsDescription()
 
   return (
-    <div css={descriptionCss}>
-      <h2>{t('help.spellbook')}</h2>
-      <p>
-        <Trans defaults="help.spellbook.description" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.spellbook.gains" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.spellbook.points" components={components} values={{ first: points[0], last: points[1] }} />
-        {!!pointDescription && <Trans defaults={pointDescription} components={components} />}
-      </p>
-      <hr />
+    <div css={helpContainerCss}>
+      <div css={helpHeaderCss}>
+        <h2 css={helpTitleCss}>{t('help.spellbook')}</h2>
+        <div css={helpOrnamentCss}><span css={diamondCss} /></div>
+      </div>
+
+      <div css={helpImportantCss}>
+        <p>
+          <Trans defaults="help.spellbook.description" components={components} />
+        </p>
+      </div>
+
+      <div css={helpScoringLabeledCss}>
+        <Trans defaults="help.scoring.label" components={components} />
+        <p>
+          <span css={pointsBadgeCss}>
+            <Trans defaults="help.spellbook.points" components={components} values={{ first: points[0], last: points[1] }} />
+          </span>
+        </p>
+        {!!pointDescription && (
+          <p>
+            <Trans defaults={pointDescription} components={components} />
+          </p>
+        )}
+      </div>
     </div>
   )
 }

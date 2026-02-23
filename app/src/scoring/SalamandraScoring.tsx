@@ -96,11 +96,14 @@ export class SalamandraScoring implements ScoringDescription {
         </div>
       )
 
-    return (
-      <div css={centeredCss}>
-        <Picture src={EagleScore} />
-      </div>
-    )
+    if (key === SalamandraScoringKey.EAGLE)
+      return (
+        <div css={centeredCss}>
+          <Picture src={EagleScore} />
+        </div>
+      )
+
+    return <></>
   }
 
   getSpellBooks(rules: MaterialRules) {

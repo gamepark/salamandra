@@ -1,4 +1,3 @@
-import { css } from '@emotion/react'
 import { MaterialHelpProps, PlayMoveButton, useLegalMoves, usePlayerId, useRules } from '@gamepark/react-game'
 import { CustomMove, isCustomMoveType } from '@gamepark/rules-api'
 import { Potion } from '@gamepark/salamandra/material/Potion'
@@ -7,26 +6,51 @@ import { CustomMoveType } from '@gamepark/salamandra/rules/CustomMove'
 import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import CristalToken1 from '../../images/tokens/CristalToken1.png'
 import { ActivateApprenticeToGainCrystal } from '../../buttons/ActivateApprenticeToGainCrystal'
 import { TradeCrystalToGainResources } from '../../buttons/TradeCrystalToGainResources.tsx'
-import { components, descriptionCss } from './utils'
+import {
+  components,
+  helpContainerCss,
+  helpHeaderCss,
+  helpTitleCss,
+  helpHeaderIconCss,
+  helpOrnamentCss,
+  diamondCss,
+  helpSecondaryCss,
+  helpImportantCss,
+  helpButtonGridCss
+} from './utils'
 
 export const CrystalTokenHelp = (props: MaterialHelpProps) => {
   const { t } = useTranslation()
 
   return (
-    <div css={descriptionCss}>
-      <h2>{t('help.crystal')}</h2>
-      <p>
-        <Trans defaults="help.crystal.text" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.crystal.effect1" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.crystal.effect2" components={components} />
-      </p>
-      <hr />
+    <div css={helpContainerCss}>
+      <div css={helpHeaderCss}>
+        <img src={CristalToken1} css={helpHeaderIconCss} alt="" />
+        <h2 css={helpTitleCss}>{t('help.crystal')}</h2>
+        <div css={helpOrnamentCss}><span css={diamondCss} /></div>
+      </div>
+
+      <div css={helpSecondaryCss}>
+        <p>
+          <Trans defaults="help.crystal.text" components={components} />
+        </p>
+      </div>
+
+      <div css={helpImportantCss}>
+        <p>
+          <Trans defaults="help.crystal.effect1" components={components} />
+        </p>
+      </div>
+
+      <div css={helpImportantCss}>
+        <p>
+          <Trans defaults="help.crystal.effect2" components={components} />
+        </p>
+      </div>
+
       <HelpButtons {...props} />
     </div>
   )
@@ -42,7 +66,7 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
   const payCristalsToGainPotion: CustomMove[] = useLegalMoves(isCustomMoveType(CustomMoveType.PayCrystalsToGainPotion)) as CustomMove[]
 
   return (
-    <div css={buttonGridCss}>
+    <div css={helpButtonGridCss}>
       {payCristalsToGainResource.map((move: CustomMove, index) => {
         const data: { resource: PrimaryResource } = move.data
         if (!isPlayerCrystal || activePlayer !== me) return null
@@ -61,10 +85,3 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
     </div>
   )
 }
-
-const buttonGridCss = css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  margin-top: 1em;
-`

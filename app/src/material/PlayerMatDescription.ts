@@ -1,5 +1,6 @@
 import { BoardDescription } from '@gamepark/react-game'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
+import { PlayerMatHelp } from './help/PlayerMatHelp'
 import PlayerMatBlue from '../images/boards/PlayerBoardBlue.png'
 import PlayerMatGrey from '../images/boards/PlayerBoardGrey.png'
 import PlayerMatRed from '../images/boards/PlayerBoardRed.png'
@@ -10,6 +11,8 @@ class PlayerMatDescription extends BoardDescription {
   height = 4.8 * 3.5
 
   transparency = true
+
+  help = PlayerMatHelp
 
   images = {
     [PlayerColor.Blue]: PlayerMatBlue,

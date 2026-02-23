@@ -1,5 +1,5 @@
 import { css, Interpolation, Theme } from '@emotion/react'
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, MaterialContext } from '@gamepark/react-game'
 import { MaterialItem } from '@gamepark/rules-api'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'
@@ -71,13 +71,19 @@ class FieldTileDescription extends CardDescription {
     `
   }
 
-  getHelpDisplayExtraCss(): Interpolation<Theme> {
+  getHelpDisplayExtraCss(item: Partial<MaterialItem>): Interpolation<Theme> {
+    if (item.id === undefined) {
+      return css`
+        font-size: 5em;
+        transform: rotateY(180deg);
+      `
+    }
     return css`
       font-size: 5em;
     `
   }
 
-  isFlipped(item: Partial<MaterialItem>) {
+  isFlippedOnTable(item: Partial<MaterialItem>) {
     return item.location?.type === LocationType.FieldStack
   }
 

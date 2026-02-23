@@ -1,6 +1,7 @@
 import { CardDescription } from '@gamepark/react-game'
 import { MaterialItem } from '@gamepark/rules-api'
 import { PlayerColor } from '@gamepark/salamandra/PlayerColor'
+import { DruidTileHelp } from './help/DruidTileHelp'
 import DruidTileDayBlue from '../images/tiles/player/PlayerTileBlueDay.png'
 import DruidTileDayGrey from '../images/tiles/player/PlayerTileGreyDay.png'
 import DruidTileDayRed from '../images/tiles/player/PlayerTileRedDay.png'
@@ -16,6 +17,8 @@ class DruidTileDescription extends CardDescription {
   borderRadius = 0
 
   transparency = true
+
+  help = DruidTileHelp
 
   images = {
     [PlayerColor.Blue]: DruidTileDayBlue,
