@@ -8,8 +8,8 @@ import { Headers } from './headers/Headers'
 const globalOverrides = css`
   .svg-inline--fa.fa-xmark {
     position: absolute;
-    top: 0.15em;
-    right: 0.15em;
+    top: -0.35em;
+    right: -0.35em;
     font-size: 1.8em !important;
     width: 1.4em !important;
     height: 1.4em;
@@ -27,6 +27,11 @@ const globalOverrides = css`
       transform: scale(1.1);
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     }
+  }
+
+  /* Result dialog: revert to framework defaults (it has overflow-y: auto) */
+  div:has(> h2) > .svg-inline--fa.fa-xmark {
+    all: revert;
   }
 `
 
