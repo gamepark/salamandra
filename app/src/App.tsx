@@ -6,11 +6,12 @@ import { GameDisplay } from './GameDisplay'
 import { Headers } from './headers/Headers'
 
 const globalOverrides = css`
-  .svg-inline--fa.fa-xmark {
+  /* Only style close buttons in help dialogs (not the result dialog which has a direct h2) */
+  div:not(:has(> h2)) > .svg-inline--fa.fa-xmark {
     position: absolute;
-    top: -0.35em;
-    right: -0.35em;
-    font-size: 1.8em !important;
+    top: -0.7em;
+    right: -0.7em;
+    font-size: 2.2em !important;
     width: 1.4em !important;
     height: 1.4em;
     padding: 0.3em;
@@ -27,11 +28,6 @@ const globalOverrides = css`
       transform: scale(1.1);
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     }
-  }
-
-  /* Result dialog: revert to framework defaults (it has overflow-y: auto) */
-  div:has(> h2) > .svg-inline--fa.fa-xmark {
-    all: revert;
   }
 `
 

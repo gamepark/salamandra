@@ -16,10 +16,10 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
   getPlayerMoves() {
     const moves: MaterialMove[] = []
     if (this.playerApprenticeTokenInField.length === 0) return moves
-    if (this.canpay(whiteSalamanderCost)) {
+    if (this.canpay(whiteSalamanderCost) && this.whiteSalamanderCards.length > 0) {
       moves.push(this.whiteSalamanderCards.moveItem({ type: LocationType.PlayerWhiteSalamanderCards, player: this.player }))
     }
-    if (this.canpay(blackSalamanderCost)) {
+    if (this.canpay(blackSalamanderCost) && this.blackSalamanderCards.length > 0) {
       moves.push(this.blackSalamanderCards.moveItem({ type: LocationType.PlayerBlackSalamanderCards, player: this.player }))
     }
     return moves
@@ -41,6 +41,7 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
     if (move.location.type !== LocationType.PlayerWhiteSalamanderCards && move.location.type !== LocationType.PlayerBlackSalamanderCards) return []
     const item = this.material(MaterialType.SalamanderCard).index(move.itemIndex).getItem(move.itemIndex)
     const deck = item.location.type === LocationType.PlayerWhiteSalamanderCards ? this.whiteSalamanderCards : this.blackSalamanderCards
+    if (deck.length === 0) return []
     return [deck.rotateItem(true)]
   }
 
@@ -132,11 +133,11 @@ export class ActivateSalamanderTempleHelper extends PlayerTurnRule {
       const eagleCards = this.eagleCards
       if (bonus.divinity === DivinityType.Eagle && eagleCards.length > 0) {
         moves.push(eagleCards.dealOne({ type: LocationType.PlayerEagleCards, player: this.player }))
-        moves.push(eagleCards.rotateItem(true))
+        if (eagleCards.length > 1) moves.push(eagleCards.rotateItem(true))
       }
       if (bonus.divinity === DivinityType.Bear && bearCards.length > 0) {
         moves.push(bearCards.dealOne({ type: LocationType.PlayerBearCards, player: this.player }))
-        moves.push(bearCards.rotateItem(true))
+        if (bearCards.length > 1) moves.push(bearCards.rotateItem(true))
       }
     }
     if (bonus.type === BonusType.Special) {

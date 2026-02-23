@@ -141,11 +141,11 @@ export class GroveTileHelper extends MaterialRulesPart {
       if (b.type === BonusType.DivinityCard) {
         if (b.divinity === DivinityType.Eagle && eagleCards.length > 0) {
           moves.push(eagleCards.dealOne({ type: LocationType.PlayerEagleCards, player: this.player }))
-          moves.push(eagleCards.rotateItem(true))
+          if (eagleCards.length > 1) moves.push(eagleCards.rotateItem(true))
         }
         if (b.divinity === DivinityType.Bear && bearCards.length > 0) {
           moves.push(bearCards.dealOne({ type: LocationType.PlayerBearCards, player: this.player }))
-          moves.push(bearCards.rotateItem(true))
+          if (bearCards.length > 1) moves.push(bearCards.rotateItem(true))
         }
       }
     })

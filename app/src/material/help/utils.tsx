@@ -467,6 +467,7 @@ export const helpImportantCss = css`
 export const helpImportantLabeledCss = css`
   ${classifiedPanelBase}
   padding: 0.8em 0.7em 0.55em 1.1em;
+  white-space: normal;
   background: linear-gradient(135deg, rgba(197, 165, 90, 0.1) 0%, rgba(197, 165, 90, 0.04) 100%);
   border: 1px solid rgba(197, 165, 90, 0.28);
   color: #3d2e1f;
@@ -489,6 +490,7 @@ export const helpImportantLabeledCss = css`
 export const helpCostLabeledCss = css`
   ${classifiedPanelBase}
   padding: 0.8em 0.7em 0.55em 1.1em;
+  white-space: normal;
   background: linear-gradient(135deg, rgba(196, 112, 64, 0.08) 0%, rgba(196, 112, 64, 0.02) 100%);
   border: 1px solid rgba(196, 112, 64, 0.2);
   color: #5c3018;
@@ -613,6 +615,7 @@ export const helpGainCss = css`
 export const helpGainLabeledCss = css`
   ${helpGainBase}
   padding-top: 0.8em;
+  white-space: normal;
 `
 
 // Shared scoring panel base (no badge)
@@ -660,6 +663,7 @@ export const helpScoringCss = css`
 export const helpScoringLabeledCss = css`
   ${helpScoringBase}
   padding-top: 0.8em;
+  white-space: normal;
 `
 
 // Simple golden divider
