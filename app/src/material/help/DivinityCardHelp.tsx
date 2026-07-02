@@ -37,24 +37,24 @@ export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
       <div css={helpHeaderCss}>
         <img src={isBear ? Bear : Eagle} css={helpHeaderIconCss} alt="" />
         <h2 css={helpTitleCss}>
-          <Trans defaults="help.divinity" components={components} values={{ type }} />
+          <Trans i18nKey="help.divinity" components={components} values={{ type }} />
         </h2>
         <div css={helpOrnamentCss}><span css={diamondCss} /></div>
       </div>
 
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.divinity.description.how" components={components} />
+          <Trans i18nKey="help.divinity.description.how" components={components} />
         </p>
         <p>
-          <Trans defaults="help.divinity.description.permanent" components={components} />
+          <Trans i18nKey="help.divinity.description.permanent" components={components} />
         </p>
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
-          <Trans defaults="help.divinity.end" components={components} values={{ type, first: 8, second: 4 }} />
+          <Trans i18nKey="help.divinity.end" components={components} values={{ type, first: 8, second: 4 }} />
         </p>
       </div>
 
@@ -63,13 +63,13 @@ export const DivinityCardHelp: FC<MaterialHelpProps> = (props) => {
           <div css={helpOrnamentCss}><span css={diamondCss} /></div>
           <div css={helpPointsDisplayCss}>
             <span css={pointsBadgeCss}>
-              <Trans defaults="help.divinity.points" components={components} values={{ type, points: divinityCardPoints[id.front!] }} />
+              <Trans i18nKey="help.divinity.points" components={components} values={{ type, points: divinityCardPoints[id.front!] }} />
             </span>
           </div>
           <div css={helpGainLabeledCss}>
             <p>
-              <Trans defaults="help.divinity.effects" components={components} />
-              <Trans defaults={`help.divinity.effects.${id.front}`} components={components} />
+              <Trans i18nKey="help.divinity.effects" components={components} />
+              <Trans i18nKey={`help.divinity.effects.${id.front}`} components={components} />
             </p>
           </div>
         </>

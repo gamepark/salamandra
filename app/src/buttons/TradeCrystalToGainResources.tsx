@@ -19,7 +19,7 @@ export const TradeCrystalToGainResources = (props: TradeCrystalToGainResourcesPr
   return (
     <PlayMoveButton css={buttonCss} move={canBuy} onPlay={onPlay}>
       <Trans
-        defaults="button.crystal.trade"
+        i18nKey="button.crystal.trade"
         values={{ given: amount, taken: 1 }}
         components={{
           resourceA: components.crystal,

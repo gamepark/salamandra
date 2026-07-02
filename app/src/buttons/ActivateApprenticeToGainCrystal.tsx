@@ -26,7 +26,7 @@ export const ActivateApprenticeToGainCrystal = (props: ActivateApprenticeToGainC
   return (
     <PlayMoveButton move={activateApprenticeForGainCrystal} onPlay={onPlay}>
       <Trans
-        defaults={data.itemIndex !== undefined ? 'button.crystal.activate.apprentice.this' : 'button.crystal.activate.apprentice'}
+        i18nKey={data.itemIndex !== undefined ? 'button.crystal.activate.apprentice.this' : 'button.crystal.activate.apprentice'}
         values={{ count: data.count }}
         components={components}
       />

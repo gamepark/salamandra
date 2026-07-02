@@ -18,7 +18,7 @@ export const PlaceApprenticeLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(item.id)
   return (
     <Trans
-      defaults={moveItem.location.x === 0 ? 'log.place-apprentice.bonus' : 'log.place-apprentice'}
+      i18nKey={moveItem.location.x === 0 ? 'log.place-apprentice.bonus' : 'log.place-apprentice'}
       values={{ player, color: colors.map((c) => t(`field.color.${c}`)).join(' / ') }}
       components={{
         ...LogComponents,

@@ -1,5 +1,5 @@
 import { Trans } from 'react-i18next'
 
 export const PrepareNextRoundHeader = () => {
-  return <Trans defaults="header.prepare.next.round" />
+  return <Trans i18nKey="header.prepare.next.round" />
 }

@@ -10,8 +10,8 @@ export const ChooseApprenticeToActivateHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults="header.choose.apprentice.to.activate.you" />
+    return <Trans i18nKey="header.choose.apprentice.to.activate.you" />
   }
 
-  return <Trans defaults="header.choose.apprentice.to.activate.player" values={{ player: name }} />
+  return <Trans i18nKey="header.choose.apprentice.to.activate.player" values={{ player: name }} />
 }

@@ -9,7 +9,7 @@ export const WinScrollLog: FC<MaterialLogProps> = ({ move }) => {
   const player = usePlayerName(createItem.item.location.player)
   return (
     <Trans
-      defaults="log.win-scroll"
+      i18nKey="log.win-scroll"
       values={{ player, count: createItem.item.quantity ?? 1 }}
       components={{
         ...LogComponents

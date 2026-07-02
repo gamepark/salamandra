@@ -10,7 +10,7 @@ export const ExchangeResourceLog: FC<MaterialLogProps> = ({ move }) => {
   const player = usePlayerName(customMove.data.player)
   return (
     <Trans
-      defaults="log.exchange-resource"
+      i18nKey="log.exchange-resource"
       values={{ player, count: customMove.data.amount }}
       components={{
         ...LogComponents,

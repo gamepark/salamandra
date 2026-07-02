@@ -57,20 +57,20 @@ export const SpellBookCardHelp: FC<MaterialHelpProps> = (props) => {
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.spellbook.description" components={components} />
+          <Trans i18nKey="help.spellbook.description" components={components} />
         </p>
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
           <span css={pointsBadgeCss}>
-            <Trans defaults="help.spellbook.points" components={components} values={{ first: points[0], last: points[1] }} />
+            <Trans i18nKey="help.spellbook.points" components={components} values={{ first: points[0], last: points[1] }} />
           </span>
         </p>
         {!!pointDescription && (
           <p>
-            <Trans defaults={pointDescription} components={components} />
+            <Trans i18nKey={pointDescription} components={components} />
           </p>
         )}
       </div>

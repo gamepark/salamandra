@@ -19,7 +19,7 @@ export const ActivateFieldLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(item.id)
   return (
     <Trans
-      defaults="log.activate-field"
+      i18nKey="log.activate-field"
       values={{ player, color: colors.map((c) => t(`field.color.${c}`)).join(' / ') }}
       components={{
         ...LogComponents,

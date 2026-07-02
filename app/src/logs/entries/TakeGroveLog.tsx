@@ -14,7 +14,7 @@ export const TakeGroveLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(moveItem.location.player)
   return (
     <Trans
-      defaults="log.take-grove"
+      i18nKey="log.take-grove"
       values={{ player }}
       components={{
         ...LogComponents,

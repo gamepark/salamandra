@@ -1,6 +1,6 @@
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
+import { CardDescription, ItemContext, pointerCursorCss } from '@gamepark/react-game'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove, MaterialMoveBuilder } from '@gamepark/rules-api'
 import { LocationType } from '@gamepark/salamandra/material/LocationType'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
@@ -16,6 +16,7 @@ import ApprenticeRedDay from '../images/tokens/apprentice/ApprenticeRedDay.jpg'
 import ApprenticeRedNight from '../images/tokens/apprentice/ApprenticeRedNight.jpg'
 import ApprenticeYellowDay from '../images/tokens/apprentice/ApprenticeYellowDay.jpg'
 import ApprenticeYellowNight from '../images/tokens/apprentice/ApprenticeYellowNight.jpg'
+import { SalamandraMenuButton } from '../buttons/SalamandraMenuButton'
 import { ApprenticeTokenHelp } from './help/ApprenticeTokenHelp'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
@@ -64,14 +65,14 @@ class ApprenticeTokenDescription extends CardDescription {
     const countMoves = allMoves.length
     if (countMoves) {
       return (
-        <ItemMenuButton
-          label={<Trans defaults="button.activate" />}
+        <SalamandraMenuButton
+          label={<Trans i18nKey="button.activate" />}
           y={-1}
           move={displayMaterialHelp(MaterialType.ApprenticeToken, item, context.index)}
           options={{ transient: true }}
         >
           <FontAwesomeIcon icon={faRotate} css={pointerCursorCss} />
-        </ItemMenuButton>
+        </SalamandraMenuButton>
       )
     }
 

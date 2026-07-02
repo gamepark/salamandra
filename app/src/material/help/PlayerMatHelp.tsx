@@ -24,13 +24,13 @@ export const PlayerMatHelp: FC<MaterialHelpProps> = () => {
 
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.playermat.description" components={components} />
+          <Trans i18nKey="help.playermat.description" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.playermat.rounds" components={components} />
+          <Trans i18nKey="help.playermat.rounds" components={components} />
         </p>
       </div>
     </div>

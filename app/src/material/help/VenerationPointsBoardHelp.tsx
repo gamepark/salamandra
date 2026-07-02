@@ -21,18 +21,18 @@ export const VenerationPointsBoardHelp = () => {
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
-          <Trans defaults="help.majorities.scoring" components={components} />
+          <Trans i18nKey="help.majorities.scoring" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.divinity.equality.first" components={components} />
+          <Trans i18nKey="help.divinity.equality.first" components={components} />
         </p>
         <p>
-          <Trans defaults="help.divinity.equality.second" components={components} />
+          <Trans i18nKey="help.divinity.equality.second" components={components} />
         </p>
       </div>
     </div>

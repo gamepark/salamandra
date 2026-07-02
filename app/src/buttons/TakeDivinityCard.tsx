@@ -17,7 +17,7 @@ export const TakeDivinityCard: FC<TakeDivinityCardProps> = (props) => {
   if (!takeCard || !divinityIndex) return
   return (
     <PlayMoveButton move={takeCard} onPlay={onPlay}>
-      <Trans defaults="button.take.divinity" />
+      <Trans i18nKey="button.take.divinity" />
     </PlayMoveButton>
   )
 }

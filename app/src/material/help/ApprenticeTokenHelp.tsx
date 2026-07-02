@@ -41,13 +41,13 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.apprentice.work" components={components} />
+          <Trans i18nKey="help.apprentice.work" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.apprentice.state" components={components} />
+          <Trans i18nKey="help.apprentice.state" components={components} />
         </p>
       </div>
 
@@ -60,7 +60,7 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
           onClick={() => play(displayMaterialHelp(MaterialType.DruidTile, item, druitIndex), { transient: true })}
         />
         <span>
-          <Trans defaults={isSameRotation ? 'help.apprentice.active' : 'help.apprentice.inactive'} components={components} />
+          <Trans i18nKey={isSameRotation ? 'help.apprentice.active' : 'help.apprentice.inactive'} components={components} />
         </span>
         {!!field && (
           <>
@@ -72,7 +72,7 @@ export const ApprenticeTokenHelp = (props: MaterialHelpProps) => {
               itemId={field.getItem()!.id}
             />
             <span>
-              <Trans defaults="help.apprentice.field" components={components} />
+              <Trans i18nKey="help.apprentice.field" components={components} />
             </span>
           </>
         )}

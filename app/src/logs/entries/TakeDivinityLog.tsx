@@ -15,7 +15,7 @@ export const TakeDivinityLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(moveItem.location.player)
   return (
     <Trans
-      defaults="log.take-divinity"
+      i18nKey="log.take-divinity"
       values={{ player }}
       components={{
         ...LogComponents,

@@ -14,7 +14,7 @@ export const PlaceOnSpellbookLog: FC<MaterialLogProps> = ({ move, context }) => 
   const player = usePlayerName(context.action.playerId)
   return (
     <Trans
-      defaults="log.place-on-spellbook"
+      i18nKey="log.place-on-spellbook"
       values={{ player }}
       components={{
         ...LogComponents,

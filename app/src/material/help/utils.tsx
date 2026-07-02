@@ -16,37 +16,6 @@ import sickle from '../../images/icons/sickle.png'
 import CristalToken1 from '../../images/tokens/CristalToken1.png'
 import { scrollTokenDescription } from '../ScrollTokenDescription.ts'
 
-// ==========================================
-// Inline icon styles for Trans components
-// ==========================================
-
-const roundedPictureCss = css`
-  display: inline-block;
-  height: 1.4em;
-  vertical-align: middle;
-  margin: 0 0.1em;
-
-  > img {
-    height: 1.4em;
-    width: 1.4em;
-    border-radius: 50%;
-    object-fit: cover;
-    filter: drop-shadow(0 0.03em 0.08em rgba(0, 0, 0, 0.25));
-  }
-`
-
-const iconPictureCss = css`
-  display: inline-block;
-  height: 1.4em;
-  vertical-align: middle;
-  margin: 0 0.1em;
-
-  > img {
-    height: 1.4em;
-    filter: drop-shadow(0 0.03em 0.08em rgba(0, 0, 0, 0.25));
-  }
-`
-
 export const potionImages = {
   [Potion.FlowerOrFruit]: FlowerFruitPotion,
   [Potion.Leaf]: LeafPotion

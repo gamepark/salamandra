@@ -9,7 +9,7 @@ export const ActivateApprenticeForCrystalLog: FC<MaterialLogProps> = ({ move }) 
   const player = usePlayerName(customMove.data.player)
   return (
     <Trans
-      defaults="log.activate-apprentice-for-crystal"
+      i18nKey="log.activate-apprentice-for-crystal"
       values={{ player }}
       components={{
         ...LogComponents

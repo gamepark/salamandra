@@ -1,6 +1,6 @@
 import { pointerWithin } from '@dnd-kit/core'
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
+import { DevToolsHub, GameTable, GameTableNavigation, useRules } from '@gamepark/react-game'
 import { MaterialRules } from '@gamepark/rules-api'
 import { GameBoundaries } from '@gamepark/salamandra/material/helper/GameBoundaries.ts'
 import { fieldTileDescription } from './material/FieldTileDescription.ts'
@@ -28,6 +28,7 @@ export function GameDisplay() {
       >
         <GameTableNavigation css={naviationCss} />
         <PlayerPanels />
+        {process.env.NODE_ENV === 'development' && <DevToolsHub fabBottom="calc(5em)" />}
       </GameTable>
     </>
   )

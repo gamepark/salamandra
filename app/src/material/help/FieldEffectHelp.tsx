@@ -15,7 +15,6 @@ import { scrollTokenDescription } from '../ScrollTokenDescription.ts'
 import cauldron from '../../images/icons/cauldron.png'
 import flowerFruitPotion from '../../images/icons/flower-fruit-potion.jpg'
 import leafPotion from '../../images/icons/leaf-potion.jpg'
-import billhook from '../../images/icons/sickle.png'
 import { HelpIcon, HelpRoundedIcon } from './utils'
 
 export const FieldEffectHelp = ({ effect, field }: { effect: Effect; field: FieldTile }) => {

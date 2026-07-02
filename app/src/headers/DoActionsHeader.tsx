@@ -16,7 +16,7 @@ export const DoActionsHeader = () => {
   if (winOneCristal) {
     return (
       <Trans
-        defaults="<win>Win cristal</win>"
+        i18nKey="<win>Win cristal</win>"
         components={{
           win: <PlayMoveButton move={winOneCristal} />
         }}
@@ -27,7 +27,7 @@ export const DoActionsHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults="header.take.actions.you"
+        i18nKey="header.take.actions.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -35,5 +35,5 @@ export const DoActionsHeader = () => {
     )
   }
 
-  return <Trans defaults="header.take.actions.player" values={{ player: name }} />
+  return <Trans i18nKey="header.take.actions.player" values={{ player: name }} />
 }

@@ -9,7 +9,7 @@ export const ScoreLog: FC<MaterialLogProps> = ({ move }) => {
   const player = usePlayerName(customMove.data.player)
   return (
     <Trans
-      defaults="log.score"
+      i18nKey="log.score"
       values={{ player, count: customMove.data.score }}
       components={{
         ...LogComponents

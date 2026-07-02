@@ -15,7 +15,7 @@ export const ActionsOnPassHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults="header.take.actions.on.pass.you"
+        i18nKey="header.take.actions.on.pass.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -23,5 +23,5 @@ export const ActionsOnPassHeader = () => {
     )
   }
 
-  return <Trans defaults="header.take.actions.on.pass.player" values={{ player: name }} />
+  return <Trans i18nKey="header.take.actions.on.pass.player" values={{ player: name }} />
 }

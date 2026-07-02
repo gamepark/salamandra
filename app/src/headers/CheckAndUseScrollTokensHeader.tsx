@@ -10,8 +10,8 @@ export const CheckAndUseScrollTokensHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults="header.check.and.use.scroll.tokens.you" />
+    return <Trans i18nKey="header.check.and.use.scroll.tokens.you" />
   }
 
-  return <Trans defaults="header.check.and.use.scroll.tokens.player" values={{ player: name }} />
+  return <Trans i18nKey="header.check.and.use.scroll.tokens.player" values={{ player: name }} />
 }

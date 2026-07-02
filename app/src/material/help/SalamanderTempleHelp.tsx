@@ -31,31 +31,31 @@ export const SalamanderTempleHelp: FC<MaterialHelpProps> = () => {
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.temple.activate" components={components} />
+          <Trans i18nKey="help.temple.activate" components={components} />
         </p>
         <hr css={helpDividerCss} />
         <p>
-          <Trans defaults="help.temple.cost.black" components={components} />
+          <Trans i18nKey="help.temple.cost.black" components={components} />
         </p>
         <p>
-          <Trans defaults="help.temple.cost.white" components={components} />
+          <Trans i18nKey="help.temple.cost.white" components={components} />
         </p>
       </div>
 
       <div css={helpGainCss}>
         <p>
-          <Trans defaults="help.temple.gain" components={components} />
+          <Trans i18nKey="help.temple.gain" components={components} />
         </p>
       </div>
 
       <div css={helpGainLabeledCss}>
-        <Trans defaults="help.temple.fallback.label" components={components} />
+        <Trans i18nKey="help.temple.fallback.label" components={components} />
         <ul css={groveRewardListCss}>
           <li css={groveRewardItemCss}>
-            <span><Trans defaults="help.temple.fallback.white" components={components} /></span>
+            <span><Trans i18nKey="help.temple.fallback.white" components={components} /></span>
           </li>
           <li css={groveRewardItemCss}>
-            <span><Trans defaults="help.temple.fallback.black" components={components} /></span>
+            <span><Trans i18nKey="help.temple.fallback.black" components={components} /></span>
           </li>
         </ul>
       </div>

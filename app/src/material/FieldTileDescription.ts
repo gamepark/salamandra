@@ -1,5 +1,5 @@
 import { css, Interpolation, Theme } from '@emotion/react'
-import { CardDescription, MaterialContext } from '@gamepark/react-game'
+import { CardDescription } from '@gamepark/react-game'
 import { MaterialItem } from '@gamepark/rules-api'
 import { FieldTile } from '@gamepark/salamandra/material/FieldTile'
 import { LocationType } from '@gamepark/salamandra/material/LocationType.ts'

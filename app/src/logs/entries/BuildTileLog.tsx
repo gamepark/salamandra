@@ -17,7 +17,7 @@ export const BuildTileLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(rules.getActivePlayer())
   return (
     <Trans
-      defaults={'log.build'}
+      i18nKey={'log.build'}
       values={{ player, color: colors.map((c) => t(`field.color.${c}`)).join(' / ') }}
       components={{
         ...LogComponents,

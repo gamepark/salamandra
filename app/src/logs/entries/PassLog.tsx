@@ -5,5 +5,5 @@ import { LogComponents } from '../../material/help/utils.tsx'
 
 export const PassLog: FC<MaterialLogProps> = ({ context }) => {
   const player = usePlayerName(context.action.playerId)
-  return <Trans defaults="log.pass" values={{ player }} components={LogComponents} />
+  return <Trans i18nKey="log.pass" values={{ player }} components={LogComponents} />
 }

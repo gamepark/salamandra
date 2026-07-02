@@ -1,5 +1,5 @@
-import { getRelativePlayerIndex, ItemContext, Locator, OriginType } from '@gamepark/react-game'
-import { MaterialItem } from '@gamepark/rules-api'
+import { getRelativePlayerIndex, ItemContext, Locator, MaterialContext, OriginType } from '@gamepark/react-game'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 import { PanelLocator } from './PanelLocator.ts'
 
 class PlayerMatLayoutLocator extends Locator {
@@ -11,6 +11,10 @@ class PlayerMatLayoutLocator extends Locator {
     const index = getRelativePlayerIndex(context, item.location.player)
     if (playerView === item.id || (playerView === undefined && index === 0)) return super.placeItem(item, context)
     return new PanelLocator().placeItem(item, context)
+  }
+
+  getPositionDependencies(_location: Location, context: MaterialContext): unknown {
+    return { view: context.rules.game.view }
   }
 
   locationOrigin = { x: OriginType.Min, y: OriginType.Min }

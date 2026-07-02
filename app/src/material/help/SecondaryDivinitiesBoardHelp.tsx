@@ -25,13 +25,13 @@ export const SecondaryDivinitiesBoardHelp = ({ closeDialog }: MaterialHelpProps)
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.secondary-divinity-board.how" components={components} />
+          <Trans i18nKey="help.secondary-divinity-board.how" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.secondary-divinity-board.permanent" components={components} />
+          <Trans i18nKey="help.secondary-divinity-board.permanent" components={components} />
         </p>
       </div>
 

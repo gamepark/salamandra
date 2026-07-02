@@ -25,7 +25,7 @@ export const FlipApprentice = (props: FlipApprenticeProps) => {
 
   return (
     <PlayMoveButton move={activateApprenticeForSalamandra} onPlay={onPlay}>
-      <Trans defaults="button.crystal.activate.salamandra" components={components} />
+      <Trans i18nKey="button.crystal.activate.salamandra" components={components} />
     </PlayMoveButton>
   )
 }

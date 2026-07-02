@@ -54,7 +54,7 @@ export class SalamandraScoring implements ScoringDescription {
     if (key.startsWith(SalamandraScoringKey.ROUND)) {
       return (
         <div css={centeredCss}>
-          <Trans defaults="score.round" values={{ round: key.split('.')[1] }} components={components} />
+          <Trans i18nKey="score.round" values={{ round: key.split('.')[1] }} components={components} />
         </div>
       )
     }
@@ -62,7 +62,7 @@ export class SalamandraScoring implements ScoringDescription {
     if (key === SalamandraScoringKey.SCORE) {
       return (
         <div css={centeredCss}>
-          <Trans defaults="score.actions" components={components} />
+          <Trans i18nKey="score.actions" components={components} />
         </div>
       )
     }

@@ -10,8 +10,8 @@ export const CheckPassAndEmptyPlacesHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults="header.check.pass.and.empty.places.you" />
+    return <Trans i18nKey="header.check.pass.and.empty.places.you" />
   }
 
-  return <Trans defaults="header.check.pass.and.empty.places.player" values={{ player: name }} />
+  return <Trans i18nKey="header.check.pass.and.empty.places.player" values={{ player: name }} />
 }

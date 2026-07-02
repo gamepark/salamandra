@@ -43,13 +43,7 @@ export function App() {
     <>
       <Global styles={globalOverrides} />
       {!!game && <GameDisplay />}
-      <LoadingScreen
-        display={loading}
-        author={['Pierre Giroux', 'Johannes Goupy']}
-        artist="Camille Chaussy"
-        publisher="GRRRE GAMES"
-        developer={['David Sylvestre', 'Game Park']}
-      />
+      <LoadingScreen display={loading} />
       <MaterialHeader rulesStepsHeaders={Headers} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />

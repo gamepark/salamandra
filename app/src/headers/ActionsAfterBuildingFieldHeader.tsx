@@ -10,8 +10,8 @@ export const ActionsAfterBuildingFieldHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults="header.take.actions.after.building.you" />
+    return <Trans i18nKey="header.take.actions.after.building.you" />
   }
 
-  return <Trans defaults="header.take.actions.player" values={{ player: name }} />
+  return <Trans i18nKey="header.take.actions.player" values={{ player: name }} />
 }

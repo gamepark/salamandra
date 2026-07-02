@@ -38,20 +38,20 @@ export const FieldHelp = ({ item }: MaterialHelpProps) => {
 
       {!isFree && (
         <div css={helpCostLabeledCss}>
-          <Trans defaults="help.field.cost.label" components={components} />
+          <Trans i18nKey="help.field.cost.label" components={components} />
           <p><CostDisplay resources={cost} /></p>
         </div>
       )}
 
       <div css={helpGainLabeledCss}>
-        <Trans defaults="help.field.bonus.label" components={components} />
+        <Trans i18nKey="help.field.bonus.label" components={components} />
         <p>
           <Trans i18nKey="help.field.bonus" components={{ ...components, bonus: <BonusesDisplay bonuses={bonus} /> }} />
         </p>
       </div>
 
       <div css={helpImportantLabeledCss}>
-        <Trans defaults={fieldData[field].type === FieldType.Cauldron ? 'help.field.cauldron.label' : 'help.field.harvest.label'} components={components} />
+        <Trans i18nKey={fieldData[field].type === FieldType.Cauldron ? 'help.field.cauldron.label' : 'help.field.harvest.label'} components={components} />
         <FieldEffectHelp effect={activationEffect} field={field} />
       </div>
     </div>
@@ -95,7 +95,7 @@ const FieldDeckHelp = () => {
       </div>
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.field.deck.description" components={components} />
+          <Trans i18nKey="help.field.deck.description" components={components} />
         </p>
       </div>
     </div>

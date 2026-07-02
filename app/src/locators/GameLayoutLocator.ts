@@ -22,6 +22,11 @@ class GameLayoutLocator extends Locator {
     return { x: (base.x ?? 0) + locationX * this.gap.x, y: (base.y ?? 0) + locationY * this.gap.y }
   }
 
+  getPositionDependencies(_location: Location, context: MaterialContext): unknown {
+    const gameBoundaries = new GameBoundaries(context.rules.game)
+    return { boundaries: gameBoundaries.boundaries, overCoordinates: gameBoundaries.overCoordinates }
+  }
+
   dropPreview = true
 
   getBaseCoordinates(context: MaterialContext): Partial<Coordinates> {

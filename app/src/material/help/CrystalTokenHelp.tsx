@@ -35,19 +35,19 @@ export const CrystalTokenHelp = (props: MaterialHelpProps) => {
 
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.crystal.text" components={components} />
+          <Trans i18nKey="help.crystal.text" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.crystal.effect1" components={components} />
+          <Trans i18nKey="help.crystal.effect1" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.crystal.effect2" components={components} />
+          <Trans i18nKey="help.crystal.effect2" components={components} />
         </p>
       </div>
 
@@ -77,7 +77,7 @@ const HelpButtons: FC<MaterialHelpProps> = (props) => {
         if (!isPlayerCrystal || activePlayer !== me) return null
         return (
           <PlayMoveButton key={index} move={move} onPlay={closeDialog}>
-            <Trans defaults="button.crystal.pay.to.potion" values={{ amount: data.amount, potion: data.potion }} components={components} />
+            <Trans i18nKey="button.crystal.pay.to.potion" values={{ amount: data.amount, potion: data.potion }} components={components} />
           </PlayMoveButton>
         )
       })}

@@ -24,13 +24,13 @@ export const DruidTileHelp: FC<MaterialHelpProps> = () => {
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.druid.active" components={components} />
+          <Trans i18nKey="help.druid.active" components={components} />
         </p>
       </div>
 
       <div css={helpNoticeCss}>
         <p>
-          <Trans defaults="help.druid.flip" components={components} />
+          <Trans i18nKey="help.druid.flip" components={components} />
         </p>
       </div>
     </div>

@@ -9,7 +9,7 @@ export const WinCrystalLog: FC<MaterialLogProps> = ({ move }) => {
   const player = usePlayerName(createItem.item.location.player)
   return (
     <Trans
-      defaults="log.win-crystal"
+      i18nKey="log.win-crystal"
       values={{ player, count: createItem.item.quantity ?? 1 }}
       components={{
         ...LogComponents

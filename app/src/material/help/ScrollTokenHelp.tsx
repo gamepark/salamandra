@@ -27,14 +27,14 @@ export const ScrollTokenHelp: FC<MaterialHelpProps> = () => {
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.scroll.use" components={components} />
+          <Trans i18nKey="help.scroll.use" components={components} />
         </p>
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
-          <Trans defaults="help.scroll.scoring" components={components} />
+          <Trans i18nKey="help.scroll.scoring" components={components} />
         </p>
       </div>
     </div>

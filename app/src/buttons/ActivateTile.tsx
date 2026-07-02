@@ -28,7 +28,7 @@ export const ActivateTile = (props: ActivateApprenticeToGainCrystalProps) => {
 
   return (
     <PlayMoveButton move={work} onPlay={onPlay}>
-      <Trans defaults="button.apprentice.work" components={components} />
+      <Trans i18nKey="button.apprentice.work" components={components} />
     </PlayMoveButton>
   )
 }

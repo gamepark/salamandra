@@ -41,29 +41,29 @@ export const GroveTileHelp: FC<MaterialHelpProps> = (props) => {
 
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.grove.description" components={components} />
+          <Trans i18nKey="help.grove.description" components={components} />
         </p>
       </div>
 
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.grove.crystal" components={components} />
+          <Trans i18nKey="help.grove.crystal" components={components} />
         </p>
         <hr css={helpDividerCss} />
         <p>
-          <Trans defaults="help.grove.take.action" components={components} />
+          <Trans i18nKey="help.grove.take.action" components={components} />
         </p>
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
-          <Trans defaults="help.grove.take.vp" components={components} />
+          <Trans i18nKey="help.grove.take.vp" components={components} />
         </p>
       </div>
 
       <div css={helpGainLabeledCss}>
-        <Trans defaults="help.grove.gains.label" components={components} />
+        <Trans i18nKey="help.grove.gains.label" components={components} />
         <GainsDisplay gains={gains} />
       </div>
     </div>
@@ -80,12 +80,12 @@ const GroveDeckHelp = () => {
       </div>
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.grove.deck.description" components={components} />
+          <Trans i18nKey="help.grove.deck.description" components={components} />
         </p>
       </div>
       <div css={helpImportantCss}>
         <p>
-          <Trans defaults="help.grove.deck.harvest" components={components} />
+          <Trans i18nKey="help.grove.deck.harvest" components={components} />
         </p>
       </div>
     </div>
@@ -121,11 +121,11 @@ const GainIcon: FC<{ gain: Bonus }> = ({ gain }) => {
 const GainText: FC<{ gain: Bonus }> = ({ gain }) => {
   switch (gain.type) {
     case BonusType.Points:
-      return <Trans defaults="help.grove.take.effect.points" components={components} values={{ points: gain.amount }} />
+      return <Trans i18nKey="help.grove.take.effect.points" components={components} values={{ points: gain.amount }} />
     case BonusType.Scroll:
-      return <Trans defaults="help.grove.take.effect.scroll" components={components} />
+      return <Trans i18nKey="help.grove.take.effect.scroll" components={components} />
     case BonusType.DivinityCard:
-      return <Trans defaults="help.grove.take.effect.divinity" components={components} values={{ divinity: gain.divinity }} />
+      return <Trans i18nKey="help.grove.take.effect.divinity" components={components} values={{ divinity: gain.divinity }} />
     default:
       return null
   }

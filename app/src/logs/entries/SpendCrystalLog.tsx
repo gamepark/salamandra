@@ -13,7 +13,7 @@ export const SpendCrystalLog: FC<MaterialLogProps> = ({ move, context }) => {
   const player = usePlayerName(item.location.player)
   return (
     <Trans
-      defaults="log.spend-crystal"
+      i18nKey="log.spend-crystal"
       values={{ player, count: deleteItem.quantity ?? 1 }}
       components={{
         ...LogComponents

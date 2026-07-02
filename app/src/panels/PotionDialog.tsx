@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { linkButtonCss, PlayMoveButton, RulesDialog, useLegalMoves, useRules } from '@gamepark/react-game'
+import { PlayMoveButton, RulesDialog, useLegalMoves, useRules } from '@gamepark/react-game'
 import { CustomMove, MaterialMove, MaterialMoveBuilder, MaterialRules } from '@gamepark/rules-api'
 import { DivinityCard } from '@gamepark/salamandra/material/DivinityCard'
 import { MaterialType } from '@gamepark/salamandra/material/MaterialType'
@@ -9,6 +9,7 @@ import { FC } from 'react'
 import { Trans } from 'react-i18next'
 import { TradeCrystalToGainPotion } from '../buttons/TradeResourceToGainPotion.tsx'
 import { components } from '../material/help/utils'
+import { salamandraLinkCss } from '../theme.ts'
 import { isPlayerWinThisPotion } from '../utils/resource.utils.ts'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
@@ -28,15 +29,15 @@ export const PotionDialog: FC<ResourceDialogProps> = (props) => {
   return (
     <RulesDialog open close={onClose} css={dialogCss}>
       <h1>
-        <Trans defaults="help.potion.trade" />
+        <Trans i18nKey="help.potion.trade" />
       </h1>
 
       <p css={boldCss}>
         <Trans
-          defaults="help.divinity.potion"
+          i18nKey="help.divinity.potion"
           components={{
             ...components,
-            play: <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.DivinityCard, { id: { front: divinity } })} local />
+            play: <PlayMoveButton css={salamandraLinkCss} move={displayMaterialHelp(MaterialType.DivinityCard, { id: { front: divinity } })} local />
           }}
         ></Trans>
       </p>
@@ -60,7 +61,7 @@ const dialogCss = css`
   > h1 {
     font-size: 3em;
   }
-  padding: 0 2em 0 2em;
+  padding: 1.5em 2.5em 2em;
   width: 70em;
   white-space: pre-wrap;
 `

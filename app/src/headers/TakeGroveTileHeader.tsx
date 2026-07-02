@@ -10,8 +10,8 @@ export const TakeGroveTileHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults="header.take.grove.tile.you" />
+    return <Trans i18nKey="header.take.grove.tile.you" />
   }
 
-  return <Trans defaults="header.take.grove.tile.player" values={{ player: name }} />
+  return <Trans i18nKey="header.take.grove.tile.player" values={{ player: name }} />
 }

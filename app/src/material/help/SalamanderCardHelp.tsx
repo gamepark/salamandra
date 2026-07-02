@@ -27,21 +27,21 @@ export const SalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
       <div css={helpHeaderCss}>
         <img src={Salamander} css={helpHeaderIconCss} alt="" />
         <h2 css={helpTitleCss}>
-          <Trans defaults="help.salamander" components={components} />
+          <Trans i18nKey="help.salamander" components={components} />
         </h2>
         <div css={helpOrnamentCss}><span css={diamondCss} /></div>
       </div>
 
       <div css={helpSecondaryCss}>
         <p>
-          <Trans defaults="help.salamander.description" components={components} />
+          <Trans i18nKey="help.salamander.description" components={components} />
         </p>
       </div>
 
       <div css={helpScoringLabeledCss}>
-        <Trans defaults="help.scoring.label" components={components} />
+        <Trans i18nKey="help.scoring.label" components={components} />
         <p>
-          <Trans defaults="help.divinity.end" components={components} values={{ type: undefined, first: 12, second: 6 }} />
+          <Trans i18nKey="help.divinity.end" components={components} values={{ type: undefined, first: 12, second: 6 }} />
         </p>
       </div>
 
@@ -51,16 +51,16 @@ export const SalamanderCardHelp: FC<MaterialHelpProps> = (props) => {
           <div css={helpPointsDisplayCss}>
             <span css={pointsBadgeCss}>
               <Trans
-                defaults="help.divinity.points"
+                i18nKey="help.divinity.points"
                 components={components}
                 values={{ type: undefined, points: salamanderCardPoints[item.id.front as SalamanderCard] }}
               />
             </span>
           </div>
           <div css={helpGainLabeledCss}>
-            <Trans defaults="help.salamander.bonus" components={components} />
+            <Trans i18nKey="help.salamander.bonus" components={components} />
             <p>
-              <Trans defaults={`help.salamander.bonus.${item.id.front}`} components={components} />
+              <Trans i18nKey={`help.salamander.bonus.${item.id.front}`} components={components} />
             </p>
           </div>
         </>
