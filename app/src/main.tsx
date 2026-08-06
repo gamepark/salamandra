@@ -1,5 +1,5 @@
 import { GameProvider } from '@gamepark/react-game'
-import { SalamandraOptionsSpec } from '@gamepark/salamandra/SalamandraOptions.ts'
+import { SalamandraOptionsSpecV2 } from '@gamepark/salamandra/SalamandraOptions.ts'
 import { SalamandraRules } from '@gamepark/salamandra/SalamandraRules.ts'
 import { SalamandraSetup } from '@gamepark/salamandra/SalamandraSetup.ts'
 import { StrictMode } from 'react'
@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
     <GameProvider
       game="salamandra"
       Rules={SalamandraRules}
-      optionsSpec={SalamandraOptionsSpec}
+      optionsSpec={SalamandraOptionsSpecV2}
       GameSetup={SalamandraSetup}
       material={Material}
       locators={Locators}

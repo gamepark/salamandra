@@ -1,4 +1,4 @@
-import { getEnumValues, OptionsSpec } from '@gamepark/rules-api'
+import { getEnumValues, OptionsSpecV2 } from '@gamepark/rules-api'
 import { PlayerColor } from './PlayerColor'
 
 /**
@@ -15,15 +15,14 @@ export type SalamandraOptions = {
 }
 
 /**
- * This object describes all the options a game can have, and will be used by GamePark website to create automatically forms for you game
- * (forms for friendly games, or forms for matchmaking preferences, for instance).
+ * The option space of salamandra: structure only.
+ *
+ * Labels live in the game's presentation document, published beside its translations at
+ * `/options/<locale>.json` and keyed by convention. Subscription and competitive gates live in
+ * the platform database, so they can change without releasing the game again.
  */
-export const SalamandraOptionsSpec: OptionsSpec<SalamandraOptions> = {
-  players: {
-    id: {
-      label: (t) => t('player.id'),
-      values: getEnumValues(PlayerColor),
-      valueSpec: (id) => ({ label: (t) => t(`player.${id}`) })
-    }
-  }
+export const SalamandraOptionsSpecV2: OptionsSpecV2 = {
+  specVersion: 2,
+  players: { min: 2, max: 4 },
+  identities: { values: getEnumValues(PlayerColor) }
 }

@@ -1,3 +1,3 @@
 export { SalamandraRules } from './SalamandraRules'
-export { SalamandraOptionsSpec } from './SalamandraOptions'
+export { SalamandraOptionsSpecV2 } from './SalamandraOptions'
 export { SalamandraSetup } from './SalamandraSetup'
