@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/salamandra",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "The rules of Game Template adapted for Game Park",
   "sideEffects": false,
   "type": "module",
